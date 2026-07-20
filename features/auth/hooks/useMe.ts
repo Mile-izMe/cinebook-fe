@@ -2,30 +2,33 @@ import { useQuery } from "@tanstack/react-query";
 import { authApi } from "../api";
 import { useEffect } from "react";
 import { useAuthStore } from "../store";
+import { tokenStorage } from "@/lib";
 
 export const useMe = () => {
-  const setAuth = useAuthStore((state) => state.setAuth);
-  const clearAuth = useAuthStore((state) => state.clearAuth);
+  const { setAuth, clearAuth, setLoading } = useAuthStore();
+  const hasToken =
+    typeof window !== "undefined" && !!tokenStorage.getAccessToken();
 
   const query = useQuery({
     queryKey: ["me"],
     queryFn: () => authApi.getMe(),
-    // Call API if cookie has token
-    enabled: typeof window !== "undefined" && !!localStorage.get("accessToken"),
+    enabled: hasToken,
     retry: false,
+    staleTime: 5 * 60 * 1000,
   });
 
   useEffect(() => {
-    if (query.isSuccess && query.data) {
-      setAuth(query.data.data);
+    if (!hasToken) {
+      clearAuth();
+      return;
     }
-  }, [query.isSuccess, query.data, setAuth]);
-
-  useEffect(() => {
+    if (query.isPending) setLoading();
+    if (query.isSuccess) setAuth(query.data.data);
     if (query.isError) {
+      tokenStorage.clearTokens();
       clearAuth();
     }
-  }, [query.isError, clearAuth]);
+  }, [hasToken, query.isPending, query.isSuccess, query.isError, query.data]);
 
   return query;
 };

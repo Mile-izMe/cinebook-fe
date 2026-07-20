@@ -2,6 +2,7 @@ import { ApiErrorResponse } from "@/types";
 import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
 import { toast } from "sonner";
 import { v4 as uuidv4 } from "uuid";
+import { tokenStorage } from "./token-storage";
 
 const baseURL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:8080";
 
@@ -49,7 +50,7 @@ const processQueue = (
 api.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     if (typeof window !== "undefined") {
-      const token = localStorage.getItem("accessToken");
+      const token = tokenStorage.getAccessToken();
       if (token && config.headers) {
         config.headers.Authorization = `Bearer ${token}`;
       }
@@ -97,7 +98,7 @@ api.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        const refreshToken = localStorage.getItem("refreshToken");
+        const refreshToken = tokenStorage.getRefreshToken();
         if (!refreshToken) {
           throw new Error("Refresh Token not found in localStorage!");
         }
@@ -109,8 +110,7 @@ api.interceptors.response.use(
         const { accessToken: newAccessToken, refreshToken: newRefreshToken } =
           response.data.data;
 
-        localStorage.setItem("accessToken", newAccessToken);
-        localStorage.setItem("refreshToken", newRefreshToken);
+        tokenStorage.setTokens(newAccessToken, newRefreshToken);
 
         processQueue(null, newAccessToken);
         if (originalRequest.headers) {
@@ -122,8 +122,7 @@ api.interceptors.response.use(
         // If refresh token failed (VD: refreshToken expired) -> Logout
         processQueue(refreshError as AxiosError, null);
 
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
+        tokenStorage.clearTokens();
         window.location.href = "/login";
 
         return Promise.reject(refreshError);

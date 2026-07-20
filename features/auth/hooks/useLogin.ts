@@ -4,25 +4,29 @@ import { LoginInput } from "../validation";
 import { authApi } from "../api";
 import { toast } from "sonner";
 import { ApiErrorResponse } from "@/types";
+import { tokenStorage } from "@/lib";
+import { useAuthStore } from "../store";
 
 export const useLogin = () => {
   //   const t = useTranslation();
   const router = useRouter();
-
   const queryClient = useQueryClient();
+  const { setAuth } = useAuthStore();
 
   return useMutation({
     mutationFn: (data: LoginInput) => authApi.login(data),
 
-    onSuccess: (response) => {
+    onSuccess: async (response) => {
       const { accessToken, refreshToken } = response.data;
-
-      localStorage.set("accessToken", accessToken);
-      localStorage.set("refreshToken", refreshToken);
+      tokenStorage.setTokens(accessToken, refreshToken);
 
       toast.success(response.message /* || t("login_success") */);
 
-      queryClient.invalidateQueries({ queryKey: ["me"] });
+      const me = await queryClient.fetchQuery({
+        queryKey: ["me"],
+        queryFn: authApi.getMe,
+      });
+      setAuth(me.data);
 
       router.push("/");
     },
