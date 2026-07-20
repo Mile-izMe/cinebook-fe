@@ -1,5 +1,5 @@
 "use client";
-import { useAuthStore } from "@/features/auth";
+import { useAuthStore, useLogout } from "@/features/auth";
 import { Film, LogOut, Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import Link from "next/link";
@@ -10,6 +10,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const { user, status } = useAuthStore();
   const pathname = usePathname();
+  const { mutate: logout, isPending } = useLogout();
   const isAuthenticated = status === "authenticated";
 
   const navLinks = [
@@ -81,7 +82,8 @@ export default function Navbar() {
                   </span>
                 </Link>
                 <button
-                  //   onClick={handleLogout}
+                  onClick={() => logout()}
+                  disabled={isPending}
                   className="p-2 text-zinc-400 hover:text-brand-red hover:bg-zinc-900 rounded-lg transition-all"
                   title="Logout"
                 >
@@ -163,7 +165,8 @@ export default function Navbar() {
                     </div>
                   </div>
                   <button
-                    // onClick={handleLogout}
+                    onClick={() => logout()}
+                    disabled={isPending}
                     className="w-full flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-zinc-900 text-zinc-300 hover:bg-zinc-800 transition-colors"
                   >
                     <LogOut className="w-4 h-4" />
