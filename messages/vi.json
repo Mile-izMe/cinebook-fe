@@ -1,0 +1,12 @@
+{
+  "nav": {
+    "home": "Trang chủ",
+    "bookings": "Đặt hàng",
+    "profile": "Tài khoản"
+  },
+  "auth": {
+    "signIn": "Đăng nhập",
+    "signOut": "Đăng xuất",
+    "loginSuccess": "Đăng nhập thành công"
+  }
+}

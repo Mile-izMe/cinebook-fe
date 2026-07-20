@@ -6,9 +6,10 @@ import { toast } from "sonner";
 import { ApiErrorResponse } from "@/types";
 import { tokenStorage } from "@/lib";
 import { useAuthStore } from "../store";
+import { useTranslations } from "next-intl";
 
 export const useLogin = () => {
-  //   const t = useTranslation();
+  const t = useTranslations("auth");
   const router = useRouter();
   const queryClient = useQueryClient();
   const { setAuth } = useAuthStore();
@@ -20,7 +21,7 @@ export const useLogin = () => {
       const { accessToken, refreshToken } = response.data;
       tokenStorage.setTokens(accessToken, refreshToken);
 
-      toast.success(response.message /* || t("login_success") */);
+      toast.success(response.message || t("login_success"));
 
       const me = await queryClient.fetchQuery({
         queryKey: ["me"],

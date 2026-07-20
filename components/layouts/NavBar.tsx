@@ -2,21 +2,24 @@
 import { useAuthStore, useLogout } from "@/features/auth";
 import { Film, LogOut, Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 export default function Navbar() {
+  const t = useTranslations("nav");
   const [isOpen, setIsOpen] = useState(false);
   const { user, status } = useAuthStore();
   const pathname = usePathname();
+  const normalizedPath = pathname.replace(/^\/(en|vi)/, "") || "/";
   const { mutate: logout, isPending } = useLogout();
   const isAuthenticated = status === "authenticated";
 
   const navLinks = [
-    { name: "Home", path: "/" },
-    { name: "Bookings", path: "/bookings-history" },
-    { name: "Profile", path: "/profile" },
+    { name: t("home"), path: "/" },
+    { name: t("bookings"), path: "/bookings-history" },
+    { name: t("profile"), path: "/profile" },
   ];
 
   return (
@@ -35,7 +38,7 @@ export default function Navbar() {
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => {
-              const isActive = pathname === link.path;
+              const isActive = normalizedPath === link.path;
               return (
                 <Link
                   key={link.path}
@@ -126,7 +129,7 @@ export default function Navbar() {
             className="md:hidden border-t border-white/5 bg-brand-black px-4 pt-2 pb-6 space-y-3"
           >
             {navLinks.map((link) => {
-              const isActive = pathname === link.path;
+              const isActive = normalizedPath === link.path;
               return (
                 <Link
                   key={link.path}

@@ -1,9 +1,13 @@
 import CustomToast from "@/components/layouts/CustomToast";
 import Navbar from "@/components/layouts/NavBar";
+import { routing } from "@/i18n/routing";
 import type { Metadata } from "next";
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages } from "next-intl/server";
 import { Geist, Geist_Mono } from "next/font/google";
+import { notFound } from "next/navigation";
+import { Providers } from "../providers";
 import "./globals.css";
-import { Providers } from "./providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,22 +25,31 @@ export const metadata: Metadata = {
     "A modern, highly polished dark-themed Movie Ticket Booking System with seat selection, countdown timers, checkout, and booking management.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode;
+  params: Promise<{ locale: string }>;
 }>) {
+  const { locale } = await params;
+  if (!routing.locales.includes(locale as "vi" | "en")) notFound();
+
+  const messages = await getMessages();
+
   return (
     <html
-      lang="en"
+      lang={locale}
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <Providers>
-          <Navbar />
-          {children}
-          <CustomToast />
-        </Providers>
+        <NextIntlClientProvider messages={messages}>
+          <Providers>
+            <Navbar />
+            {children}
+            <CustomToast />
+          </Providers>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

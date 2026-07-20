@@ -6,7 +6,7 @@ import { Toaster } from "sonner";
 function CustomToast() {
   return (
     <Toaster
-      position="top-right"
+      position="bottom-right"
       duration={4000}
       icons={{
         success: <CheckCircle className="w-5 h-5 text-emerald-400" />,
@@ -14,11 +14,11 @@ function CustomToast() {
         info: <Info className="w-5 h-5 text-red-500" />,
       }}
       toastOptions={{
-        style: {
-          background: "transparent",
-          border: "none",
-          boxShadow: "none",
-        },
+        // style: {
+        //   background: "transparent",
+        //   border: "none",
+        //   boxShadow: "none",
+        // },
 
         classNames: {
           toast:

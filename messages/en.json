@@ -1,0 +1,12 @@
+{
+  "nav": {
+    "home": "Home",
+    "bookings": "Bookings",
+    "profile": "Profile"
+  },
+  "auth": {
+    "signIn": "Sign In",
+    "signOut": "Sign Out",
+    "loginSuccess": "Login successful"
+  }
+}
