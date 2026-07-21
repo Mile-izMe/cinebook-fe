@@ -9,16 +9,18 @@ export const createLoginSchema = (t: MessageGetter) =>
   });
 
 export const createRegisterSchema = (t: MessageGetter) =>
-  z.object({
-    userName: z.string().min(3, t("username_min_length")),
-    email: z.string().email(t("email_invalid")),
-    phone: z.string().min(10, t("phone_min_length")),
-    password: z.string().min(6, t("password_min_length")),
-  });
+  z
+    .object({
+      userName: z.string().min(3, t("username_min_length")),
+      email: z.string().email(t("email_invalid")),
+      phone: z.string().min(10, t("phone_min_length")),
+      password: z.string().min(6, t("password_min_length")),
+      confirmPassword: z.string(),
+    })
 
-export const createRefreshTokenSchema = (t: MessageGetter) =>
+export const createRefreshTokenSchema = () =>
   z.object({
-    refreshToken: z.string().nonempty(t("refresh_token_required")),
+    refreshToken: z.string().nonempty(),
   });
 
 export type LoginInput = z.infer<ReturnType<typeof createLoginSchema>>;

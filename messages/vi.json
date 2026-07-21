@@ -1,4 +1,20 @@
 {
+  "errors": {
+    "SYS-500": "Hệ thống đang gặp sự cố. Vui lòng thử lại sau.",
+    "SYS-400": "Dữ liệu không hợp lệ. Vui lòng kiểm tra lại thông tin đã nhập.",
+    "SYS-409": "Dữ liệu gặp xung đột trong hệ thống.",
+    "USR-001": "Không tìm thấy thông tin tài khoản.",
+    "USR-002": "Email này đã được sử dụng. Vui lòng chọn email khác.",
+    "USR-003": "Số điện thoại này đã được sử dụng.",
+    "USR-004": "Mã xác thực không hợp lệ hoặc đã hết hạn.",
+    "USR-005": "Email hoặc mật khẩu không chính xác.",
+    "USR-006": "Tài khoản chưa được xác thực. Vui lòng kiểm tra email của bạn.",
+    "USR-007": "Phiên đăng nhập không hợp lệ hoặc đã hết hạn. Vui lòng đăng nhập lại.",
+    "USR-008": "Bạn không có quyền truy cập vào chức năng này.",
+    "USR-009": "Thông tin đăng nhập bị lỗi. Vui lòng đăng nhập lại.",
+    "USR-010": "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại để tiếp tục.",
+    "DEFAULT": "Đã có lỗi xảy ra. Vui lòng thử lại!"
+  },
   "nav": {
     "home": "Trang chủ",
     "bookings": "Đặt hàng",
@@ -7,6 +23,11 @@
   "auth": {
     "signIn": "Đăng nhập",
     "signOut": "Đăng xuất",
-    "loginSuccess": "Đăng nhập thành công"
+    "email_invalid": "Email không hợp lệ",
+    "password_min_length": "Mật khẩu không đủ độ dài",
+    "username_min_length": "Tên không đủ độ dài",
+    "phone_min_length": "Số điện thoại không đúng",
+    "login_success": "Đăng nhập thành công",
+    "register_success": "Đăng ký thành công"
   }
 }

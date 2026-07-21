@@ -1,12 +1,11 @@
-import { useRouter } from "next/navigation";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { LoginInput } from "../validation";
-import { authApi } from "../api";
-import { toast } from "sonner";
-import { ApiErrorResponse } from "@/types";
 import { tokenStorage } from "@/lib";
-import { useAuthStore } from "../store";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { authApi } from "../api";
+import { useAuthStore } from "../store";
+import { LoginInput } from "../validation";
 
 export const useLogin = () => {
   const t = useTranslations("auth");
@@ -30,10 +29,6 @@ export const useLogin = () => {
       setAuth(me.data);
 
       router.push("/");
-    },
-
-    onError: (error: ApiErrorResponse) => {
-      console.log("Login failed with code:", error.errorCode);
     },
   });
 };

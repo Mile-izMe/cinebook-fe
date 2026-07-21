@@ -24,7 +24,6 @@ function LoginForm() {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    reset,
   } = form;
 
   const handleLogin = async (data: LoginInput) => {
@@ -68,43 +67,42 @@ function LoginForm() {
 
         {/* Forgot password view overlay */}
         {showForgot ? (
-          //   <form onSubmit={handleForgotPassword} className="space-y-4">
-          //     <h3 className="text-[10px] font-black text-zinc-300 uppercase tracking-widest mb-2">
-          //       Recover Your Password
-          //     </h3>
-          //     <p className="text-[10px] text-zinc-500 leading-relaxed uppercase font-black tracking-wider">
-          //       Enter your email address below. We'll send you a recovery link to
-          //       securely reset credentials.
-          //     </p>
-          //     <div className="space-y-2">
-          //       <label className="text-[10px] font-black text-zinc-400 uppercase tracking-widest">
-          //         Email Address
-          //       </label>
-          //       <input
-          //         type="email"
-          //         value={forgotEmail}
-          //         onChange={(e) => setForgotEmail(e.target.value)}
-          //         placeholder="name@example.com"
-          //         className="w-full bg-black border border-white/5 rounded-xl px-4 py-3 text-xs focus:outline-none focus:ring-1 focus:ring-brand-red focus:border-brand-red text-white placeholder-zinc-700 font-semibold uppercase tracking-wide"
-          //       />
-          //     </div>
-          //     <div className="flex gap-3 pt-2">
-          //       <button
-          //         type="button"
-          //         onClick={() => setShowForgot(false)}
-          //         className="flex-1 py-3.5 bg-brand-black border border-white/5 text-zinc-300 hover:bg-zinc-800 font-black text-[10px] uppercase rounded-xl transition-all tracking-widest"
-          //       >
-          //         Cancel
-          //       </button>
-          //       <button
-          //         type="submit"
-          //         className="flex-1 py-3.5 bg-brand-red hover:bg-red-700 text-white font-black text-[10px] uppercase rounded-xl transition-all tracking-widest"
-          //       >
-          //         Send Link
-          //       </button>
-          //     </div>
-          //   </form>
-          <div>Handle after</div>
+          <form /* onSubmit={handleForgotPassword} */ className="space-y-4">
+            <h3 className="text-[10px] font-black text-zinc-300 uppercase tracking-widest mb-2">
+              Recover Your Password
+            </h3>
+            <p className="text-[10px] text-zinc-500 leading-relaxed uppercase font-black tracking-wider">
+              Enter your email address below. We&apos;ll send you a recovery
+              link to securely reset credentials.
+            </p>
+            <div className="space-y-2">
+              <label className="text-[10px] font-black text-zinc-400 uppercase tracking-widest">
+                Email Address
+              </label>
+              <input
+                type="email"
+                // value={forgotEmail}
+                // onChange={(e) => setForgotEmail(e.target.value)}
+                placeholder="name@example.com"
+                className="w-full bg-black border border-white/5 rounded-xl px-4 py-3 text-xs focus:outline-none focus:ring-1 focus:ring-brand-red focus:border-brand-red text-white placeholder-zinc-700 font-semibold uppercase tracking-wide"
+              />
+            </div>
+            <div className="flex gap-3 pt-2">
+              <button
+                type="button"
+                onClick={() => setShowForgot(false)}
+                className="flex-1 py-3.5 bg-brand-black border border-white/5 text-zinc-300 hover:bg-zinc-800 font-black text-[10px] uppercase rounded-xl transition-all tracking-widest"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="flex-1 py-3.5 bg-brand-red hover:bg-red-700 text-white font-black text-[10px] uppercase rounded-xl transition-all tracking-widest"
+              >
+                Send Link
+              </button>
+            </div>
+          </form>
         ) : (
           /* Normal Login Form */
           <form onSubmit={handleSubmit(handleLogin)} className="space-y-5">
@@ -144,7 +142,7 @@ function LoginForm() {
                 <button
                   type="button"
                   onClick={() => setShowForgot(true)}
-                  className="text-[10px] text-brand-red hover:text-red-450 font-black uppercase tracking-widest hover:underline"
+                  className="cursor-pointer text-[10px] text-brand-red hover:text-red-450 font-black uppercase tracking-widest hover:underline"
                 >
                   Forgot?
                 </button>

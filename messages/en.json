@@ -1,4 +1,20 @@
 {
+  "errors": {
+    "SYS-500": "An unexpected system error occurred. Please try again later.",
+    "SYS-400": "Invalid input data. Please check your information.",
+    "SYS-409": "A data conflict occurred in the system.",
+    "USR-001": "User account not found.",
+    "USR-002": "This email already exists. Please use a different one.",
+    "USR-003": "This phone number is already registered.",
+    "USR-004": "The verification token is invalid or has expired.",
+    "USR-005": "Incorrect email or password.",
+    "USR-006": "Your account is not verified. Please check your email.",
+    "USR-007": "Invalid or expired session. Please log in again.",
+    "USR-008": "You do not have permission to access this feature.",
+    "USR-009": "Authentication error. Please log in again.",
+    "USR-010": "Your session has expired. Please log in again to continue.",
+    "DEFAULT": "An unexpected error occurred. Please try again!"
+  },
   "nav": {
     "home": "Home",
     "bookings": "Bookings",
@@ -7,6 +23,11 @@
   "auth": {
     "signIn": "Sign In",
     "signOut": "Sign Out",
-    "loginSuccess": "Login successful"
+    "email_invalid": "Email is invalid",
+    "password_min_length": "Password too short",
+    "username_min_length": "Username too short",
+    "phone_min_length": "Phone number too short",
+    "login_success": "Login successful",
+    "register_success": "Registration successful"
   }
 }

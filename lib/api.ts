@@ -1,6 +1,5 @@
 import { ApiErrorResponse } from "@/types";
 import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
-import { toast } from "sonner";
 import { v4 as uuidv4 } from "uuid";
 import { tokenStorage } from "./token-storage";
 
@@ -133,15 +132,9 @@ api.interceptors.response.use(
 
     if (error.response && error.response.data) {
       const apiError = error.response.data as ApiErrorResponse;
-
-      if (apiError.status !== 401) {
-        toast.error(apiError.message || "Có lỗi xảy ra!");
-      }
-
       return Promise.reject(apiError);
     }
 
-    toast.error("Can not connect to server. Please try again later.");
     return Promise.reject(error);
   },
 );
