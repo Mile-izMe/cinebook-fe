@@ -2,6 +2,7 @@ import { ApiErrorResponse } from "@/types";
 import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
 import { v4 as uuidv4 } from "uuid";
 import { tokenStorage } from "./token-storage";
+import { setCookie } from "cookies-next";
 
 const baseURL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:8080";
 
@@ -110,6 +111,12 @@ api.interceptors.response.use(
           response.data.data;
 
         tokenStorage.setTokens(newAccessToken, newRefreshToken);
+
+        setCookie("accessToken", newAccessToken, { maxAge: 900, path: "/" });
+        setCookie("refreshToken", newRefreshToken, {
+          maxAge: 604800,
+          path: "/",
+        });
 
         processQueue(null, newAccessToken);
         if (originalRequest.headers) {

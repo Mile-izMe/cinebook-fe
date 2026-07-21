@@ -27,7 +27,7 @@
     "password_min_length": "Password too short",
     "username_min_length": "Username too short",
     "phone_min_length": "Phone number too short",
-    "login_success": "Login successful",
-    "register_success": "Registration successful"
+    "login_success": "Welcome back to CineBook!",
+    "register_success": "Registration successful. Please check your email!"
   }
 }

@@ -7,6 +7,7 @@ type AuthStatus = "idle" | "loading" | "authenticated" | "unauthenticated";
 interface AuthState {
   user: User | null;
   status: AuthStatus;
+  setStatus: (status: AuthStatus) => void;
   setAuth: (user: User) => void;
   clearAuth: () => void;
   setLoading: () => void;
@@ -18,6 +19,7 @@ export const useAuthStore = create<AuthState>()(
     (set) => ({
       user: null,
       status: "idle",
+      setStatus: (status) => set({ status }, false, "auth/setStatus"),
       setAuth: (user) =>
         set({ user, status: "authenticated" }, false, "auth/setAuth"),
       clearAuth: () =>

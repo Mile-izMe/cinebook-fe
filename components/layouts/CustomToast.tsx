@@ -14,12 +14,7 @@ function CustomToast() {
         info: <Info className="w-5 h-5 text-red-500" />,
       }}
       toastOptions={{
-        // style: {
-        //   background: "transparent",
-        //   border: "none",
-        //   boxShadow: "none",
-        // },
-
+        unstyled: true,
         classNames: {
           toast:
             "flex items-start gap-3 p-4 rounded-xl border shadow-xl backdrop-blur-md w-[356px] pointer-events-auto",

@@ -63,7 +63,7 @@ function RegisterForm() {
             className="inline-flex items-center gap-2 text-brand-red font-black text-2xl tracking-widest select-none"
           >
             <Film className="w-8 h-8 fill-brand-red animate-pulse" />
-            <span>STARLIGHT</span>
+            <span>CINEBOOK</span>
           </Link>
           <h2 className="text-xs font-black text-white uppercase tracking-widest">
             Create an Account
@@ -85,13 +85,7 @@ function RegisterForm() {
               <input
                 type="text"
                 placeholder="John Doe"
-                {...register("userName", {
-                  required: "Name is required",
-                  minLength: {
-                    value: 3,
-                    message: "Name must be at least 3 characters",
-                  },
-                })}
+                {...register("userName")}
                 className="w-full bg-black border border-white/5 rounded-xl pl-12 pr-4 py-3 text-xs focus:outline-none focus:ring-1 focus:ring-brand-red focus:border-brand-red text-white placeholder-zinc-700 font-semibold uppercase tracking-wide"
               />
             </div>
@@ -112,18 +106,12 @@ function RegisterForm() {
               <input
                 type="email"
                 placeholder="name@example.com"
-                {...register("email", {
-                  required: "Email is required",
-                  pattern: {
-                    value: /^\S+@\S+$/i,
-                    message: "Please enter a valid email address",
-                  },
-                })}
-                className="w-full bg-black border border-white/5 rounded-xl pl-12 pr-4 py-3 text-xs focus:outline-none focus:ring-1 focus:ring-brand-red focus:border-brand-red text-white placeholder-zinc-700 font-semibold uppercase tracking-wide"
+                {...register("email")}
+                className="w-full bg-black border border-white/5 rounded-xl pl-12 pr-4 py-3 text-xs focus:outline-none focus:ring-1 focus:ring-brand-red focus:border-brand-red text-white placeholder-zinc-700 font-semibold tracking-wide"
               />
             </div>
             {errors.email && (
-              <p className="text-brand-red text-[9px] uppercase font-black tracking-widest mt-1">
+              <p className="text-brand-red text-[9px] font-black tracking-widest mt-1">
                 {errors.email.message}
               </p>
             )}
@@ -137,20 +125,14 @@ function RegisterForm() {
             <div className="relative">
               <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-zinc-700" />
               <input
-                type="password"
+                type="text"
                 placeholder="0987654321"
-                {...register("phone", {
-                  required: "Phone number is required",
-                  minLength: {
-                    value: 10,
-                    message: "Phone number must be at least 10 numbers",
-                  },
-                })}
-                className="w-full bg-black border border-white/5 rounded-xl pl-12 pr-4 py-3 text-xs focus:outline-none focus:ring-1 focus:ring-brand-red focus:border-brand-red text-white placeholder-zinc-700 font-semibold"
+                {...register("phone")}
+                className="w-full bg-black border border-white/5 rounded-xl pl-12 pr-4 py-3 text-xs focus:outline-none focus:ring-1 focus:ring-brand-red focus:border-brand-red text-white placeholder-zinc-700 font-semibold tracking-wide"
               />
             </div>
             {errors.phone && (
-              <p className="text-brand-red text-[9px] uppercase font-black tracking-widest mt-1">
+              <p className="text-brand-red text-[9px] font-black tracking-widest mt-1">
                 {errors.phone.message}
               </p>
             )}
@@ -166,13 +148,7 @@ function RegisterForm() {
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="••••••••"
-                {...register("password", {
-                  required: "Password is required",
-                  minLength: {
-                    value: 6,
-                    message: "Password must be at least 6 characters",
-                  },
-                })}
+                {...register("password")}
                 className="w-full bg-black border border-white/5 rounded-xl pl-12 pr-11 py-3 text-xs focus:outline-none focus:ring-1 focus:ring-brand-red focus:border-brand-red text-white placeholder-zinc-700 font-semibold"
               />
               <button
@@ -199,7 +175,7 @@ function RegisterForm() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full py-4 bg-brand-red hover:bg-red-700 text-white font-black text-xs uppercase rounded-xl transition-all shadow-lg active:scale-98 disabled:opacity-50 flex items-center justify-center gap-2 tracking-widest"
+            className="cursor-pointer w-full py-4 bg-brand-red hover:bg-red-700 text-white font-black text-xs uppercase rounded-xl transition-all shadow-lg active:scale-98 disabled:opacity-50 flex items-center justify-center gap-2 tracking-widest"
           >
             {isSubmitting ? (
               <Loader2 className="w-5 h-5 animate-spin" />

@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { authApi } from "../api";
 import { useAuthStore } from "../store";
 import { LoginInput } from "../validation";
+import { setCookie } from "cookies-next";
 
 export const useLogin = () => {
   const t = useTranslations("auth");
@@ -20,7 +21,10 @@ export const useLogin = () => {
       const { accessToken, refreshToken } = response.data;
       tokenStorage.setTokens(accessToken, refreshToken);
 
-      toast.success(response.message || t("login_success"));
+      setCookie("accessToken", accessToken, { maxAge: 900, path: "/" });
+      setCookie("refreshToken", refreshToken, { maxAge: 604800, path: "/" });
+
+      toast.success(t("login_success"));
 
       const me = await queryClient.fetchQuery({
         queryKey: ["me"],

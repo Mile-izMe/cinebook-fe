@@ -10,17 +10,17 @@ const PROTECTED_PATHS = ["/bookings-history", "/profile"];
 export function middleware(request: NextRequest) {
   // Run next-intl's routing logic first (locale detection/redirect)
   const intlResponse = intlMiddleware(request);
-
   const { pathname } = request.nextUrl;
   const pathWithoutLocale = pathname.replace(/^\/(vi|en)/, "") || "/";
+
   const accessToken = request.cookies.get("accessToken")?.value;
-  // NOTE: middleware can't actually see the token cause of localStorage
+  const refreshToken = request.cookies.get("refreshToken")?.value;
 
   const isProtected = PROTECTED_PATHS.some((p) =>
     pathWithoutLocale.startsWith(p),
   );
 
-  if (isProtected && !accessToken) {
+  if (isProtected && !accessToken && !refreshToken) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 

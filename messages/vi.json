@@ -27,7 +27,7 @@
     "password_min_length": "Mật khẩu không đủ độ dài",
     "username_min_length": "Tên không đủ độ dài",
     "phone_min_length": "Số điện thoại không đúng",
-    "login_success": "Đăng nhập thành công",
+    "login_success": "Chào mừng quay trở lại với CineBook",
     "register_success": "Đăng ký thành công"
   }
 }

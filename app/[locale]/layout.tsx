@@ -8,6 +8,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
 import { Providers } from "../providers";
 import "./globals.css";
+import Footer from "@/components/layouts/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -48,6 +49,7 @@ export default async function RootLayout({
             <Navbar />
             {children}
             <CustomToast />
+            <Footer />
           </Providers>
         </NextIntlClientProvider>
       </body>
