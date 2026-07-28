@@ -1,4 +1,5 @@
 export interface CursorPaginationMeta {
   nextCursor: string | null;
-  hasNextPage: boolean;
+  hasMore: boolean;
+  limit: number;
 }

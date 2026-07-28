@@ -113,7 +113,7 @@ export default function Navbar() {
                 <X className="w-6 h-6" />
               ) : (
                 <Menu className="w-6 h-6" />
-              )}
+              )}  
             </button>
           </div>
         </div>
@@ -170,11 +170,11 @@ export default function Navbar() {
                   <button
                     onClick={() => logout()}
                     disabled={isPending}
-                    className="w-full flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-zinc-900 text-zinc-300 hover:bg-zinc-800 transition-colors"
+                    className="cursor-pointer w-full flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-zinc-900 text-zinc-300 hover:bg-zinc-800 transition-colors"
                   >
                     <LogOut className="w-4 h-4" />
                     <span>Sign Out</span>
-                  </button>
+                  </button> 
                 </div>
               ) : (
                 <Link

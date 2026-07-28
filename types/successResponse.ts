@@ -4,6 +4,6 @@ export interface ApiResponse<T> {
   success: boolean;
   message?: string;
   data: T;
-  timestamp: Date;
+  timestamp: string;
   meta?: CursorPaginationMeta;
 }
