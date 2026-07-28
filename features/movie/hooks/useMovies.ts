@@ -1,4 +1,4 @@
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { keepPreviousData, useInfiniteQuery } from "@tanstack/react-query";
 import { movieApi } from "../api";
 
 export const useMovies = (keyword?: string, genreId?: string) => {
@@ -9,5 +9,6 @@ export const useMovies = (keyword?: string, genreId?: string) => {
     initialPageParam: undefined as string | undefined,
     getNextPageParam: (lastPage) =>
       lastPage.meta?.hasMore ? lastPage.meta.nextCursor : undefined,
+    placeholderData: keepPreviousData,
   });
 };
