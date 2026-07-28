@@ -18,7 +18,7 @@ function Footer() {
               <span>CINEBOOK</span>
             </Link>
             <p className="text-xs text-zinc-500 leading-relaxed">
-              Experience cinema like never before. Starlight Cinema brings you
+              Experience cinema like never before. Cinebook Cinema brings you
               advanced laser projection, deep Dolby Atmos audio, and VIP
               recliners for maximum movie immersion.
             </p>
@@ -142,14 +142,19 @@ function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-white/5 mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-zinc-500">
-          <p>
-            &copy; {new Date().getFullYear()} Cinebook Cinema Group. All rights
-            reserved.
-          </p>
-          <p className="font-mono text-[10px]">
-            DESIGNED WITH THEME BOLD TYPOGRAPHY
-          </p>
+        {/* CẬP NHẬT: Thêm TMDB Attribution vào khu vực bản quyền */}
+        <div className="border-t border-white/5 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center md:items-start gap-4 text-xs text-zinc-500 text-center md:text-left">
+          <div className="space-y-2">
+            <p>
+              &copy; {new Date().getFullYear()} Cinebook Cinema Group. All
+              rights reserved.
+            </p>
+            {/* Dòng ghi công bắt buộc của TMDB */}
+            <p className="opacity-75">
+              This product uses the TMDB API but is not endorsed or certified by
+              TMDB.
+            </p>
+          </div>
         </div>
       </div>
     </footer>

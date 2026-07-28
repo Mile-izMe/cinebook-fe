@@ -6,8 +6,10 @@ export interface GenreResponse {
 export interface MovieSummaryResponse {
   id: string;
   title: string;
+  description: string;
   posterUrl: string;
   backdropUrl: string;
+  duration: number;
   score: number;
   ageRating: string;
   genres: GenreResponse[];
