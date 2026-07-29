@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { Film, Loader2 } from "lucide-react";
 import { MoviesGridSkeleton } from "@/components";
 import MovieCard from "./MovieCard";
+import { useTranslations } from "next-intl";
 
 interface MovieListProps {
   movies: MovieSummaryResponse[];
@@ -27,6 +28,7 @@ export default function MovieList({
   fetchNextPage,
   onMovieClick,
 }: MovieListProps) {
+  const t = useTranslations("movie");
   const { ref, inView } = useInView();
 
   // Scroll to end (inView = true) and exist data (hasMore), call API next page
@@ -47,8 +49,8 @@ export default function MovieList({
         <Film className="w-5 h-5 text-brand-red" />
         <h2 className="text-xs font-black uppercase tracking-widest text-white">
           {keyword || selectedGenre !== "All"
-            ? "Search Results"
-            : "Now Playing"}
+            ? t("search_results")
+            : t("now_playing")}
         </h2>
       </div>
 
@@ -77,7 +79,7 @@ export default function MovieList({
         <div className="text-center py-24 bg-brand-dark border border-white/5 rounded-2xl">
           <Film className="w-12 h-12 text-zinc-700 mx-auto mb-3" />
           <p className="text-zinc-500 text-xs font-black uppercase tracking-widest">
-            No movies found matching your criteria
+            {t("no_movies_found_criteria")}
           </p>
         </div>
       )}

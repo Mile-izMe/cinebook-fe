@@ -2,6 +2,7 @@ import { motion } from "motion/react";
 import { MovieSummaryResponse } from "../types";
 import { Clock, Star } from "lucide-react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 interface MovieCardProps {
   key?: string;
@@ -10,6 +11,7 @@ interface MovieCardProps {
 }
 
 export default function MovieCard({ movie, onClick }: MovieCardProps) {
+  const t = useTranslations("movie");
   return (
     <motion.div
       onClick={onClick}
@@ -52,7 +54,9 @@ export default function MovieCard({ movie, onClick }: MovieCardProps) {
           <div className="space-y-3 translate-y-4 group-hover:translate-y-0 transition-transform duration-300 ease-out">
             <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-zinc-300 font-mono">
               <Clock className="w-3.5 h-3.5 text-zinc-400" />
-              <span>{movie.duration} mins</span>
+              <span>
+                {movie.duration} {t("mins")}
+              </span>
             </div>
 
             <p className="text-xs text-zinc-400 line-clamp-2 leading-relaxed">
@@ -63,7 +67,7 @@ export default function MovieCard({ movie, onClick }: MovieCardProps) {
                 href={`/movie/${movie.id}`}
                 className="block w-full text-center bg-brand-red hover:bg-red-700 text-white text-[10px] font-black uppercase tracking-widest py-2.5 rounded-xl transition-all shadow-lg active:scale-95"
               >
-                Book Tickets
+                {t("book_tickets")}
               </Link>
             </div>
           </div>
@@ -87,7 +91,7 @@ export default function MovieCard({ movie, onClick }: MovieCardProps) {
           ))}
           {movie.genres.length > 2 && (
             <span className="text-[10px] text-zinc-500 font-bold uppercase tracking-widest pl-1 flex items-center">
-              +{movie.genres.length - 2} more
+              {t("more_genres", { count: movie.genres.length - 2 })}
             </span>
           )}
         </div>

@@ -9,12 +9,14 @@ import { useMovieDetail } from "../../hooks";
 import MovieNotFound from "./MovieNotFound";
 import TrailerModal from "./TrailerModal";
 import MovieReviewSection from "@/features/review/components/MovieReviewSection";
+import { useTranslations } from "next-intl";
 
 interface MovieDetailProps {
   id: string;
 }
 
 export default function MovieDetail({ id }: MovieDetailProps) {
+  const t = useTranslations("movie");
   const [isTrailerOpen, setIsTrailerOpen] = useState(false);
   const { data, isLoading, isError } = useMovieDetail(id);
   const router = useRouter();
@@ -53,7 +55,7 @@ export default function MovieDetail({ id }: MovieDetailProps) {
             className="cursor-pointer flex items-center gap-2 bg-brand-dark/80 hover:bg-zinc-800 text-zinc-300 hover:text-white px-4 py-3 rounded-xl border border-white/5 transition-all font-black text-[10px] uppercase tracking-widest backdrop-blur-md"
           >
             <ChevronLeft className="w-4 h-4" />
-            <span>Back</span>
+            <span>{t("back")}</span>
           </button>
         </div>
 
@@ -96,7 +98,9 @@ export default function MovieDetail({ id }: MovieDetailProps) {
                 </span>
                 <span className="bg-brand-dark border border-white/10 text-zinc-300 font-black text-[10px] uppercase px-2.5 py-1 rounded flex items-center gap-1">
                   <Clock className="w-3.5 h-3.5 text-zinc-400" />
-                  <span className="font-mono">{movie.duration} MINS</span>
+                  <span className="font-mono">
+                    {movie.duration} {t("mins")}
+                  </span>
                 </span>
                 <span className="bg-brand-dark border border-white/10 text-zinc-300 font-black text-[10px] uppercase px-2.5 py-1 rounded flex items-center gap-1 font-mono">
                   <Calendar className="w-3.5 h-3.5 text-zinc-400" />
@@ -112,7 +116,7 @@ export default function MovieDetail({ id }: MovieDetailProps) {
                 <Star className="w-4.5 h-4.5 fill-amber-500 text-amber-500" />
                 <span className="text-base font-mono">{movie.score}</span>
                 <span className="text-zinc-500 font-black uppercase tracking-widest text-[10px] ml-1">
-                  / 10 Rating
+                  / 10 {t("rating")}
                 </span>
               </div>
             </div>
@@ -136,13 +140,13 @@ export default function MovieDetail({ id }: MovieDetailProps) {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-white/5 pt-6 text-xs uppercase tracking-wider font-semibold">
               <div className="space-y-1">
                 <span className="text-zinc-500 text-[10px] uppercase font-black tracking-widest">
-                  Director
+                  {t("director")}
                 </span>
                 <p className="text-white font-black">{movie.director}</p>
               </div>
               <div className="space-y-1">
                 <span className="text-zinc-500 text-[10px] uppercase font-black tracking-widest">
-                  Starring Cast
+                  {t("starring_cast")}
                 </span>
                 <p className="text-white font-black leading-relaxed">
                   {movie.cast.join(", ")}
@@ -157,7 +161,7 @@ export default function MovieDetail({ id }: MovieDetailProps) {
                 className="cursor-pointer w-full sm:w-auto bg-brand-red hover:bg-red-700 text-white font-black text-xs uppercase py-4.5 px-10 rounded-xl transition-all shadow-lg active:scale-95 tracking-widest flex items-center justify-center gap-2"
               >
                 <Film className="w-4 h-4 fill-white" />
-                <span>Select Showtime</span>
+                <span>{t("select_showtime")}</span>
               </button>
             </div>
           </div>
@@ -172,7 +176,7 @@ export default function MovieDetail({ id }: MovieDetailProps) {
       <Modal
         isOpen={isTrailerOpen}
         onClose={() => setIsTrailerOpen(false)}
-        title={`${movie.title} - Official Movie Trailer`}
+        title={`${movie.title} - ${t("official_movie_trailer")}`}
         maxWidth="4xl"
       >
         <TrailerModal movie={movie} embedUrl={embedUrl} />

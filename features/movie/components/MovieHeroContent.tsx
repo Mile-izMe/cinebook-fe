@@ -3,6 +3,7 @@ import { MovieSummaryResponse } from "../types";
 import { motion } from "motion/react";
 import { Film, Play, Star, TrendingUp } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 interface MovieHeroContentProps {
   selectedMovie: MovieSummaryResponse | null;
@@ -11,6 +12,7 @@ interface MovieHeroContentProps {
 
 function MovieHeroContent({ selectedMovie, isLoading }: MovieHeroContentProps) {
   const router = useRouter();
+  const t = useTranslations("movie");
 
   return (
     <div>
@@ -40,7 +42,7 @@ function MovieHeroContent({ selectedMovie, isLoading }: MovieHeroContentProps) {
               <div className="flex items-center gap-2">
                 <span className="flex items-center gap-1.5 bg-brand-red text-white font-black text-[10px] uppercase px-3 py-1.5 rounded shadow-lg tracking-widest">
                   <TrendingUp className="w-3.5 h-3.5 text-white" />
-                  Spotlight
+                  {t("spotlight")}
                 </span>
                 <span className="text-white text-[10px] font-black bg-black border border-white/10 px-2.5 py-1 rounded uppercase tracking-wider">
                   {selectedMovie.ageRating}
@@ -54,10 +56,14 @@ function MovieHeroContent({ selectedMovie, isLoading }: MovieHeroContentProps) {
               <div className="flex items-center gap-4 text-xs text-zinc-300 uppercase tracking-widest font-black">
                 <div className="flex items-center gap-1 text-amber-500 font-black font-mono">
                   <Star className="w-4 h-4 fill-amber-500 text-amber-500" />
-                  <span>{selectedMovie.score} IMDB</span>
+                  <span>
+                    {selectedMovie.score} {t("imdb")}
+                  </span>
                 </div>
                 <span>•</span>
-                <span className="font-mono">{selectedMovie.duration} MINS</span>
+                <span className="font-mono">
+                  {selectedMovie.duration} {t("mins")}
+                </span>
                 <span>•</span>
                 <span className="text-zinc-400">
                   {selectedMovie.genres.map((g) => g.name).join(" / ")}
@@ -85,13 +91,13 @@ function MovieHeroContent({ selectedMovie, isLoading }: MovieHeroContentProps) {
                 className="cursor-pointer flex items-center gap-2 bg-brand-red hover:bg-red-700 text-white font-black py-4 px-8 rounded-xl transition-all shadow-lg active:scale-95 text-xs uppercase tracking-widest"
               >
                 <Play className="w-4 h-4 fill-white" />
-                <span>Book Tickets</span>
+                <span>{t("book_tickets")}</span>
               </button>
               <button
                 onClick={() => router.push(`/movie/${selectedMovie.id}`)}
                 className="cursor-pointer flex items-center gap-2 bg-brand-dark hover:bg-zinc-800 border border-white/5 text-zinc-200 hover:text-white font-black py-4 px-8 rounded-xl transition-all active:scale-95 text-xs uppercase tracking-widest"
               >
-                <span>Read Details</span>
+                <span>{t("read_details")}</span>
               </button>
             </motion.div>
           </div>
@@ -108,10 +114,10 @@ function MovieHeroContent({ selectedMovie, isLoading }: MovieHeroContentProps) {
             >
               <Film className="w-16 h-16 text-zinc-700 mx-auto opacity-50" />
               <h1 className="text-xl sm:text-3xl font-black text-zinc-500 tracking-widest uppercase">
-                No Movies Found
+                {t("no_movies_found")}
               </h1>
               <p className="text-zinc-600 text-xs sm:text-sm uppercase tracking-wider font-bold">
-                Try adjusting your criteria or search keyword
+                {t("try_adjusting_criteria")}
               </p>
             </motion.div>
           </div>
