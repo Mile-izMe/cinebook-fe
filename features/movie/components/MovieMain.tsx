@@ -1,6 +1,6 @@
 "use client";
 import { useDebounce } from "@/hooks";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useMovies } from "../hooks";
 import { MovieSummaryResponse } from "../types";
 import FilterContainer from "./FilterContainer";

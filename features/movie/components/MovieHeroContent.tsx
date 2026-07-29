@@ -82,14 +82,14 @@ function MovieHeroContent({ selectedMovie, isLoading }: MovieHeroContentProps) {
             >
               <button
                 onClick={() => router.push(`/movie/${selectedMovie.id}`)}
-                className="flex items-center gap-2 bg-brand-red hover:bg-red-700 text-white font-black py-4 px-8 rounded-xl transition-all shadow-lg active:scale-95 text-xs uppercase tracking-widest"
+                className="cursor-pointer flex items-center gap-2 bg-brand-red hover:bg-red-700 text-white font-black py-4 px-8 rounded-xl transition-all shadow-lg active:scale-95 text-xs uppercase tracking-widest"
               >
                 <Play className="w-4 h-4 fill-white" />
                 <span>Book Tickets</span>
               </button>
               <button
                 onClick={() => router.push(`/movie/${selectedMovie.id}`)}
-                className="flex items-center gap-2 bg-brand-dark hover:bg-zinc-800 border border-white/5 text-zinc-200 hover:text-white font-black py-4 px-8 rounded-xl transition-all active:scale-95 text-xs uppercase tracking-widest"
+                className="cursor-pointer flex items-center gap-2 bg-brand-dark hover:bg-zinc-800 border border-white/5 text-zinc-200 hover:text-white font-black py-4 px-8 rounded-xl transition-all active:scale-95 text-xs uppercase tracking-widest"
               >
                 <span>Read Details</span>
               </button>
@@ -97,7 +97,7 @@ function MovieHeroContent({ selectedMovie, isLoading }: MovieHeroContentProps) {
           </div>
         </div>
       ) : (
-        /* TRƯỜNG HỢP 2: KHÔNG CÓ PHIM -> Hiển thị Fallback UI */
+        /* Film not found -> Fallback UI */
         !isLoading && (
           <div className="relative h-[65vh] sm:h-[75vh] md:h-[80vh] w-full flex flex-col items-center justify-center bg-black/50 border-b border-white/5">
             <motion.div
