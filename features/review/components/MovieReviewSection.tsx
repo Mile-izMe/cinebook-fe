@@ -48,7 +48,7 @@ export default function MovieReviewSection({
                 <button
                   onClick={() => fetchNextPage()}
                   disabled={isFetchingNextPage}
-                  className="bg-transparent border border-brand-red text-brand-red hover:bg-brand-red hover:text-white font-black text-xs uppercase tracking-widest px-8 py-3 rounded-xl transition-all disabled:opacity-50"
+                  className="cursor-pointer bg-transparent border border-brand-red text-brand-red hover:bg-brand-red hover:text-white font-black text-xs uppercase tracking-widest px-8 py-3 rounded-xl transition-all disabled:opacity-50"
                 >
                   {isFetchingNextPage ? (
                     <span className="flex items-center gap-2">

@@ -7,7 +7,7 @@ const intlMiddleware = createMiddleware(routing);
 
 const PROTECTED_PATHS = ["/bookings-history", "/profile"];
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   // Run next-intl's routing logic first (locale detection/redirect)
   const intlResponse = intlMiddleware(request);
   const { pathname } = request.nextUrl;

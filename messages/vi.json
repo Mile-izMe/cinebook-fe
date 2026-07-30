@@ -69,5 +69,20 @@
     "cast_required": "Dàn diễn viên là bắt buộc",
     "invalid_url": "URL không hợp lệ",
     "genre_required": "Cần có ít nhất một thể loại"
+  },
+  "review": {
+    "rating_min": "Đánh giá phải ít nhất là 1",
+    "rating_max": "Đánh giá không thể nhiều hơn 5",
+    "create_review_success": "Tạo đánh giá thành công",
+    "create_review_fail": "Tạo đánh giá thất bại",
+    "leave_a_review": "Để lại đánh giá",
+    "what_did_you_think": "Bạn nghĩ gì về bộ phim?",
+    "post_review": "Đăng đánh giá",
+    "must_be_logged_in": "Bạn phải đăng nhập để đăng đánh giá.",
+    "login_now": "Đăng nhập ngay",
+    "audience_reviews": "Đánh giá của khán giả",
+    "loading": "Đang tải...",
+    "load_more_reviews": "Tải thêm đánh giá",
+    "no_reviews_yet": "Chưa có đánh giá nào. Hãy là người đầu tiên chia sẻ suy nghĩ của bạn!"
   }
 }
