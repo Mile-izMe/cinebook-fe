@@ -1,11 +1,10 @@
 "use client";
 import { MapPin } from "lucide-react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo } from "react";
 import { useCities } from "../hooks";
 
 export default function CitySelection() {
-  const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -21,10 +20,10 @@ export default function CitySelection() {
       const params = new URLSearchParams(searchParams.toString());
       params.set("cityId", id);
 
-      // push new URL, scroll: false to help page not scroll to top
-      router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+      // push new URL
+      window.history.replaceState(null, "", `${pathname}?${params.toString()}`);
     },
-    [searchParams, pathname, router],
+    [searchParams, pathname],
   );
 
   useEffect(() => {

@@ -1,12 +1,12 @@
 "use client";
-import { useState } from "react";
-import SidebarFilters from "./SidebarFilters";
-import { useShowtimes } from "@/features/showtime";
 import { ShowtimePageSkeleton } from "@/components/ui";
-import { useSearchParams } from "next/navigation";
 import { useMovieDetail } from "@/features/movie";
+import { useShowtimes } from "@/features/showtime";
+import { useSearchParams } from "next/navigation";
 import BookingBreadcrumb from "./BookingBreadcrumb";
+import CinemaShowtime from "./CinemaShowtime";
 import DateSelection from "./DateSelection";
+import SidebarFilters from "./SidebarFilters";
 
 interface ShowtimeSelectionProps {
   movieId: string;
@@ -21,12 +21,25 @@ function ShowtimeSelection({ movieId }: ShowtimeSelectionProps) {
   const { data: movieData } = useMovieDetail(movieId);
   const movie = movieData?.data;
 
-  const { data, isLoading, isError } = useShowtimes(movieId, {
+  const { data, isLoading } = useShowtimes(movieId, {
     cityId: cityId,
     format: format,
-    // date,
+    date,
   });
   const showtimeInfor = data?.data ?? [];
+  const groupedCinemasWithShowtimes = showtimeInfor.reduce(
+    (acc, s) => {
+      (acc[s.cinemaId] ??= {
+        name: s.cinemaName,
+        showtimes: [],
+      }).showtimes.push(s);
+      return acc;
+    },
+    {} as Record<
+      string,
+      { name: string; showtimes: (typeof showtimeInfor)[number][] }
+    >,
+  );
 
   if (isLoading) {
     return <ShowtimePageSkeleton />;
@@ -40,6 +53,10 @@ function ShowtimeSelection({ movieId }: ShowtimeSelectionProps) {
         <SidebarFilters />
         <div className="lg:col-span-3 space-y-8">
           <DateSelection />
+          <CinemaShowtime
+            groupedCinemasWithShowtimes={groupedCinemasWithShowtimes}
+            movie={movie}
+          />
         </div>
       </div>
     </div>

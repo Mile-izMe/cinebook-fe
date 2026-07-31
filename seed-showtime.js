@@ -86,15 +86,16 @@ async function main() {
     process.exit(1);
   }
 
-  const activeMovies = movies.slice(0, 3);
-
-  const tomorrow = new Date();
-  tomorrow.setDate(tomorrow.getDate() + 1);
-
   const showTimesConfig = [
-    { hour: 18, minute: 0 },
-    { hour: 21, minute: 0 },
+    { hour: 9, minute: 0 }, // Suất sáng: 09:00
+    { hour: 11, minute: 30 }, // Suất trưa: 11:30
+    { hour: 14, minute: 0 }, // Suất đầu chiều: 14:00
+    { hour: 16, minute: 30 }, // Suất cuối chiều: 16:30
+    { hour: 19, minute: 0 }, // Suất tối: 19:00
+    { hour: 21, minute: 30 }, // Suất đêm: 21:30
   ];
+
+  const DAYS_TO_SEED = 7;
 
   for (const cinema of cinemas) {
     console.log(`\n🎬 Cinema: ${cinema.name}`);
@@ -114,31 +115,33 @@ async function main() {
         basePrice = 120000;
       }
 
-      // Each room show 2 times 1 day
-      for (const timeConfig of showTimesConfig) {
-        // Random 1 in 3 film
-        const randomMovie =
-          activeMovies[Math.floor(Math.random() * activeMovies.length)];
+      for (let dayOffset = 0; dayOffset < DAYS_TO_SEED; dayOffset++) {
+        const targetDate = new Date();
+        targetDate.setDate(targetDate.getDate() + dayOffset);
 
-        const startTime = new Date(tomorrow);
-        startTime.setHours(timeConfig.hour, timeConfig.minute, 0, 0);
+        for (const timeConfig of showTimesConfig) {
+          const randomMovie = movies[Math.floor(Math.random() * movies.length)];
 
-        const payload = {
-          movieId: randomMovie.id,
-          roomId: room.id,
-          startTime: formatLocalDateTime(startTime),
-          format: format,
-          basePrice: basePrice,
-        };
+          const startTime = new Date(targetDate);
+          startTime.setHours(timeConfig.hour, timeConfig.minute, 0, 0);
 
-        const created = await createShowtime(payload, accessToken);
-        if (created) {
-          console.log(
-            `  ✅ OK -> Room ${room.name} | ${formatLocalDateTime(startTime)} | Phim: ${randomMovie.title.substring(0, 15)}... | Giá: ${basePrice}`,
-          );
+          const payload = {
+            movieId: randomMovie.id,
+            roomId: room.id,
+            startTime: formatLocalDateTime(startTime),
+            format: format,
+            basePrice: basePrice,
+          };
+
+          const created = await createShowtime(payload, accessToken);
+          if (created) {
+            console.log(
+              `  ✅ OK -> Room ${room.name} | ${formatLocalDateTime(startTime)} | Phim: ${randomMovie.title.substring(0, 15)}... | Giá: ${basePrice}`,
+            );
+          }
+
+          await new Promise((r) => setTimeout(r, 200));
         }
-
-        await new Promise((r) => setTimeout(r, 100));
       }
     }
   }

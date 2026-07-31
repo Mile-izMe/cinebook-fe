@@ -1,6 +1,6 @@
 "use client";
-import React, { useMemo, useEffect, useCallback } from "react";
-import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
+import { useCallback, useEffect, useMemo } from "react";
 
 // Auto generate 7 days from today
 const generateDateOptions = (daysCount = 7) => {
@@ -38,7 +38,6 @@ const generateDateOptions = (daysCount = 7) => {
 };
 
 export default function DateSelection() {
-  const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -54,10 +53,10 @@ export default function DateSelection() {
       const params = new URLSearchParams(searchParams.toString());
       params.set("date", dateStr);
 
-      // replace URL, scroll: false to help page not scroll to top
-      router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+      // replace URL
+      window.history.replaceState(null, "", `${pathname}?${params.toString()}`);
     },
-    [searchParams, pathname, router],
+    [searchParams, pathname],
   );
 
   // 4. If URL does not have ?date=..., auto set today for default

@@ -1,10 +1,9 @@
 "use client";
 import { Film } from "lucide-react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
 
 export default function FormatSelection() {
-  const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -20,9 +19,9 @@ export default function FormatSelection() {
         params.set("format", format);
       }
 
-      router.push(`${pathname}?${params.toString()}`, { scroll: false });
+      window.history.replaceState(null, "", `${pathname}?${params.toString()}`);
     },
-    [searchParams, pathname, router],
+    [searchParams, pathname],
   );
 
   return (
