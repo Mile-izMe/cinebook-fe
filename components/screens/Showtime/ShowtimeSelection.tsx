@@ -16,7 +16,7 @@ interface ShowtimeSelectionProps {
 }
 
 function ShowtimeSelection({ movieId }: ShowtimeSelectionProps) {
-  const { filters, updateFilter } = useShowtimeFilters();
+  const [filters, setFilters] = useShowtimeFilters();
 
   const { data: movieData } = useMovieDetail(movieId);
   const movie = movieData?.data;
@@ -37,15 +37,15 @@ function ShowtimeSelection({ movieId }: ShowtimeSelectionProps) {
       {/* Top Breadcrumb Header */}
       {movie && <BookingBreadcrumb movie={movie} currentStep={1} />}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 grid grid-cols-1 lg:grid-cols-4 gap-10">
-        <SidebarFilters filters={filters} onFiltersChange={updateFilter} />
+        <SidebarFilters filters={filters} onFiltersChange={setFilters} />
         <div className="lg:col-span-3 space-y-8">
           <DateSelection
-            selectedDate={filters.date}
-            onChange={(date) => updateFilter({ date })}
+            selectedDate={filters.date ?? undefined}
+            onChange={(date) => setFilters({ date })}
           />
           <CinemaShowtime
             movie={movie}
-            date={filters.date}
+            date={filters.date ?? undefined}
             cinemaGroups={groupedShowtimes}
           />
         </div>

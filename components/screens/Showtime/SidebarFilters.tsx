@@ -11,12 +11,12 @@ function SidebarFilters({ filters, onFiltersChange }: SidebarFiltersProps) {
   return (
     <div className="space-y-6">
       <CitySelection
-        value={filters.cityId}
+        value={filters.cityId ?? undefined}
         onChange={(cityId) => onFiltersChange({ cityId })}
       />
 
       <FormatSelection
-        value={filters.format}
+        value={filters.format ?? undefined}
         onChange={(format) => onFiltersChange({ format })}
       />
     </div>

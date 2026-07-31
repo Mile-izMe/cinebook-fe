@@ -3,12 +3,11 @@ import { ApiResponse } from "@/types";
 import { Showtime } from "../types";
 
 export interface ShowtimeQueryParams {
-  cityId?: string;
-  cinemaId?: string;
-  format?: string;
-  date?: string;
+  cityId: string | null;
+  cinemaId: string | null;
+  format: string | null;
+  date: string | null;
 }
-
 export const showtimeApi = {
   getShowtimes: (
     movieId: string,

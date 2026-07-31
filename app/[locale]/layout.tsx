@@ -1,4 +1,5 @@
 import CustomToast from "@/components/layouts/CustomToast";
+import Footer from "@/components/layouts/Footer";
 import Navbar from "@/components/layouts/NavBar";
 import { routing } from "@/i18n/routing";
 import type { Metadata } from "next";
@@ -6,9 +7,9 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { Geist, Geist_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { Providers } from "../providers";
 import "./globals.css";
-import Footer from "@/components/layouts/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,12 +46,14 @@ export default async function RootLayout({
     >
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         <NextIntlClientProvider messages={messages}>
-          <Providers>
-            <Navbar />
-            {children}
-            <CustomToast />
-            <Footer />
-          </Providers>
+          <NuqsAdapter>
+            <Providers>
+              <Navbar />
+              {children}
+              <CustomToast />
+              <Footer />
+            </Providers>
+          </NuqsAdapter>
         </NextIntlClientProvider>
       </body>
     </html>

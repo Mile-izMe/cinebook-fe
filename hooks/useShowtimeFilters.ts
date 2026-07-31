@@ -1,42 +1,14 @@
 "use client";
 
-import { ShowtimeQueryParams } from "@/features/showtime";
-import { usePathname, useSearchParams } from "next/navigation";
-import { useCallback, useMemo } from "react";
+import { parseAsString, useQueryStates } from "nuqs";
+
+export const showtimeFilterParsers = {
+  cityId: parseAsString,
+  cinemaId: parseAsString,
+  format: parseAsString,
+  date: parseAsString,
+} as const;
 
 export function useShowtimeFilters() {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-
-  const filters = useMemo(
-    () => ({
-      cityId: searchParams.get("cityId") ?? undefined,
-      cinemaId: searchParams.get("cinemaId") ?? undefined,
-      format: searchParams.get("format") ?? undefined,
-      date: searchParams.get("date") ?? undefined,
-    }),
-    [searchParams],
-  );
-
-  const updateFilter = useCallback(
-    (updates: Partial<ShowtimeQueryParams>) => {
-      const params = new URLSearchParams(searchParams.toString());
-
-      Object.entries(updates).forEach(([key, value]) => {
-        if (value == null || value === "") {
-          params.delete(key);
-        } else {
-          params.set(key, value);
-        }
-      });
-
-      window.history.replaceState(null, "", `${pathname}?${params.toString()}`);
-    },
-    [pathname, searchParams],
-  );
-
-  return {
-    filters,
-    updateFilter,
-  };
+  return useQueryStates(showtimeFilterParsers);
 }
