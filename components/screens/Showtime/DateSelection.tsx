@@ -1,6 +1,11 @@
 "use client";
-import { usePathname, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useMemo } from "react";
+
+import { useMemo } from "react";
+
+interface DateSelectionProps {
+  selectedDate?: string;
+  onChange(date: string): void;
+}
 
 // Auto generate 7 days from today
 const generateDateOptions = (daysCount = 7) => {
@@ -37,34 +42,12 @@ const generateDateOptions = (daysCount = 7) => {
   return options;
 };
 
-export default function DateSelection() {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-
-  // 1. Auto calculate 7 days (1 time by using useMemo)
+export default function DateSelection({
+  selectedDate,
+  onChange,
+}: DateSelectionProps) {
+  // Auto calculate 7 days (1 time by using useMemo)
   const dateOptions = useMemo(() => generateDateOptions(7), []);
-
-  // 2. Read ?date=... from URL
-  const selectedDate = searchParams.get("date");
-
-  // 3. Update URL when user pick date
-  const setDateToUrl = useCallback(
-    (dateStr: string) => {
-      const params = new URLSearchParams(searchParams.toString());
-      params.set("date", dateStr);
-
-      // replace URL
-      window.history.replaceState(null, "", `${pathname}?${params.toString()}`);
-    },
-    [searchParams, pathname],
-  );
-
-  // 4. If URL does not have ?date=..., auto set today for default
-  useEffect(() => {
-    if (!selectedDate && dateOptions.length > 0) {
-      setDateToUrl(dateOptions[0].date);
-    }
-  }, [selectedDate, dateOptions, setDateToUrl]);
 
   // Current active day (prefer from URL, if not use today)
   const activeDate = selectedDate ?? dateOptions[0]?.date;
@@ -76,7 +59,7 @@ export default function DateSelection() {
         return (
           <button
             key={opt.date}
-            onClick={() => setDateToUrl(opt.date)}
+            onClick={() => onChange(opt.date)}
             className={`flex-1 flex flex-col items-center justify-center p-4 rounded-2xl min-w-[100px] transition-all border cursor-pointer select-none ${
               isSelected
                 ? "bg-brand-red border-brand-red text-white shadow-lg shadow-red-950/30 scale-102 font-black"

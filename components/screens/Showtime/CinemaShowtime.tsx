@@ -1,25 +1,15 @@
 import { MovieDetailResponse } from "@/features/movie";
-import { Showtime } from "@/features/showtime";
+import { CinemaGroup } from "@/lib";
 import { AlertCircle, MapPin } from "lucide-react";
 import { motion } from "motion/react";
-import { useSearchParams } from "next/navigation";
 
 interface CinemaShowtimeProps {
-  groupedCinemasWithShowtimes: Record<
-    string,
-    { name: string; showtimes: Showtime[] }
-  >;
-  movie: MovieDetailResponse | undefined;
+  movie?: MovieDetailResponse;
+  date?: string;
+  cinemaGroups: CinemaGroup[];
 }
 
-function CinemaShowtime({
-  groupedCinemasWithShowtimes,
-  movie,
-}: CinemaShowtimeProps) {
-  const searchParams = useSearchParams();
-  const cinemaGroups = Object.values(groupedCinemasWithShowtimes);
-  const date = searchParams.get("date") ?? undefined;
-
+function CinemaShowtime({ movie, date, cinemaGroups }: CinemaShowtimeProps) {
   return (
     <div className="space-y-6">
       {cinemaGroups.length > 0 ? (
@@ -33,12 +23,11 @@ function CinemaShowtime({
             {/* Cinema Info Header */}
             <div className="border-b border-white/5 pb-4">
               <h3 className="font-black text-white text-sm tracking-widest uppercase">
-                {group.name}
+                {group.cinemaName}
               </h3>
               <p className="text-zinc-500 text-[10px] uppercase font-black tracking-wider mt-1.5 flex items-center gap-1">
                 <MapPin className="w-3.5 h-3.5 text-brand-red" />
-                {/* <span>{group.address}</span> */}
-                <span>Dang de trong</span>
+                <span>{group.cinemaAddress}</span>
               </p>
             </div>
 

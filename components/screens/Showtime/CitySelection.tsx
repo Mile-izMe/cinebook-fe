@@ -1,36 +1,18 @@
 "use client";
+import { useCities } from "@/features/city";
 import { MapPin } from "lucide-react";
-import { usePathname, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useMemo } from "react";
-import { useCities } from "../hooks";
+import { useMemo } from "react";
 
-export default function CitySelection() {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+interface Props {
+  value?: string;
+  onChange(cityId?: string): void;
+}
 
-  const selectedCityId = searchParams.get("cityId");
-
+export default function CitySelection({ value, onChange }: Props) {
   const { data } = useCities();
   const cities = useMemo(() => {
     return data?.data ?? [];
   }, [data]);
-
-  const setCityToUrl = useCallback(
-    (id: string) => {
-      const params = new URLSearchParams(searchParams.toString());
-      params.set("cityId", id);
-
-      // push new URL
-      window.history.replaceState(null, "", `${pathname}?${params.toString()}`);
-    },
-    [searchParams, pathname],
-  );
-
-  useEffect(() => {
-    if (cities.length > 0 && !selectedCityId) {
-      setCityToUrl(cities[0].id);
-    }
-  }, [cities, selectedCityId, setCityToUrl]);
 
   return (
     <div className="bg-brand-dark border border-white/5 rounded-2xl p-5 space-y-3">
@@ -42,9 +24,9 @@ export default function CitySelection() {
         {cities.map((city) => (
           <button
             key={city.id}
-            onClick={() => setCityToUrl(city.id)}
+            onClick={() => onChange(city.id)}
             className={`w-full text-left px-4 py-3 rounded-xl text-xs font-black uppercase tracking-wider transition-all border ${
-              selectedCityId === city.id
+              value === city.id
                 ? "bg-brand-red/10 border-brand-red/50 text-brand-red"
                 : "bg-black border-white/5 text-zinc-400 hover:text-white hover:border-zinc-700"
             }`}

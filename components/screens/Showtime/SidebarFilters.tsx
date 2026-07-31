@@ -1,11 +1,24 @@
-import CitySelection from "@/features/city/components/CitySelection";
-import FormatSelection from "@/features/showtime/components/FormatSelection";
+import { ShowtimeQueryParams } from "@/features/showtime";
+import CitySelection from "./CitySelection";
+import FormatSelection from "./FormatSelection";
 
-function SidebarFilters() {
+interface SidebarFiltersProps {
+  filters: ShowtimeQueryParams;
+  onFiltersChange(filters: Partial<ShowtimeQueryParams>): void;
+}
+
+function SidebarFilters({ filters, onFiltersChange }: SidebarFiltersProps) {
   return (
     <div className="space-y-6">
-      <CitySelection />
-      <FormatSelection />
+      <CitySelection
+        value={filters.cityId}
+        onChange={(cityId) => onFiltersChange({ cityId })}
+      />
+
+      <FormatSelection
+        value={filters.format}
+        onChange={(format) => onFiltersChange({ format })}
+      />
     </div>
   );
 }

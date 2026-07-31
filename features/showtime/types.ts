@@ -7,6 +7,7 @@ export interface Showtime {
   roomName: string;
   cinemaId: string;
   cinemaName: string;
+  cinemaAddress: string;
   startTime: string;
   endTime: string;
   format: string;
