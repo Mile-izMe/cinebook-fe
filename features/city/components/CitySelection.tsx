@@ -1,31 +1,37 @@
 "use client";
-import { ShowtimePageSkeleton } from "@/components";
 import { MapPin } from "lucide-react";
-import { useMemo, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useCallback, useEffect, useMemo } from "react";
 import { useCities } from "../hooks";
 
-interface CitySelectionProps {
-  selectedCityId: string | undefined;
-  setSelectedCityId: (cityId: string | undefined) => void;
-}
+export default function CitySelection() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
-export default function CitySelection({
-  selectedCityId,
-  setSelectedCityId,
-}: CitySelectionProps) {
-  const { data, isLoading } = useCities();
+  const selectedCityId = searchParams.get("cityId");
+
+  const { data } = useCities();
   const cities = useMemo(() => {
     return data?.data ?? [];
   }, [data]);
 
-  // Derived State
-  // If selectedCity has value -> Use
-  // If selectedCity is undefined (render) -> Use ID of the first city
-  const activeCityId = selectedCityId ?? cities[0]?.id;
+  const setCityToUrl = useCallback(
+    (id: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("cityId", id);
 
-  if (isLoading) {
-    return <ShowtimePageSkeleton />;
-  }
+      // push new URL, scroll: false to help page not scroll to top
+      router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    },
+    [searchParams, pathname, router],
+  );
+
+  useEffect(() => {
+    if (cities.length > 0 && !selectedCityId) {
+      setCityToUrl(cities[0].id);
+    }
+  }, [cities, selectedCityId, setCityToUrl]);
 
   return (
     <div className="bg-brand-dark border border-white/5 rounded-2xl p-5 space-y-3">
@@ -37,9 +43,9 @@ export default function CitySelection({
         {cities.map((city) => (
           <button
             key={city.id}
-            onClick={() => setSelectedCityId(city.id)}
+            onClick={() => setCityToUrl(city.id)}
             className={`w-full text-left px-4 py-3 rounded-xl text-xs font-black uppercase tracking-wider transition-all border ${
-              activeCityId === city.id
+              selectedCityId === city.id
                 ? "bg-brand-red/10 border-brand-red/50 text-brand-red"
                 : "bg-black border-white/5 text-zinc-400 hover:text-white hover:border-zinc-700"
             }`}

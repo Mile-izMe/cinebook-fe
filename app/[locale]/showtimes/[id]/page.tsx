@@ -15,11 +15,10 @@ interface PageProps {
 
 export default async function ShowtimePage({ params }: PageProps) {
   const { id } = await params;
-  // console.log(id);
 
   return (
     <main>
-      <ShowtimeSelection />
+      <ShowtimeSelection movieId={id} />
     </main>
   );
 }
