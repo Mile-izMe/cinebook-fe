@@ -1,6 +1,7 @@
 import { CinemaGroup } from "@/lib";
 import { AlertCircle, MapPin } from "lucide-react";
 import { motion } from "motion/react";
+import { useRouter } from "next/navigation";
 
 interface CinemaShowtimeProps {
   date?: string;
@@ -8,6 +9,8 @@ interface CinemaShowtimeProps {
 }
 
 function CinemaShowtime({ date, cinemaGroups }: CinemaShowtimeProps) {
+  const router = useRouter();
+
   return (
     <div className="space-y-6">
       {cinemaGroups.length > 0 ? (
@@ -35,7 +38,7 @@ function CinemaShowtime({ date, cinemaGroups }: CinemaShowtimeProps) {
                 {group.showtimes.map((st) => (
                   <button
                     key={st.id}
-                    // onClick={() => handleSelectShowtime(group, st)}
+                    onClick={() => router.push(`/seat/${st.id}`)}
                     className="group/btn bg-black border border-white/5 hover:border-brand-red/80 rounded-xl px-5 py-4 text-center transition-all cursor-pointer select-none active:scale-95"
                   >
                     <div className="text-sm font-black text-white group-hover/btn:text-brand-red transition-colors font-mono">

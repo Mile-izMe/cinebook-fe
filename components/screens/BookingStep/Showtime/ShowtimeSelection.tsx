@@ -20,7 +20,6 @@ function ShowtimeSelection({ movieId }: ShowtimeSelectionProps) {
   const cities = cityData?.data;
 
   const [filters, setFilters] = useShowtimeFilters();
-
   useInitializeShowtimeFilters({
     filters,
     setFilters,
