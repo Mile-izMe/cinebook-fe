@@ -1,25 +1,31 @@
 "use client";
 
 import { ShowtimePageSkeleton } from "@/components/ui";
-import { useMovieDetail } from "@/features/movie";
+import { useCities } from "@/features/city";
 import { useShowtimes } from "@/features/showtime";
-import { useShowtimeFilters } from "@/hooks";
+import { useInitializeShowtimeFilters, useShowtimeFilters } from "@/hooks";
 import { groupShowtimesByCinema } from "@/lib";
 import { useMemo } from "react";
-import BookingBreadcrumb from "./BookingBreadcrumb";
+import BookingBreadcrumb from "../BookingBreadcrumb";
 import CinemaShowtime from "./CinemaShowtime";
-import DateSelection from "./DateSelection";
-import SidebarFilters from "./SidebarFilters";
+import DateSelection from "./Filter/DateSelection";
+import SidebarFilters from "./Filter/SidebarFilters";
 
 interface ShowtimeSelectionProps {
   movieId: string;
 }
 
 function ShowtimeSelection({ movieId }: ShowtimeSelectionProps) {
+  const { data: cityData } = useCities();
+  const cities = cityData?.data;
+
   const [filters, setFilters] = useShowtimeFilters();
 
-  const { data: movieData } = useMovieDetail(movieId);
-  const movie = movieData?.data;
+  useInitializeShowtimeFilters({
+    filters,
+    setFilters,
+    cities,
+  });
 
   const { data, isLoading } = useShowtimes(movieId, filters);
 
@@ -35,16 +41,19 @@ function ShowtimeSelection({ movieId }: ShowtimeSelectionProps) {
   return (
     <div className="grow bg-brand-black pb-20">
       {/* Top Breadcrumb Header */}
-      {movie && <BookingBreadcrumb movie={movie} currentStep={1} />}
+      {movieId && <BookingBreadcrumb movieId={movieId} currentStep={1} />}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 grid grid-cols-1 lg:grid-cols-4 gap-10">
-        <SidebarFilters filters={filters} onFiltersChange={setFilters} />
+        <SidebarFilters
+          cities={cities}
+          filters={filters}
+          onFiltersChange={setFilters}
+        />
         <div className="lg:col-span-3 space-y-8">
           <DateSelection
-            selectedDate={filters.date ?? undefined}
+            selectedDate={filters.date}
             onChange={(date) => setFilters({ date })}
           />
           <CinemaShowtime
-            movie={movie}
             date={filters.date ?? undefined}
             cinemaGroups={groupedShowtimes}
           />

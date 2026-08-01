@@ -1,15 +1,13 @@
-import { MovieDetailResponse } from "@/features/movie";
 import { CinemaGroup } from "@/lib";
 import { AlertCircle, MapPin } from "lucide-react";
 import { motion } from "motion/react";
 
 interface CinemaShowtimeProps {
-  movie?: MovieDetailResponse;
   date?: string;
   cinemaGroups: CinemaGroup[];
 }
 
-function CinemaShowtime({ movie, date, cinemaGroups }: CinemaShowtimeProps) {
+function CinemaShowtime({ date, cinemaGroups }: CinemaShowtimeProps) {
   return (
     <div className="space-y-6">
       {cinemaGroups.length > 0 ? (
@@ -65,7 +63,7 @@ function CinemaShowtime({ movie, date, cinemaGroups }: CinemaShowtimeProps) {
             No Showtimes Available
           </h3>
           <p className="text-zinc-500 text-xs max-w-sm mx-auto leading-relaxed">
-            There are no scheduled showtimes for {movie?.title} in this city. on{" "}
+            There are no scheduled showtimes for this movie in this city. on{" "}
             {date}. Try selecting another city or date.
           </p>
         </div>

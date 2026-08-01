@@ -1,8 +1,27 @@
 import { Film } from "lucide-react";
 
+const formats = [
+  {
+    label: "All",
+    value: null,
+  },
+  {
+    label: "2D",
+    value: "2D",
+  },
+  {
+    label: "3D",
+    value: "3D",
+  },
+  {
+    label: "IMAX",
+    value: "IMAX",
+  },
+];
+
 interface Props {
-  value?: string;
-  onChange(format?: string): void;
+  value?: string | null;
+  onChange(format?: string | null): void;
 }
 
 export default function FormatSelection({ value, onChange }: Props) {
@@ -13,17 +32,17 @@ export default function FormatSelection({ value, onChange }: Props) {
         <span>Viewing Format</span>
       </h3>
       <div className="grid grid-cols-2 gap-2 pt-1">
-        {(["All", "2D", "3D", "IMAX"] as const).map((format) => (
+        {formats.map((item) => (
           <button
-            key={format}
-            onClick={() => onChange(format)}
+            key={item.value}
+            onClick={() => onChange(item.value)}
             className={`px-3 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border text-center ${
-              value === format
+              value === item.value
                 ? "bg-brand-red/10 border-brand-red/50 text-brand-red"
                 : "bg-black border-white/5 text-zinc-400 hover:text-white hover:border-zinc-700"
             }`}
           >
-            {format}
+            {item.label}
           </button>
         ))}
       </div>

@@ -1,4 +1,4 @@
-import ShowtimeSelection from "@/components/screens/Showtime/ShowtimeSelection";
+import ShowtimeSelection from "@/components/screens/BookingStep/Showtime/ShowtimeSelection";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

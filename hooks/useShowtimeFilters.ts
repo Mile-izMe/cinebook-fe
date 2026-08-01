@@ -12,3 +12,10 @@ export const showtimeFilterParsers = {
 export function useShowtimeFilters() {
   return useQueryStates(showtimeFilterParsers);
 }
+
+export type ShowtimeFilters = {
+  cityId: string | null;
+  cinemaId: string | null;
+  format: string | null;
+  date: string | null;
+};

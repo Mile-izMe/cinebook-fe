@@ -1,19 +1,24 @@
-import { MovieDetailResponse } from "@/features/movie";
+import { GenreResponse, useMovieDetail } from "@/features/movie";
 import { ChevronRight } from "lucide-react";
 
 interface BookingBreadcrumbProps {
-  movie: MovieDetailResponse;
+  movieId: string;
   currentStep?: 1 | 2 | 3;
 }
 
 export default function BookingBreadcrumb({
-  movie,
+  movieId,
   currentStep = 1,
 }: BookingBreadcrumbProps) {
+  const { data: movieData } = useMovieDetail(movieId);
+  const movie = movieData?.data;
+
+  if (!movie) return null;
+
   return (
     <div className="bg-brand-dark/40 border-b border-white/5 py-5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between sm:items-center gap-3">
-        {/* THÔNG TIN PHIM */}
+        {/* FILM INFOR */}
         <div className="flex items-center gap-4">
           <img
             src={movie.posterUrl}
@@ -25,8 +30,10 @@ export default function BookingBreadcrumb({
               {movie.title}
             </h2>
             <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-widest mt-0.5">
-              {movie.genres.map((genre) => genre.name).join(", ")} •{" "}
-              {movie.duration} MINS
+              {movie.genres
+                .map((genres: GenreResponse) => genres.name)
+                .join(", ")}{" "}
+              • {movie.duration} MINS
             </p>
           </div>
         </div>
