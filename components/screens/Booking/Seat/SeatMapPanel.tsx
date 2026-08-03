@@ -1,5 +1,6 @@
 import { SeatMapRow, SeatMapSeat } from "@/features/booking";
 import { Armchair } from "lucide-react";
+import CountdownTimer from "./CountdownTimer";
 import InformationWarning from "./InformationWarning";
 import SeatComponent from "./SeatComponent";
 import SeatingMapLegend from "./SeatingMapLegend";
@@ -9,6 +10,7 @@ interface SeatMapPanelProps {
   rows: SeatMapRow[];
   selectedSeats: SeatMapSeat[];
   onSeatSelect: (seat: SeatMapSeat) => void;
+  clearSeats: () => void;
 }
 
 function SeatMapPanel({
@@ -16,7 +18,12 @@ function SeatMapPanel({
   rows,
   selectedSeats,
   onSeatSelect,
+  clearSeats,
 }: SeatMapPanelProps) {
+  const handleTimerExpire = () => {
+    clearSeats();
+  };
+
   if (isLoading) {
     return (
       <div className="flex flex-col items-center justify-center h-64 text-zinc-500 text-xs animate-pulse">
@@ -41,9 +48,9 @@ function SeatMapPanel({
         </div>
 
         {/* Countdown seat hold timer */}
-        {/* {selectedSeats.length > 0 && (
+        {selectedSeats.length > 0 && (
           <CountdownTimer initialMinutes={5} onExpire={handleTimerExpire} />
-        )} */}
+        )}
       </div>
 
       {/* Screen representation */}

@@ -8,7 +8,7 @@ export interface SeatMapResponse {
 
 export interface MovieSummary {
   id: string;
-  tilte: string;
+  title: string;
   posterUrl: string;
   duration: number;
 }
