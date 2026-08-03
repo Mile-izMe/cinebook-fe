@@ -1,3 +1,4 @@
+import SeatSelection from "@/components/screens/Booking/Seat/SeatSelection";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -14,11 +15,10 @@ interface PageProps {
 
 export default async function page({ params }: PageProps) {
   const { id } = await params;
-  console.log(id);
 
   return (
-    <div>
-      <div>This is booking seat page</div>
-    </div>
+    <main>
+      <SeatSelection showtimeId={id} />
+    </main>
   );
 }

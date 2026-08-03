@@ -9,7 +9,7 @@ import { useMemo } from "react";
 import BookingBreadcrumb from "../BookingBreadcrumb";
 import CinemaShowtime from "./CinemaShowtime";
 import DateSelection from "./Filter/DateSelection";
-import SidebarFilters from "./Filter/SidebarFilters";
+import SidebarFilters from "./SidebarFilters";
 
 interface ShowtimeSelectionProps {
   movieId: string;

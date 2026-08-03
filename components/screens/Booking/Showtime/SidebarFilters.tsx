@@ -1,7 +1,7 @@
 import { CityResponse } from "@/features/city";
 import { ShowtimeQueryParams } from "@/features/showtime";
-import CitySelection from "./CitySelection";
-import FormatSelection from "./FormatSelection";
+import CitySelection from "./Filter/CitySelection";
+import FormatSelection from "./Filter/FormatSelection";
 
 interface SidebarFiltersProps {
   cities?: CityResponse[];
