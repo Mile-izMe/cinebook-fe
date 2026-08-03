@@ -9,7 +9,7 @@ export const useSeatMap = (showtimeId: string) => {
 
     enabled: !!showtimeId,
 
-    staleTime: 1000 * 60 * 60,
+    staleTime: 1000 * 60 * 60, // Cache 5 minutes
 
     placeholderData: keepPreviousData,
   });

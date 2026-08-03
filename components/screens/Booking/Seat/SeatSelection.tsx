@@ -6,12 +6,13 @@ import {
   RoomSummary,
   useSeatMap,
 } from "@/features/booking";
-import BookingBreadcrumb from "../BookingBreadcrumb";
 import { useBookingStore } from "@/store";
-import SeatMapPanel from "./SeatMapPanel";
-import BookingSummary from "./BookingSummary";
-import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { toast } from "sonner";
+import BookingBreadcrumb from "../BookingBreadcrumb";
+import BookingSummary from "./BookingSummary";
+import SeatMapPanel from "./SeatMapPanel";
 
 interface ShowtimeSelectionProps {
   showtimeId: string;
@@ -23,7 +24,12 @@ export default function SeatSelection({ showtimeId }: ShowtimeSelectionProps) {
   const seatMap = data?.data;
   const selectedSeats = useBookingStore((s) => s.selectedSeats);
   const toggleSeat = useBookingStore((s) => s.toggleSeat);
-  const { clearSeats } = useBookingStore();
+  const clearSeats = useBookingStore((s) => s.clearSeats);
+  const setShowtime = useBookingStore((s) => s.setShowtime);
+
+  useEffect(() => {
+    setShowtime(showtimeId);
+  }, [showtimeId, setShowtime]);
 
   if (!seatMap) return null;
 
@@ -50,7 +56,7 @@ export default function SeatSelection({ showtimeId }: ShowtimeSelectionProps) {
             rows={seatMap.rows}
             selectedSeats={selectedSeats}
             onSeatSelect={toggleSeat}
-            clearSeats={() => clearSeats}
+            clearSeats={clearSeats}
           />
 
           <BookingSummary
