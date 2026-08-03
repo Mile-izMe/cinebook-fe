@@ -11,6 +11,7 @@ export interface MovieSummary {
   title: string;
   posterUrl: string;
   duration: number;
+  genreNames: string[];
 }
 
 export interface CinemaSummary {

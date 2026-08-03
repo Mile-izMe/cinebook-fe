@@ -1,3 +1,5 @@
+"use client";
+
 import { CinemaSummary, MovieSummary, SeatMapSeat } from "@/features/booking";
 import {
   ChevronRight,
@@ -7,7 +9,7 @@ import {
   Tag,
   Ticket,
 } from "lucide-react";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { toast } from "sonner";
 
 interface BookingSummaryProps {
@@ -34,6 +36,11 @@ function BookingSummary({
   const [discountAmount, setDiscountAmount] = useState(0);
   const [promoError, setPromoError] = useState("");
   const [isApplyingPromo, setIsApplyingPromo] = useState(false);
+  const subtotal = useMemo(
+    () => selectedSeats.reduce((sum, seat) => sum + seat.price, 0),
+    [selectedSeats],
+  );
+  const total = subtotal - discountAmount;
 
   const handleClearDiscount = () => {
     setDiscountCode("");
@@ -102,7 +109,7 @@ function BookingSummary({
                 </span>
               </div>
               <p className="text-[9px] text-zinc-500 uppercase font-black tracking-widest">
-                {/* {movieSummary.genre.slice(0, 2).join(" / ")} */} ACTION
+                {movieSummary.genreNames.slice(0, 2).join(" / ")}
               </p>
             </div>
           </div>
@@ -228,32 +235,34 @@ function BookingSummary({
           )}
 
           {/* Price Breakdown */}
-          {/* <div className="space-y-2 bg-black p-4 rounded-xl border border-white/5 uppercase font-black tracking-widest text-[9px]">
-          <div className="flex justify-between text-[10px]">
-            <span className="text-zinc-500">Subtotal</span>
-            <span className="font-mono text-zinc-300">
-              ${originalTotal.toFixed(2)}
-            </span>
-          </div>
-          {discountAmount > 0 && (
-            <div className="flex justify-between text-[10px] text-emerald-400">
-              <span>Discount</span>
-              <span className="font-mono">-${discountAmount.toFixed(2)}</span>
+          <div className="space-y-2 bg-black p-4 rounded-xl border border-white/5 uppercase font-black tracking-widest text-[9px]">
+            <div className="flex justify-between text-[10px]">
+              <span className="text-zinc-500">Subtotal</span>
+              <span className="font-mono text-zinc-300">
+                {subtotal.toLocaleString("vi-VN")} VND
+              </span>
             </div>
-          )}
-          <div className="flex justify-between text-[10px] text-zinc-500">
-            <span>Booking Fee</span>
-            <span className="font-mono">Free</span>
+            {discountAmount > 0 && (
+              <div className="flex justify-between text-[10px] text-emerald-400">
+                <span>Discount</span>
+                <span className="font-mono">
+                  -{discountAmount.toLocaleString("vi-VN")} VND
+                </span>
+              </div>
+            )}
+            <div className="flex justify-between text-[10px] text-zinc-500">
+              <span>Booking Fee</span>
+              <span className="font-mono">Free</span>
+            </div>
+            <div className="border-t border-white/5 my-2 pt-2.5 flex justify-between">
+              <span className="text-xs font-black text-white uppercase tracking-widest">
+                Total
+              </span>
+              <span className="text-base font-black text-brand-red font-mono">
+                {total.toLocaleString("vi-VN")} VND
+              </span>
+            </div>
           </div>
-          <div className="border-t border-white/5 my-2 pt-2.5 flex justify-between">
-            <span className="text-xs font-black text-white uppercase tracking-widest">
-              Total
-            </span>
-            <span className="text-base font-black text-brand-red font-mono">
-              ${finalTotal.toFixed(2)}
-            </span>
-          </div>
-        </div> */}
 
           {/* Action Button */}
           {onNext && (
