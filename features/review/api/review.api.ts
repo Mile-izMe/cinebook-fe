@@ -2,16 +2,12 @@ import api from "@/lib/api";
 import { ApiResponse } from "@/types";
 import { ReviewResponse } from "../types";
 import { CreateReviewInput } from "../validation";
-
-export interface ReviewSearchParams {
-  cursor?: string;
-  limit?: number;
-}
+import { CursorQueryParams } from "@/types";
 
 export const reviewApi = {
   getReviews: (
     movieId: string,
-    params: ReviewSearchParams,
+    params: CursorQueryParams,
   ): Promise<ApiResponse<ReviewResponse[]>> =>
     api.get(`/api/movies/${movieId}/reviews`, {
       params,

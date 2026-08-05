@@ -1,11 +1,11 @@
 import { keepPreviousData, useInfiniteQuery } from "@tanstack/react-query";
-import { movieApi } from "../api";
+import { bookingApi } from "../api";
 
-export const useMovies = (keyword?: string, genreId?: string) => {
+export const useMemberBooking = () => {
   return useInfiniteQuery({
-    queryKey: ["movies", keyword, genreId],
+    queryKey: ["bookings"],
     queryFn: ({ pageParam }) =>
-      movieApi.getListMovies({ keyword, genreId, cursor: pageParam }),
+      bookingApi.getBookingHistory({ cursor: pageParam, limit: 5 }),
     initialPageParam: undefined as string | undefined,
     getNextPageParam: (lastPage) =>
       lastPage.meta?.hasMore ? lastPage.meta.nextCursor : undefined,

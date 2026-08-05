@@ -3,7 +3,7 @@ import { movieApi } from "../api";
 
 export const useMovieDetail = (id: string) => {
   return useQuery({
-    queryKey: ["movie", "detail", id],
+    queryKey: ["movie", id],
     queryFn: () => movieApi.getMovieDetail(id),
     enabled: !!id,
   });

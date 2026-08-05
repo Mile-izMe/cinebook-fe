@@ -12,7 +12,7 @@ export const useCreateMovie = () => {
     mutationFn: (data: CreateMovieInput) => movieApi.createMovie(data),
     onSuccess: () => {
       toast.success(t("create_movie_success"));
-      queryClient.invalidateQueries({ queryKey: ["movie"] });
+      queryClient.invalidateQueries({ queryKey: ["movies"] });
     },
     onError: () => {
       toast.error(t("create_movie_fail"));

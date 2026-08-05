@@ -38,6 +38,37 @@ export interface SeatMapSeat {
   status: SeatStatus;
 }
 
+export interface BookingResponse {
+  bookingId: string;
+  movie: string;
+  cinema: string;
+  address: string;
+  room: string;
+  showtime: string; // Instant -> ISO 8601 string
+  seats: string[];
+  totalPrice: number;
+  status: BookingStatus;
+  bookingTime: string; // Instant -> ISO 8601 string
+}
+
+export interface BookingSummaryResponse {
+  bookingId: string;
+  movieName: string;
+  posterUrl: string;
+  seats: string[];
+  showtimeStart: string;
+  totalPrice: number;
+  status: BookingStatus;
+}
+
 export type SeatType = "STANDARD" | "VIP" | "COUPLE" | "WHEELCHAIR";
 
 export type SeatStatus = "AVAILABLE" | "RESERVED" | "SOLD";
+
+export enum BookingStatus {
+  PENDING = "PENDING",
+  PAID = "PAID",
+  CANCELLED = "CANCELLED",
+  EXPIRED = "EXPIRED",
+  USED = "USED",
+}

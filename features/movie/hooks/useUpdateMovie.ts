@@ -13,7 +13,7 @@ export const useUpdateMovie = (id: string) => {
     onSuccess: () => {
       toast.success(t("update_movie_success"));
       queryClient.invalidateQueries({ queryKey: ["movie"] });
-      queryClient.invalidateQueries({ queryKey: ["movie", "detail", id] });
+      queryClient.invalidateQueries({ queryKey: ["movie", id] });
     },
     onError: () => {
       toast.error(t("update_movie_fail"));

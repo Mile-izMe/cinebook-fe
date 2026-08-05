@@ -9,9 +9,10 @@ export const useDeleteMovie = () => {
 
   return useMutation({
     mutationFn: (id: string) => movieApi.deleteMovie(id),
-    onSuccess: () => {
+    onSuccess: (_, id) => {
       toast.success(t("delete_movie_success"));
-      queryClient.invalidateQueries({ queryKey: ["movie"] });
+      queryClient.invalidateQueries({ queryKey: ["movies"] });
+      queryClient.invalidateQueries({ queryKey: ["movie", id] });
     },
     onError: () => {
       toast.error(t("delete_movie_fail"));
