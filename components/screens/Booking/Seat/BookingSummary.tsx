@@ -271,7 +271,7 @@ function BookingSummary({
               disabled={
                 selectedSeats.length === 0 || isNextLoading || disableNext
               }
-              className="w-full flex items-center justify-center gap-2 bg-brand-red hover:bg-red-700 text-white font-black py-4 px-4 rounded-xl transition-all shadow-lg active:scale-98 disabled:opacity-50 disabled:pointer-events-none text-xs tracking-widest uppercase"
+              className="cursor-pointer w-full flex items-center justify-center gap-2 bg-brand-red hover:bg-red-700 text-white font-black py-4 px-4 rounded-xl transition-all shadow-lg active:scale-98 disabled:opacity-50 disabled:pointer-events-none text-xs tracking-widest uppercase"
             >
               {isNextLoading ? (
                 <Loader2 className="w-5 h-5 animate-spin" />

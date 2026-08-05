@@ -1,4 +1,4 @@
-import SeatSelection from "@/components/screens/Booking/Seat/SeatSelection";
+import { SeatSelection } from "@/components";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
