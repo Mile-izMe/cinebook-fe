@@ -1,42 +1,67 @@
-import { GenreResponse, useMovieDetail } from "@/features/movie";
-import { ChevronRight } from "lucide-react";
+"use client";
+
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useRouter } from "next/navigation";
+
+export interface BreadcrumbMovieInfo {
+  title: string;
+  posterUrl: string;
+  duration: number;
+  genreNames: string[];
+}
 
 interface BookingBreadcrumbProps {
-  movieId: string;
+  movie?: BreadcrumbMovieInfo;
+  showtimeId?: string;
   currentStep?: 1 | 2 | 3;
 }
 
 export default function BookingBreadcrumb({
-  movieId,
+  movie,
+  showtimeId,
   currentStep = 1,
 }: BookingBreadcrumbProps) {
-  const { data: movieData } = useMovieDetail(movieId);
-  const movie = movieData?.data;
+  const router = useRouter();
 
-  if (!movie) return null;
+  const handleNavigateBack = () => {
+    if (currentStep === 1) {
+      router.push(`/`);
+    } else {
+      router.push(`/seats/${showtimeId}`);
+    }
+  };
 
   return (
     <div className="bg-brand-dark/40 border-b border-white/5 py-5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between sm:items-center gap-3">
         {/* FILM INFOR */}
-        <div className="flex items-center gap-4">
-          <img
-            src={movie.posterUrl}
-            alt={movie.title}
-            className="w-10 aspect-[2/3] object-cover rounded border border-white/5"
-          />
-          <div>
-            <h2 className="text-xs font-black text-white uppercase tracking-wider">
-              {movie.title}
-            </h2>
-            <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-widest mt-0.5">
-              {movie.genres
-                .map((genres: GenreResponse) => genres.name)
-                .join(", ")}{" "}
-              • {movie.duration} MINS
-            </p>
+        {movie !== undefined ? (
+          <div className="flex items-center gap-4">
+            <img
+              src={movie.posterUrl}
+              alt={movie.title}
+              className="w-10 aspect-[2/3] object-cover rounded border border-white/5"
+            />
+            <div>
+              <h2 className="text-xs font-black text-white uppercase tracking-wider">
+                {movie.title}
+              </h2>
+              <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-widest mt-0.5">
+                {movie.genreNames.join(", ")} • {movie.duration} MINS
+              </p>
+            </div>
           </div>
-        </div>
+        ) : (
+          <button
+            onClick={handleNavigateBack}
+            className="cursor-pointer flex items-center gap-2 text-zinc-400 hover:text-white font-black text-[10px] uppercase tracking-widest"
+          >
+            <ChevronLeft className="w-4 h-4" />
+            <span>
+              {currentStep == 1 ? "Return To Movie List" : "Return to Seats"}
+            </span>
+          </button>
+        )}
 
         {/* PROCESS BOOKING (BREADCRUMB) */}
         <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest">

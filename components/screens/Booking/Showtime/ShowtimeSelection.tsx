@@ -33,6 +33,18 @@ function ShowtimeSelection({ movieId }: ShowtimeSelectionProps) {
     [data],
   );
 
+  const firstShowtime = data?.data?.[0];
+  const breadcrumbMovie = useMemo(() => {
+    if (!firstShowtime) return undefined;
+
+    return {
+      title: firstShowtime.movieTitle,
+      posterUrl: firstShowtime.moviePosterUrl,
+      duration: firstShowtime.movieDuration,
+      genreNames: firstShowtime.genreNames,
+    };
+  }, [firstShowtime]);
+
   if (isLoading) {
     return <ShowtimePageSkeleton />;
   }
@@ -40,7 +52,7 @@ function ShowtimeSelection({ movieId }: ShowtimeSelectionProps) {
   return (
     <div className="grow bg-brand-black pb-20">
       {/* Top Breadcrumb Header */}
-      {movieId && <BookingBreadcrumb movieId={movieId} currentStep={1} />}
+      {movieId && <BookingBreadcrumb movie={breadcrumbMovie} currentStep={1} />}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 grid grid-cols-1 lg:grid-cols-4 gap-10">
         <SidebarFilters
           cities={cities}

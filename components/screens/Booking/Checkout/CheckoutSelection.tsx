@@ -1,15 +1,17 @@
 "use client";
 
-import { useBookingStore } from "@/store";
-import React from "react";
+import BookingBreadcrumb from "../BookingBreadcrumb";
 
-function CheckoutSelection() {
-  const showtimeId = useBookingStore((state) => state.showtimeId);
-  // console.log(showtimeId);
+interface CheckoutSelectionProps {
+  showtimeId: string;
+}
+
+function CheckoutSelection({ showtimeId }: CheckoutSelectionProps) {
+  console.log(showtimeId);
 
   return (
-    <div>
-      <div>CheckoutSelection</div>
+    <div className="grow bg-brand-black pb-20">
+      <BookingBreadcrumb showtimeId={showtimeId} currentStep={3} />
     </div>
   );
 }

@@ -3,6 +3,7 @@ export interface Showtime {
   movieId: string;
   movieTitle: string;
   movieDuration: number;
+  moviePosterUrl: string;
   roomId: string;
   roomName: string;
   cinemaId: string;

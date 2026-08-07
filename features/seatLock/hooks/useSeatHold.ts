@@ -53,8 +53,7 @@ export const useSeatHold = ({
         { showtimeId, seatTokens: tokensRef.current },
         {
           onError: (err) => {
-            const apiError = err as ApiErrorResponse;
-            if (apiError.errorCode === "LOCK-004") {
+            if (err.message === "Maximum time holding seat reached") {
               setTimeLeft(0);
               clearInterval(interval);
             }

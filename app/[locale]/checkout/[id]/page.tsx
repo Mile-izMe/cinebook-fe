@@ -6,10 +6,19 @@ export const metadata: Metadata = {
   description: "Checkout to receive ticket for the movie.",
 };
 
-export default async function CheckoutPage() {
+interface PageProps {
+  params: Promise<{
+    locale: string;
+    id: string;
+  }>;
+}
+
+export default async function CheckoutPage({ params }: PageProps) {
+  const { id } = await params;
+
   return (
     <main>
-      <CheckoutSelection />
+      <CheckoutSelection showtimeId={id} />
     </main>
   );
 }
