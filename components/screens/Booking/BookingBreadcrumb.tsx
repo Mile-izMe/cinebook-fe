@@ -27,7 +27,7 @@ export default function BookingBreadcrumb({
     if (currentStep === 1) {
       router.push(`/`);
     } else {
-      router.push(`/seats/${showtimeId}`);
+      router.push(`/seat/${showtimeId}`);
     }
   };
 
