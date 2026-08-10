@@ -6,6 +6,6 @@ export const useLockedSeats = (showtimeId: string) => {
     queryKey: ["locked-seats", showtimeId],
     queryFn: () => seatLockApi.getLockedSeats(showtimeId),
     enabled: !!showtimeId,
-    staleTime: Infinity,
+    refetchOnMount: "always",
   });
 };

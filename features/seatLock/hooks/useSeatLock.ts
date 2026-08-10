@@ -11,9 +11,10 @@ export const useSeatLock = () => {
 
   return useMutation({
     mutationFn: (data: SeatLockingInput) => seatLockApi.lockSeat(data),
-    onSuccess: (response) => {
+    onSuccess: () => {
       toast.success(t("lock_seat_success"));
-      const maxExpiresAtMs = new Date(response.data[0].expiresAt).getTime();
+      const maxExpiresAtMs = Date.now() + 15 * 60 * 1000;
+
       setMaxExpiresAt(maxExpiresAtMs);
     },
     onError: () => {

@@ -31,6 +31,7 @@ function TicketReceiver({
         {!isAuthenticated && (
           <div className="flex bg-zinc-900 rounded-lg p-1">
             <button
+              type="button"
               onClick={() => setCheckoutMode("guest")}
               className={`text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-md transition-all ${
                 checkoutMode === "guest"
@@ -41,6 +42,7 @@ function TicketReceiver({
               Guest
             </button>
             <button
+              type="button"
               onClick={() => setCheckoutMode("login")}
               className={`text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-md transition-all ${
                 checkoutMode === "login"
@@ -125,7 +127,10 @@ function TicketReceiver({
               Log in to accumulate points, manage your bookings, and checkout
               faster.
             </p>
-            <button className="bg-brand-red hover:bg-red-700 text-white text-xs font-black uppercase tracking-widest px-8 py-3 rounded-xl transition-all">
+            <button
+              type="button"
+              className="bg-brand-red hover:bg-red-700 text-white text-xs font-black uppercase tracking-widest px-8 py-3 rounded-xl transition-all"
+            >
               Open Login Modal
             </button>
           </div>

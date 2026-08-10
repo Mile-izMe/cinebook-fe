@@ -58,7 +58,6 @@ export default function SeatSelection({ showtimeId }: ShowtimeSelectionProps) {
       toast.info("Please select at least one seat to continue.");
       return;
     }
-    router.push(`/checkout/${showtimeId}`);
 
     try {
       const response = await lockSeats({
@@ -76,7 +75,7 @@ export default function SeatSelection({ showtimeId }: ShowtimeSelectionProps) {
       toast.error(
         "One of your seat has been held by another person. Please try again!",
       );
-      queryClient.invalidateQueries({ queryKey: ["seatmap", showtimeId] });
+      queryClient.invalidateQueries({ queryKey: ["locked-seats", showtimeId] });
     }
   };
 

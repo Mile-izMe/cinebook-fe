@@ -15,7 +15,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider, useForm, useWatch } from "react-hook-form";
 import { toast } from "sonner";
 import BookingBreadcrumb from "../BookingBreadcrumb";
 import BookingSummary from "../BookingSummary";
@@ -48,10 +48,16 @@ function CheckoutSelection({ showtimeId }: CheckoutSelectionProps) {
     "bank",
   );
 
-  const { formattedTime, isExpired } = useSeatHold({
+  const { formattedTime, isExpired, releaseSeats } = useSeatHold({
     showtimeId,
     seatTokens,
   });
+
+  const handleBackToSeats = async () => {
+    await releaseSeats();
+    clearSeats();
+    router.push(`/seat/${showtimeId}`);
+  };
 
   useEffect(() => {
     if (isExpired) {
@@ -74,6 +80,22 @@ function CheckoutSelection({ showtimeId }: CheckoutSelectionProps) {
     handleSubmit,
     formState: { isSubmitting },
   } = form;
+
+  const watchedEmail = useWatch({
+    control: form.control,
+    name: "guestEmail",
+  });
+
+  const watchedPhone = useWatch({
+    control: form.control,
+    name: "guestPhone",
+  });
+
+  const isGuestInfoValid = isAuthenticated
+    ? true
+    : Boolean(watchedEmail?.trim() && watchedPhone?.trim());
+
+  const isDisableNext = isSubmitting || isExpired || !isGuestInfoValid;
 
   useEffect(() => {
     if (isAuthenticated && user) {
@@ -104,7 +126,11 @@ function CheckoutSelection({ showtimeId }: CheckoutSelectionProps) {
           Finish payment in: {formattedTime}
         </div>
 
-        <BookingBreadcrumb showtimeId={showtimeId} currentStep={3} />
+        <BookingBreadcrumb
+          showtimeId={showtimeId}
+          currentStep={3}
+          onBackClick={handleBackToSeats}
+        />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
             <CheckoutOption
@@ -121,8 +147,9 @@ function CheckoutSelection({ showtimeId }: CheckoutSelectionProps) {
               cinemaSummary={cinemaData}
               selectedSeats={selectedSeats}
               onNext={handleSubmit(handleCreateBooking)}
-              nextText="Go to Checkout"
-              disableNext={isSubmitting}
+              nextText="PAY NOW"
+              isNextLoading={isSubmitting}
+              disableNext={isDisableNext}
             />
           </div>
         </div>

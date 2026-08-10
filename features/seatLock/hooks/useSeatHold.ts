@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useBookingStore } from "@/store";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useSeatExtend } from "./useSeatExtend";
 import { useSeatUnlock } from "./useSeatUnlock";
-import { useBookingStore } from "@/store";
 
 interface UseSeatHoldProps {
   showtimeId: string;
@@ -22,8 +22,8 @@ export const useSeatHold = ({
   const isExpired = timeLeft <= 0;
   const tokensRef = useRef(seatTokens);
 
-  const extendMutation = useSeatExtend();
-  const unlockMutation = useSeatUnlock();
+  const { mutate: extendLock } = useSeatExtend();
+  const { mutateAsync: unlockSeats } = useSeatUnlock();
 
   useEffect(() => {
     tokensRef.current = seatTokens;
@@ -49,7 +49,7 @@ export const useSeatHold = ({
   }, [isExpired]);
 
   // ----------------------------------------------------
-  // 2. HEARTBEAT (Ping Server every 4 mins)
+  // 2. HEARTBEAT (Ping Server every 1 mins)
   // ----------------------------------------------------
   useEffect(() => {
     if (isExpired || Object.keys(tokensRef.current).length === 0) return;
@@ -60,12 +60,12 @@ export const useSeatHold = ({
         `[Heartbeat 💓] ${currentTime} - Sending request extend TTL...`,
       );
 
-      extendMutation.mutate(
+      extendLock(
         { showtimeId, seatTokens: tokensRef.current },
         {
           onSuccess: () => {
             console.log(
-              `[Heartbeat ✅] ${new Date().toLocaleTimeString()} - Gia hạn TTL trong Redis thành công (thêm 2 phút)!`,
+              `[Heartbeat ✅] ${new Date().toLocaleTimeString()} - Extend TTL Redis success (+ 2mins)!`,
             );
           },
           onError: (err) => {
@@ -79,15 +79,15 @@ export const useSeatHold = ({
       );
     }, 60000);
     return () => clearInterval(interval);
-  }, [showtimeId, extendMutation, isExpired]);
+  }, [showtimeId, extendLock, isExpired]);
 
   // ----------------------------------------------------
   // 3. CLEANUP
   // ----------------------------------------------------
-  const releaseSeats = async () => {
+  const releaseSeats = useCallback(async () => {
     if (Object.keys(tokensRef.current).length === 0) return;
     try {
-      await unlockMutation.mutateAsync({
+      await unlockSeats({
         showtimeId,
         seatTokens: tokensRef.current,
       });
@@ -95,7 +95,7 @@ export const useSeatHold = ({
     } catch (error) {
       console.error("Error releasing chair:", error);
     }
-  };
+  }, [showtimeId, unlockSeats]);
 
   // ----------------------------------------------------
   // Helper: Format display remaining time (E.g: 14:59)

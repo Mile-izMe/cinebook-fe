@@ -14,21 +14,25 @@ interface BookingBreadcrumbProps {
   movie?: BreadcrumbMovieInfo;
   showtimeId?: string;
   currentStep?: 1 | 2 | 3;
+  onBackClick?: () => void;
 }
 
 export default function BookingBreadcrumb({
   movie,
   showtimeId,
   currentStep = 1,
+  onBackClick,
 }: BookingBreadcrumbProps) {
   const router = useRouter();
 
   const handleNavigateBack = () => {
-    if (currentStep === 1) {
-      router.push(`/`);
-    } else {
-      router.push(`/seat/${showtimeId}`);
+    if (onBackClick) {
+      onBackClick();
+      return;
     }
+
+    if (currentStep === 1) router.push(`/`);
+    else router.push(`/seat/${showtimeId}`);
   };
 
   return (
@@ -53,6 +57,7 @@ export default function BookingBreadcrumb({
           </div>
         ) : (
           <button
+            type="button"
             onClick={handleNavigateBack}
             className="cursor-pointer flex items-center gap-2 text-zinc-400 hover:text-white font-black text-[10px] uppercase tracking-widest"
           >
