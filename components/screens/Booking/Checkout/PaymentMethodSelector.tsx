@@ -1,16 +1,25 @@
-import React from "react";
-import PaymentRadioItem from "./PaymentRadioItem";
 import { CreditCard } from "lucide-react";
+import { useFormContext } from "react-hook-form";
+import CardSimulation from "./CardSimulation";
+import PaymentRadioItem from "./PaymentRadioItem";
 
 interface PaymentMethodSelectorProps {
   paymentMethod: "bank" | "momo" | "atm";
   setPaymentMethod: (method: "bank" | "momo" | "atm") => void;
+  finalPrice?: number;
 }
 
 function PaymentMethodSelector({
   paymentMethod,
   setPaymentMethod,
+  finalPrice = 0,
 }: PaymentMethodSelectorProps) {
+  const { watch } = useFormContext();
+
+  const watchedCardNumber = watch("cardNumber");
+  const watchedCardHolder = watch("cardHolder");
+  const watchedExpiry = watch("expiryDate");
+
   return (
     <div className="bg-brand-dark border border-white/5 rounded-2xl overflow-hidden shadow-2xl text-zinc-300">
       <div className="bg-black p-5 border-b border-white/5">
@@ -38,7 +47,22 @@ function PaymentMethodSelector({
           description="Pay quickly via MoMo app"
         />
 
-        {/* Sau này bạn nhét khối UI ATM Card Simulator vào dưới này */}
+        <PaymentRadioItem
+          value="atm"
+          currentValue={paymentMethod}
+          onChange={setPaymentMethod}
+          title="ATM / Credit Card"
+          description="Visa, Mastercard, JCB, Domestic ATM"
+        />
+
+        {paymentMethod === "atm" && (
+          <CardSimulation
+            watchedCardNumber={watchedCardNumber}
+            watchedCardHolder={watchedCardHolder}
+            watchedExpiry={watchedExpiry}
+            finalPrice={finalPrice}
+          />
+        )}
       </div>
     </div>
   );

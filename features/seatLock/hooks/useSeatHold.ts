@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSeatExtend } from "./useSeatExtend";
 import { useSeatUnlock } from "./useSeatUnlock";
+import { useBookingStore } from "@/store";
 
 interface UseSeatHoldProps {
   showtimeId: string;
@@ -13,7 +14,11 @@ export const useSeatHold = ({
   seatTokens,
   maxHoldSeconds = 900,
 }: UseSeatHoldProps) => {
-  const [timeLeft, setTimeLeft] = useState<number>(maxHoldSeconds);
+  const maxExpiresAt = useBookingStore((s) => s.maxExpiresAt);
+  const [timeLeft, setTimeLeft] = useState(() => {
+    if (!maxExpiresAt) return maxHoldSeconds;
+    return Math.max(0, Math.floor((maxExpiresAt - Date.now()) / 1000));
+  });
   const isExpired = timeLeft <= 0;
   const tokensRef = useRef(seatTokens);
 
@@ -47,52 +52,50 @@ export const useSeatHold = ({
   // 2. HEARTBEAT (Ping Server every 4 mins)
   // ----------------------------------------------------
   useEffect(() => {
+    if (isExpired || Object.keys(tokensRef.current).length === 0) return;
+
     const interval = setInterval(() => {
+      const currentTime = new Date().toLocaleTimeString();
+      console.log(
+        `[Heartbeat 💓] ${currentTime} - Sending request extend TTL...`,
+      );
+
       extendMutation.mutate(
         { showtimeId, seatTokens: tokensRef.current },
         {
+          onSuccess: () => {
+            console.log(
+              `[Heartbeat ✅] ${new Date().toLocaleTimeString()} - Gia hạn TTL trong Redis thành công (thêm 2 phút)!`,
+            );
+          },
           onError: (err) => {
             if (err.message === "Maximum time holding seat reached") {
+              console.error(`[Heartbeat ❌] Error extending:`, err.message);
               setTimeLeft(0);
               clearInterval(interval);
             }
           },
         },
       );
-    }, 240000);
+    }, 60000);
     return () => clearInterval(interval);
-  }, [showtimeId, extendMutation]);
+  }, [showtimeId, extendMutation, isExpired]);
 
   // ----------------------------------------------------
-  // 3. CLEANUP (Auto Unlock when User close Tab or Back)
+  // 3. CLEANUP
   // ----------------------------------------------------
-  const releaseSeats = useCallback(async () => {
+  const releaseSeats = async () => {
     if (Object.keys(tokensRef.current).length === 0) return;
     try {
       await unlockMutation.mutateAsync({
         showtimeId,
         seatTokens: tokensRef.current,
       });
-      // Clear token
       tokensRef.current = {};
     } catch (error) {
       console.error("Error releasing chair:", error);
     }
-  }, [showtimeId, unlockMutation]);
-
-  useEffect(() => {
-    // Event user close tab/explorer (Window Unload)
-    const handleBeforeUnload = () => {
-      releaseSeats();
-    };
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
-    // Event component cancel (User click Back or navigate)
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-      releaseSeats();
-    };
-  }, [releaseSeats]);
+  };
 
   // ----------------------------------------------------
   // Helper: Format display remaining time (E.g: 14:59)

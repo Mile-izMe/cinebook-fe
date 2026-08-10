@@ -34,8 +34,8 @@ function TicketReceiver({
               onClick={() => setCheckoutMode("guest")}
               className={`text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-md transition-all ${
                 checkoutMode === "guest"
-                  ? "bg-zinc-700 text-white"
-                  : "text-zinc-500 hover:text-zinc-300"
+                  ? "cursor-pointer bg-zinc-700 text-white"
+                  : "cursor-pointer text-zinc-500 hover:text-zinc-300"
               }`}
             >
               Guest
@@ -44,8 +44,8 @@ function TicketReceiver({
               onClick={() => setCheckoutMode("login")}
               className={`text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-md transition-all ${
                 checkoutMode === "login"
-                  ? "bg-brand-red text-white"
-                  : "text-zinc-500 hover:text-zinc-300"
+                  ? "cursor-pointer bg-brand-red text-white"
+                  : "cursor-pointer text-zinc-500 hover:text-zinc-300"
               }`}
             >
               Login
@@ -69,42 +69,6 @@ function TicketReceiver({
           </div>
         ) : checkoutMode === "guest" ? (
           <form className="space-y-4">
-            {/* <div>
-              <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest block mb-2">
-                Full Name
-              </label>
-              <div className="relative">
-                <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
-                <input
-                  type="text"
-                  placeholder="John Doe"
-                  className="w-full bg-black border border-white/5 rounded-xl py-3 pl-11 pr-4 text-sm text-white focus:outline-none focus:border-brand-red transition-colors"
-                />
-              </div>
-            </div> */}
-            <div>
-              <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest block mb-2">
-                Phone Number
-              </label>
-              <div className="relative">
-                <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
-                <input
-                  type="tel"
-                  placeholder="0987 654 321"
-                  {...register("guestPhone")}
-                  className={`w-full bg-black border rounded-xl py-3 pl-11 pr-4 text-sm text-white focus:outline-none transition-colors ${
-                    errors.guestPhone
-                      ? "border-brand-red focus:border-brand-red"
-                      : "border-white/5 focus:border-white/20"
-                  }`}
-                />
-              </div>
-              {errors.guestPhone && (
-                <p className="text-brand-red text-[10px] mt-1 italic">
-                  {errors.guestPhone.message as string}
-                </p>
-              )}
-            </div>
             <div>
               <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest block mb-2">
                 Email Address
@@ -125,6 +89,30 @@ function TicketReceiver({
               {errors.guestEmail && (
                 <p className="text-brand-red text-[10px] mt-1 italic">
                   {errors.guestEmail.message as string}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest block mb-2">
+                Phone Number
+              </label>
+              <div className="relative">
+                <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+                <input
+                  type="tel"
+                  placeholder="0987 654 321"
+                  {...register("guestPhone")}
+                  className={`w-full bg-black border rounded-xl py-3 pl-11 pr-4 text-sm text-white focus:outline-none transition-colors ${
+                    errors.guestPhone
+                      ? "border-brand-red focus:border-brand-red"
+                      : "border-white/5 focus:border-white/20"
+                  }`}
+                />
+              </div>
+              {errors.guestPhone && (
+                <p className="text-brand-red text-[10px] mt-1 italic">
+                  {errors.guestPhone.message as string}
                 </p>
               )}
             </div>

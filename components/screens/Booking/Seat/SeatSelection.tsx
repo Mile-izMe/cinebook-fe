@@ -60,24 +60,24 @@ export default function SeatSelection({ showtimeId }: ShowtimeSelectionProps) {
     }
     router.push(`/checkout/${showtimeId}`);
 
-    // try {
-    //   const response = await lockSeats({
-    //     showtimeId,
-    //     seatIds: selectedSeats.map((seat) => seat.seatId),
-    //   });
+    try {
+      const response = await lockSeats({
+        showtimeId,
+        seatIds: selectedSeats.map((seat) => seat.seatId),
+      });
 
-    //   const tokensRecord = Object.fromEntries(
-    //     response.data.map((item: SeatLock) => [item.seatId, item.lockToken]),
-    //   );
+      const tokensRecord = Object.fromEntries(
+        response.data.map((item: SeatLock) => [item.seatId, item.lockToken]),
+      );
 
-    //   setSeatTokens(tokensRecord);
-    //   router.push(`/checkout/${showtimeId}`);
-    // } catch {
-    //   toast.error(
-    //     "One of your seat has been held by another person. Please try again!",
-    //   );
-    //   queryClient.invalidateQueries({ queryKey: ["seatmap", showtimeId] });
-    // }
+      setSeatTokens(tokensRecord);
+      router.push(`/checkout/${showtimeId}`);
+    } catch {
+      toast.error(
+        "One of your seat has been held by another person. Please try again!",
+      );
+      queryClient.invalidateQueries({ queryKey: ["seatmap", showtimeId] });
+    }
   };
 
   return (
