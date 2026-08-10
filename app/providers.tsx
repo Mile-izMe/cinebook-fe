@@ -9,9 +9,15 @@ import {
 } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { StompSessionProvider } from "react-stomp-hooks";
+import SockJS from "sockjs-client";
 import { toast } from "sonner";
 
 export function Providers({ children }: { children: React.ReactNode }) {
+  const socketUrl = process.env.NEXT_PUBLIC_API_URL
+    ? `${process.env.NEXT_PUBLIC_API_URL}/ws`
+    : "http://localhost:8080/ws";
+
   const tError = useTranslations("errors");
   const [queryClient] = useState(
     () =>
@@ -37,9 +43,15 @@ export function Providers({ children }: { children: React.ReactNode }) {
   );
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <AuthInitializer />
-      {children}
-    </QueryClientProvider>
+    <StompSessionProvider
+      url={socketUrl}
+      webSocketFactory={() => new SockJS(socketUrl)}
+      debug={(str) => console.log(str)}
+    >
+      <QueryClientProvider client={queryClient}>
+        <AuthInitializer />
+        {children}
+      </QueryClientProvider>
+    </StompSessionProvider>
   );
 }

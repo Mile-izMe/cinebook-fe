@@ -1,12 +1,13 @@
 import { SeatMapRow, SeatMapSeat } from "@/features/booking";
 import { Armchair } from "lucide-react";
-// import CountdownTimer from "./CountdownTimer";
 import InformationWarning from "./InformationWarning";
 import SeatComponent from "./SeatComponent";
 import SeatingMapLegend from "./SeatingMapLegend";
 
 interface SeatMapPanelProps {
   isLoading: boolean;
+  lockedSeatIds: string[];
+  mySeatTokens: Record<string, string>;
   rows: SeatMapRow[];
   selectedSeats: SeatMapSeat[];
   onSeatSelect: (seat: SeatMapSeat) => void;
@@ -15,15 +16,12 @@ interface SeatMapPanelProps {
 
 function SeatMapPanel({
   isLoading,
+  lockedSeatIds,
+  mySeatTokens,
   rows,
   selectedSeats,
   onSeatSelect,
-  // clearSeats,
 }: SeatMapPanelProps) {
-  // const handleTimerExpire = () => {
-  //   clearSeats();
-  // };
-
   if (isLoading) {
     return (
       <div className="flex flex-col items-center justify-center h-64 text-zinc-500 text-xs animate-pulse">
@@ -46,11 +44,6 @@ function SeatMapPanel({
             booking.
           </p>
         </div>
-
-        {/* Countdown seat hold timer */}
-        {/* {selectedSeats.length > 0 && (
-          <CountdownTimer initialMinutes={5} onExpire={handleTimerExpire} />
-        )} */}
       </div>
 
       {/* Screen representation */}
@@ -75,6 +68,15 @@ function SeatMapPanel({
               {/* Seat row items */}
               <div className="flex gap-2">
                 {seats.map((seat) => {
+                  // 1. Check if seats are locked in Redis
+                  const isLockedInRedis = lockedSeatIds.includes(seat.seatId);
+
+                  // 2. Token of chair belong to it's owner
+                  const isMySeat = !!mySeatTokens[seat.seatId];
+
+                  // 3. Consider as "LOCKED" if it's in Redis & not belong to us
+                  const isLockedByOther = isLockedInRedis && !isMySeat;
+
                   return (
                     <SeatComponent
                       key={seat.seatId}
@@ -82,6 +84,7 @@ function SeatMapPanel({
                       isSelected={selectedSeats.some(
                         (s) => s.seatId === seat.seatId,
                       )}
+                      isLocked={isLockedByOther}
                       onSelect={onSeatSelect}
                     />
                   );

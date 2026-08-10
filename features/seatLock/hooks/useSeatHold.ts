@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useSeatExtend } from "./useSeatExtend";
 import { useSeatUnlock } from "./useSeatUnlock";
-import { ApiErrorResponse } from "@/types";
 
 interface UseSeatHoldProps {
   showtimeId: string;

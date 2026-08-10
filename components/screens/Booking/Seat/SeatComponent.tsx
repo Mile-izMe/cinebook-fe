@@ -7,19 +7,28 @@ import { motion } from "motion/react";
 interface SeatComponentProps {
   seat: SeatMapSeat;
   isSelected: boolean;
+  isLocked: boolean;
   onSelect: (seat: SeatMapSeat) => void;
 }
 
-function SeatComponent({ seat, isSelected, onSelect }: SeatComponentProps) {
-  const isAvailable = seat.status === "AVAILABLE";
+function SeatComponent({
+  seat,
+  isSelected,
+  isLocked,
+  onSelect,
+}: SeatComponentProps) {
   const isSold = seat.status === "SOLD";
   const isReserved = seat.status === "RESERVED";
+
+  const isDisabled = isSold || isReserved || isLocked;
 
   const getSeatColor = () => {
     if (isSold)
       return "bg-zinc-800 text-zinc-600 border-zinc-900 cursor-not-allowed";
-    if (isReserved)
+
+    if (isReserved || isLocked)
       return "bg-amber-700/30 text-amber-500 border-amber-900/50 cursor-not-allowed";
+
     if (isSelected)
       return "bg-red-600 text-white border-red-500 shadow-md shadow-red-900/40";
 
@@ -29,29 +38,37 @@ function SeatComponent({ seat, isSelected, onSelect }: SeatComponentProps) {
     if (seat.type === "WHEELCHAIR") {
       return "bg-sky-950/40 text-sky-400 border-sky-800/80 hover:bg-sky-900/55 hover:text-sky-300";
     }
+
     return "bg-zinc-900 text-zinc-400 border-zinc-700 hover:bg-zinc-850 hover:text-white";
   };
 
   const handleClick = () => {
-    if (isAvailable) onSelect(seat);
+    if (!isDisabled) onSelect(seat);
+  };
+
+  const getTooltipText = () => {
+    if (isSold) return `${seat.label} - Unavailable`;
+    if (isLocked) return `${seat.label} - Temporarily held by another user`;
+    if (isReserved) return `${seat.label} - Reserved/Maintenance`;
+    return `${seat.label} - ${seat.type} (${seat.price.toLocaleString("vi-VN")}đ)`;
   };
 
   return (
     <motion.button
-      whileHover={isAvailable ? { scale: 1.15 } : {}}
-      whileTap={isAvailable ? { scale: 0.95 } : {}}
+      whileHover={!isDisabled ? { scale: 1.15 } : {}}
+      whileTap={!isDisabled ? { scale: 0.95 } : {}}
       onClick={handleClick}
-      disabled={!isAvailable}
+      disabled={isDisabled}
       className={`relative flex items-center justify-center aspect-square w-8 sm:w-9 md:w-10 rounded-lg border text-[9px] sm:text-xs font-bold transition-all duration-150 focus:outline-none ${getSeatColor()}`}
-      title={`${seat.label} - ${seat.type} (${seat.price.toLocaleString("vi-VN")}đ) - ${seat.status}`}
+      title={getTooltipText()}
     >
-      {seat.type === "WHEELCHAIR" && !isSelected && !isSold ? (
+      {seat.type === "WHEELCHAIR" && !isSelected && !isDisabled ? (
         <Accessibility className="w-3.5 h-3.5 sm:w-4 sm:h-4 opacity-80" />
       ) : (
         <span>{seat.label}</span>
       )}
 
-      {isSold && (
+      {(isSold || isLocked) && (
         <div className="absolute inset-0 flex items-center justify-center opacity-45">
           <div className="w-full h-[1.5px] bg-zinc-600 rotate-45" />
         </div>

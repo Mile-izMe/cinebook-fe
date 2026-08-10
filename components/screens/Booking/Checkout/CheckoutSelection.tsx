@@ -25,14 +25,18 @@ interface CheckoutSelectionProps {
 function CheckoutSelection({ showtimeId }: CheckoutSelectionProps) {
   const checkoutForm = useTranslations("checkout");
   const checkoutSchema = bookingSchema(checkoutForm);
-  const selectedSeats = useBookingStore((s) => s.selectedSeats);
 
-  const { user, status } = useAuthStore();
+  const selectedSeats = useBookingStore((s) => s.selectedSeats);
+  const seatTokens = useBookingStore((s) => s.seatTokens);
+  const user = useAuthStore((u) => u.user);
+  const status = useAuthStore((u) => u.status);
+
   const { data } = useSeatMap(showtimeId);
   const { mutate: createBooking } = useCreateBooking();
 
   const isAuthenticated = status === "authenticated";
   const seatMap = data?.data;
+  
   const [checkoutMode, setCheckoutMode] = useState<"guest" | "login">("guest");
   const [paymentMethod, setPaymentMethod] = useState<"bank" | "momo" | "atm">(
     "bank",
