@@ -12,11 +12,12 @@ import {
 import { useCreateBooking } from "@/features/booking/hooks/useCreateBooking";
 import { useBookingStore } from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { ShieldAlert } from "lucide-react";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FormProvider, useForm, useWatch } from "react-hook-form";
-import { toast } from "sonner";
 import BookingBreadcrumb from "../BookingBreadcrumb";
 import BookingSummary from "../BookingSummary";
 import CheckoutOption from "./CheckoutOption";
@@ -58,13 +59,6 @@ function CheckoutSelection({ showtimeId }: CheckoutSelectionProps) {
     clearSeats();
     router.push(`/seat/${showtimeId}`);
   };
-
-  useEffect(() => {
-    if (isExpired) {
-      toast.error("Out of holding seat time!");
-      router.push(`/showtimes/${showtimeId}/seats`);
-    }
-  }, [isExpired, router, showtimeId]);
 
   const form = useForm<CreateBookingInput>({
     resolver: zodResolver(checkoutSchema),
@@ -115,6 +109,27 @@ function CheckoutSelection({ showtimeId }: CheckoutSelectionProps) {
       router.push(`/bookings/successs`);
     } catch {}
   };
+
+  if (isExpired) {
+    return (
+      <div className="grow flex flex-col items-center justify-center bg-brand-black text-center py-20 px-4">
+        <ShieldAlert className="w-12 h-12 text-brand-red mb-3 animate-bounce" />
+        <h2 className="text-sm font-black text-white mb-2 uppercase tracking-widest">
+          Checkout Session Expired
+        </h2>
+        <p className="text-zinc-500 text-xs max-w-sm mb-6 leading-relaxed">
+          You do not have any active seat reservations selected. Please return
+          home to book your tickets.
+        </p>
+        <Link
+          href="/"
+          className="bg-brand-red hover:bg-red-700 text-white font-black py-4 px-8 rounded-xl text-xs uppercase tracking-widest transition-all"
+        >
+          Browse Movies
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <FormProvider {...form}>
