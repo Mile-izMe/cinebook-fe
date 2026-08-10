@@ -1,4 +1,5 @@
 import { Film } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 const formats = [
   {
@@ -25,11 +26,12 @@ interface Props {
 }
 
 export default function FormatSelection({ value, onChange }: Props) {
+  const t = useTranslations("screen.booking.showtime");
   return (
     <div className="bg-brand-dark border border-white/5 rounded-2xl p-5 space-y-3">
       <h3 className="text-[10px] font-black uppercase tracking-widest text-zinc-400 flex items-center gap-1.5 border-b border-white/5 pb-2">
         <Film className="w-4 h-4 text-brand-red" />
-        <span>Viewing Format</span>
+        <span>{t("view_format")}</span>
       </h3>
       <div className="grid grid-cols-2 gap-2 pt-1">
         {formats.map((item) => (

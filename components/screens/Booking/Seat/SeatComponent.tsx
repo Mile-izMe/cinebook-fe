@@ -3,6 +3,7 @@
 import { SeatMapSeat } from "@/features/booking";
 import { Accessibility } from "lucide-react";
 import { motion } from "motion/react";
+import { useTranslations } from "next-intl";
 
 interface SeatComponentProps {
   seat: SeatMapSeat;
@@ -17,6 +18,7 @@ function SeatComponent({
   isLocked,
   onSelect,
 }: SeatComponentProps) {
+  const t = useTranslations("screen.booking.seat");
   const isSold = seat.status === "SOLD";
   const isReserved = seat.status === "RESERVED";
 
@@ -47,9 +49,9 @@ function SeatComponent({
   };
 
   const getTooltipText = () => {
-    if (isSold) return `${seat.label} - Unavailable`;
-    if (isLocked) return `${seat.label} - Temporarily held by another user`;
-    if (isReserved) return `${seat.label} - Reserved/Maintenance`;
+    if (isSold) return `${seat.label} - ${t("unavai")}`;
+    if (isLocked) return `${seat.label} - ${t("tempo_hold")}`;
+    if (isReserved) return `${seat.label} - ${t("reserved")}`;
     return `${seat.label} - ${seat.type} (${seat.price.toLocaleString("vi-VN")}đ)`;
   };
 

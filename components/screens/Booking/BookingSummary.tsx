@@ -9,6 +9,7 @@ import {
   Tag,
   Ticket,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import React, { useMemo, useState } from "react";
 import { toast } from "sonner";
 
@@ -31,6 +32,7 @@ function BookingSummary({
   isNextLoading = false,
   disableNext = false,
 }: BookingSummaryProps) {
+  const t = useTranslations("screen.booking");
   const [promoInput, setPromoInput] = useState("");
   const [discountCode, setDiscountCode] = useState("");
   const [discountAmount, setDiscountAmount] = useState(0);
@@ -70,7 +72,7 @@ function BookingSummary({
       <div className="bg-brand-dark border border-white/5 p-6 rounded-2xl flex flex-col items-center justify-center text-center h-48">
         <Ticket className="w-10 h-10 text-zinc-600 mb-2 animate-bounce" />
         <p className="text-zinc-500 text-xs font-black uppercase tracking-widest">
-          Select movie and seats to view summary
+          {t("select_movie_seat")}
         </p>
       </div>
     );
@@ -83,7 +85,7 @@ function BookingSummary({
         <div className="bg-black p-5 border-b border-white/5">
           <h3 className="font-black text-xs text-white tracking-widest uppercase flex items-center gap-2">
             <Ticket className="w-5 h-5 text-brand-red" />
-            <span>Booking Summary</span>
+            <span>{t("booking_summary")}</span>
           </h3>
         </div>
 
@@ -105,7 +107,7 @@ function BookingSummary({
                 </span>
                 <span className="text-zinc-500">•</span>
                 <span className="text-zinc-400 font-mono">
-                  {movieSummary.duration} MINS
+                  {movieSummary.duration} {t("min")}
                 </span>
               </div>
               <p className="text-[9px] text-zinc-500 uppercase font-black tracking-widest">
@@ -149,9 +151,9 @@ function BookingSummary({
           <div>
             <div className="flex justify-between items-center text-[10px] font-black uppercase tracking-widest mb-2">
               <span className="text-zinc-400">
-                Selected Seats ({selectedSeats.length})
+                {t("selected_seats")} ({selectedSeats.length})
               </span>
-              <span className="text-zinc-500 font-mono">Row / Seat</span>
+              <span className="text-zinc-500 font-mono">{t("rowSeat")}</span>
             </div>
 
             {selectedSeats.length > 0 ? (
@@ -173,7 +175,7 @@ function BookingSummary({
               </div>
             ) : (
               <p className="text-zinc-500 text-[10px] uppercase font-black tracking-widest italic">
-                No seats selected yet
+                {t("no_seat")}
               </p>
             )}
           </div>
@@ -184,7 +186,7 @@ function BookingSummary({
           {selectedSeats.length > 0 && (
             <div className="space-y-3">
               <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 block">
-                Discount Code
+                {t("discount_code")}
               </label>
               {discountCode ? (
                 <div className="flex justify-between items-center bg-black border border-brand-red/30 p-2.5 rounded-xl text-[11px] uppercase font-black">
@@ -244,19 +246,19 @@ function BookingSummary({
             </div>
             {discountAmount > 0 && (
               <div className="flex justify-between text-[10px] text-emerald-400">
-                <span>Discount</span>
+                <span>{t("discount")}</span>
                 <span className="font-mono">
                   -{discountAmount.toLocaleString("vi-VN")} VND
                 </span>
               </div>
             )}
             <div className="flex justify-between text-[10px] text-zinc-500">
-              <span>Booking Fee</span>
-              <span className="font-mono">Free</span>
+              <span>{t("booking_fee")}</span>
+              <span className="font-mono">{t("free")}</span>
             </div>
             <div className="border-t border-white/5 my-2 pt-2.5 flex justify-between">
               <span className="text-xs font-black text-white uppercase tracking-widest">
-                Total
+                {t("total")}
               </span>
               <span className="text-base font-black text-brand-red font-mono">
                 {total.toLocaleString("vi-VN")} VND

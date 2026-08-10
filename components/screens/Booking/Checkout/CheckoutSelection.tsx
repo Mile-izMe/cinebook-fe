@@ -28,7 +28,7 @@ interface CheckoutSelectionProps {
 
 function CheckoutSelection({ showtimeId }: CheckoutSelectionProps) {
   const router = useRouter();
-  const checkoutForm = useTranslations("checkout");
+  const checkoutForm = useTranslations("booking");
   const checkoutSchema = bookingSchema(checkoutForm);
 
   const selectedSeats = useBookingStore((s) => s.selectedSeats);

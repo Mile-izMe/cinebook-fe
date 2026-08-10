@@ -1,6 +1,7 @@
 "use client";
 import { CityResponse } from "@/features/city";
 import { MapPin } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface Props {
   cities?: CityResponse[];
@@ -9,11 +10,12 @@ interface Props {
 }
 
 export default function CitySelection({ cities, value, onChange }: Props) {
+  const t = useTranslations("screen.booking.showtime");
   return (
     <div className="bg-brand-dark border border-white/5 rounded-2xl p-5 space-y-3">
       <h3 className="text-[10px] font-black uppercase tracking-widest text-zinc-400 flex items-center gap-1.5 border-b border-white/5 pb-2">
         <MapPin className="w-4 h-4 text-brand-red" />
-        <span>Select City</span>
+        <span>{t("select_city")}</span>
       </h3>
       <div className="flex flex-col gap-2 pt-1">
         {cities?.map((city) => (

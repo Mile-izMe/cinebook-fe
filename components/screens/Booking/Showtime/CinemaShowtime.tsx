@@ -1,6 +1,7 @@
 import { CinemaGroup } from "@/lib";
 import { AlertCircle, MapPin } from "lucide-react";
 import { motion } from "motion/react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 
 interface CinemaShowtimeProps {
@@ -9,6 +10,7 @@ interface CinemaShowtimeProps {
 }
 
 function CinemaShowtime({ date, cinemaGroups }: CinemaShowtimeProps) {
+  const t = useTranslations("screen.booking.showtime");
   const router = useRouter();
 
   return (
@@ -63,7 +65,7 @@ function CinemaShowtime({ date, cinemaGroups }: CinemaShowtimeProps) {
         <div className="text-center py-20 bg-brand-dark border border-white/5 rounded-2xl">
           <AlertCircle className="w-10 h-10 text-zinc-700 mx-auto mb-3" />
           <h3 className="text-zinc-400 font-black text-xs uppercase tracking-widest mb-1.5">
-            No Showtimes Available
+            {t("no_showtime_avai")}
           </h3>
           <p className="text-zinc-500 text-xs max-w-sm mx-auto leading-relaxed">
             There are no scheduled showtimes for this movie in this city. on{" "}

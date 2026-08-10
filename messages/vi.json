@@ -84,5 +84,65 @@
     "loading": "Đang tải...",
     "load_more_reviews": "Tải thêm đánh giá",
     "no_reviews_yet": "Chưa có đánh giá nào. Hãy là người đầu tiên chia sẻ suy nghĩ của bạn!"
+  },
+  "booking": {
+    "create_booking_success": "Đặt vé thành công",
+    "create_booking_fail": "Đặt vé thất bại",
+    "showtimeId_required": "Mã suất chiếu là bắt buộc",
+    "seatTokens_required": "Mã token ghế là bắt buộc",
+    "bookingCode_required": "Mã đặt vé là bắt buộc",
+    "email_required": "Email là bắt buộc"
+  },
+  "seatLock": {
+    "extend_seat_success": "Gia hạn giữ ghế thành công",
+    "extend_seat_fail": "Gia hạn giữ ghế thất bại",
+    "lock_seat_success": "Khóa ghế thành công",
+    "lock_seat_fail": "Khóa ghế thất bại",
+    "unlock_seat_success": "Mở khóa ghế thành công",
+    "unlock_seat_fail": "Mở khóa ghế thất bại",
+    "showtimeId_required": "Mã suất chiếu là bắt buộc",
+    "seatIds_required": "Danh sách mã ghế là bắt buộc",
+    "seatTokens_required": "Mã token ghế là bắt buộc"
+  },
+  "screen": {
+    "booking": {
+      "min": "PHÚT",
+      "showtime_step": "Suất chiếu",
+      "seat_step": "Chọn ghế",
+      "checkout_step": "Thanh toán",
+      "select_movie_seat": "Chọn phim và ghế để xem tóm tắt",
+      "booking_summary": "Tóm tắt đặt vé",
+      "selected_seats": "Ghế đã chọn",
+      "rowSeat": "Hàng / Ghế",
+      "no_seat": "Chưa có ghế nào được chọn",
+      "discount_code": "Mã giảm giá",
+      "discount": "Giảm giá",
+      "booking_fee": "Phí đặt vé",
+      "free": "Miễn phí",
+      "total": "Tổng cộng",
+      "showtime": {
+        "no_showtime_avai": "Không có suất chiếu khả dụng",
+        "select_city": "Chọn thành phố",
+        "view_format": "Định dạng chiếu"
+      },
+      "seat": {
+        "infor_warning": "Bằng cách đặt vé trực tuyến, bạn được đảm bảo quyền đặt chỗ cho các vị trí đã chọn. Thời gian khóa giúp đảm bảo giao dịch diễn ra an toàn. Vui lòng đeo khẩu trang bên trong rạp theo quy định hướng dẫn y tế tại địa phương.",
+        "unavai": "Không khả dụng",
+        "tempo_hold": "Đang giữ tạm thời bởi người dùng khác",
+        "reserved": "Đã đặt trước / Bảo trì",
+        "seating_legend": "Chú thích sơ đồ ghế",
+        "standard": "Thường",
+        "vip": "VIP",
+        "vip_lounge": "Phòng chờ VIP",
+        "wheel": "Ghế xe lăn",
+        "selected_seat": "Ghế đã chọn",
+        "sold_out": "Đã bán hết",
+        "reserved_hold": "Giữ chỗ đặt trước",
+        "theorical_create": "Đang tạo sơ đồ rạp chiếu...",
+        "select_seat": "Chọn ghế",
+        "click_6_seats": "Nhấp vào các ghế trên sơ đồ bên dưới để chọn. Tối đa 6 ghế mỗi lần đặt.",
+        "theater_stage": "Sân khấu rạp / Màn hình cong hướng này"
+      }
+    }
   }
 }

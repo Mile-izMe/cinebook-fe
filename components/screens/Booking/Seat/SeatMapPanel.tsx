@@ -3,6 +3,7 @@ import { Armchair } from "lucide-react";
 import InformationWarning from "./InformationWarning";
 import SeatComponent from "./SeatComponent";
 import SeatingMapLegend from "./SeatingMapLegend";
+import { useTranslations } from "next-intl";
 
 interface SeatMapPanelProps {
   isLoading: boolean;
@@ -22,11 +23,12 @@ function SeatMapPanel({
   selectedSeats,
   onSeatSelect,
 }: SeatMapPanelProps) {
+  const t = useTranslations("screen.booking.seat");
   if (isLoading) {
     return (
       <div className="flex flex-col items-center justify-center h-64 text-zinc-500 text-xs animate-pulse">
         <Armchair className="w-10 h-10 mb-2 animate-bounce" />
-        <span>Creating theatrical grid...</span>
+        <span>{t("theorical_create")}</span>
       </div>
     );
   }
@@ -37,11 +39,10 @@ function SeatMapPanel({
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4 border-b border-white/5">
         <div>
           <h3 className="font-black text-white text-xs uppercase tracking-widest">
-            Select Seats
+            {t("select_seat")}
           </h3>
           <p className="text-zinc-500 text-[10px] uppercase font-black tracking-widest mt-1">
-            Click seats in the map below to select them. Maximum 6 seats per
-            booking.
+            {t("click_6_seats")}
           </p>
         </div>
       </div>
@@ -51,7 +52,7 @@ function SeatMapPanel({
         {/* Screen arc curve */}
         <div className="w-3/4 h-2 mx-auto bg-brand-red rounded-full shadow-[0_-5px_25px_rgba(229,9,20,0.8)]" />
         <div className="text-[9px] uppercase font-black tracking-widest text-zinc-500 mt-4">
-          Theater Stage / Curved Laser Screen This Way
+          {t("theater_stage")}
         </div>
       </div>
 

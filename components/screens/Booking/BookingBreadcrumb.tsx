@@ -1,6 +1,7 @@
 "use client";
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 
 export interface BreadcrumbMovieInfo {
@@ -23,6 +24,7 @@ export default function BookingBreadcrumb({
   currentStep = 1,
   onBackClick,
 }: BookingBreadcrumbProps) {
+  const t = useTranslations("screen.booking");
   const router = useRouter();
 
   const handleNavigateBack = () => {
@@ -73,21 +75,21 @@ export default function BookingBreadcrumb({
           <span
             className={currentStep >= 1 ? "text-brand-red" : "text-zinc-500"}
           >
-            1. Showtime
+            1. {t("showtime_step")}
           </span>
           <ChevronRight className="w-3.5 h-3.5 text-zinc-500" />
 
           <span
             className={currentStep >= 2 ? "text-brand-red" : "text-zinc-500"}
           >
-            2. Seats
+            2. {t("seat_step")}
           </span>
           <ChevronRight className="w-3.5 h-3.5 text-zinc-500" />
 
           <span
             className={currentStep === 3 ? "text-brand-red" : "text-zinc-500"}
           >
-            3. Checkout
+            3. {t("checkout_step")}
           </span>
         </div>
       </div>

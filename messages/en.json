@@ -84,5 +84,65 @@
     "loading": "Loading...",
     "load_more_reviews": "Load More Reviews",
     "no_reviews_yet": "No reviews yet. Be the first to share your thoughts!"
+  },
+  "booking": {
+    "create_booking_success": "Booking created successfully",
+    "create_booking_fail": "Failed to create booking",
+    "showtimeId_required": "Showtime ID is required",
+    "seatTokens_required": "Seat Tokens are required",
+    "bookingCode_required": "Booking code is required",
+    "email_required": "Email is required"
+  },
+  "seatLock": {
+    "extend_seat_success": "Seat extended successfully",
+    "extend_seat_fail": "Failed to extend seat",
+    "lock_seat_success": "Seat locked successfully",
+    "lock_seat_fail": "Failed to lock seat",
+    "unlock_seat_success": "Seat unlocked successfully",
+    "unlock_seat_fail": "Failed to unlock seat",
+    "showtimeId_required": "Showtime ID is required",
+    "seatIds_required": "List of Seat ID are required",
+    "seatTokens_required": "Seat Tokens are required"
+  },
+  "screen": {
+    "booking": {
+      "min": "MINS",
+      "showtime_step": "Showtime",
+      "seat_step": "Seats",
+      "checkout_step": "Checkout",
+      "select_movie_seat": "Select movie and seats to view summary",
+      "booking_summary": "Booking Summary",
+      "selected_seats": "Selected Seats",
+      "rowSeat": "Row / Seat",
+      "no_seat": "No seats selected yet",
+      "discount_code": "Discount Code",
+      "discount": "Discount",
+      "booking_fee": "Booking Fee",
+      "free": "Free",
+      "total": "Total",
+      "showtime": {
+        "no_showtime_avai": "No Showtimes Available",
+        "select_city": "Select City",
+        "view_format": "Viewing Format"
+      },
+      "seat": {
+        "infor_warning": "By booking tickets online, you are guaranteed reservation rights for selected spots. Lock duration allows safe transaction clearance. Please wear face masks inside theatres according to local health guidance laws.",
+        "unavai": "Unavailable",
+        "tempo_hold": "Temporarily held by another user",
+        "reserved": "Reserved/Maintenance",
+        "seating_legend": "Seating Legend",
+        "standard": "Standard",
+        "vip": "VIP",
+        "vip_lounge": "VIP Lounge",
+        "wheel": "Wheelchair",
+        "selected_seat": "Selected Seat",
+        "sold_out": "Sold Out",
+        "reserved_hold": "Reserved Hold",
+        "theorical_create": "Creating theatrical grid...",
+        "select_seat": "Select Seats",
+        "click_6_seats": "Click seats in the map below to select them. Maximum 6 seats per booking.",
+        "theater_stage": "Theater Stage / Curved Laser Screen This Way"
+      }
+    }
   }
 }

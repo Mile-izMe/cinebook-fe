@@ -14,7 +14,6 @@ export const useSeatLock = () => {
     onSuccess: () => {
       toast.success(t("lock_seat_success"));
       const maxExpiresAtMs = Date.now() + 15 * 60 * 1000;
-
       setMaxExpiresAt(maxExpiresAtMs);
     },
     onError: () => {
