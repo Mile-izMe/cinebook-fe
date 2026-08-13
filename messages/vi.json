@@ -3,6 +3,7 @@
     "SYS-500": "Hệ thống đang gặp sự cố. Vui lòng thử lại sau.",
     "SYS-400": "Dữ liệu không hợp lệ. Vui lòng kiểm tra lại thông tin đã nhập.",
     "SYS-409": "Dữ liệu gặp xung đột trong hệ thống.",
+
     "USR-001": "Không tìm thấy thông tin tài khoản.",
     "USR-002": "Email này đã được sử dụng. Vui lòng chọn email khác.",
     "USR-003": "Số điện thoại này đã được sử dụng.",
@@ -13,6 +14,42 @@
     "USR-008": "Bạn không có quyền truy cập vào chức năng này.",
     "USR-009": "Thông tin đăng nhập bị lỗi. Vui lòng đăng nhập lại.",
     "USR-010": "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại để tiếp tục.",
+
+    "MOV-001": "Không tìm thấy phim.",
+    "MOV-002": "Không tìm thấy thể loại phim.",
+    "MOV-003": "Bạn đã đánh giá bộ phim này rồi.",
+    "MOV-004": "Định dạng file không hợp lệ, chỉ chấp nhận file hình ảnh.",
+    "MOV-005": "Kích thước file vượt quá giới hạn cho phép.",
+    "MOV-006": "Tải file lên thất bại, vui lòng thử lại.",
+
+    "CIN-001": "Không tìm thấy thành phố.",
+    "CIN-002": "Không tìm thấy rạp chiếu phim.",
+    "CIN-003": "Không tìm thấy phòng chiếu.",
+    "CIN-004": "Sơ đồ ghế đã được tạo cho phòng chiếu này, không thể tạo lại.",
+    "CIN-005": "Không tìm thấy suất chiếu.",
+    "CIN-006": "Suất chiếu này bị trùng lặp thời gian với một suất chiếu khác trong cùng phòng.",
+
+    "BOOK-001": "Suất chiếu đã bắt đầu, không thể đặt vé.",
+    "BOOK-002": "Ghế này không thuộc phòng của suất chiếu này.",
+    "BOOK-003": "Không tìm thấy ghế.",
+    "BOOK-004": "Ghế này đã được người khác đặt.",
+    "BOOK-005": "Không tìm thấy đơn đặt vé.",
+    "BOOK-006": "Bạn không có quyền truy cập đơn đặt vé này.",
+    "BOOK-007": "Trạng thái đơn đặt vé không hợp lệ.",
+    "BOOK-008": "Bạn cần cung cấp email và số điện thoại.",
+
+    "LOCK-001": "Ghế này đang được người khác giữ.",
+    "LOCK-002": "Bạn không giữ ghế này, hoặc thời gian giữ ghế đã hết hạn.",
+    "LOCK-003": "Thời gian giữ ghế đã hết hạn.",
+    "LOCK-004": "Đã đạt giới hạn thời gian tối đa để giữ ghế.",
+
+    "PAY-001": "Không tìm thấy giao dịch thanh toán.",
+    "PAY-002": "Đơn đặt vé này đã được thanh toán thành công.",
+    "PAY-003": "Không thể tạo giao dịch thanh toán cho đơn đặt vé ở trạng thái này.",
+    "PAY-004": "Chữ ký xác thực (signature) không hợp lệ.",
+    "PAY-005": "Số tiền thanh toán không khớp với tổng tiền của đơn đặt vé.",
+    "PAY-006": "Trạng thái giao dịch thanh toán không hợp lệ.",
+    "PAY-007": "Đơn đặt vé đã hết hạn, không thể xử lý thanh toán.",
     "DEFAULT": "Đã có lỗi xảy ra. Vui lòng thử lại!"
   },
   "nav": {

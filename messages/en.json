@@ -3,6 +3,7 @@
     "SYS-500": "An unexpected system error occurred. Please try again later.",
     "SYS-400": "Invalid input data. Please check your information.",
     "SYS-409": "A data conflict occurred in the system.",
+
     "USR-001": "User account not found.",
     "USR-002": "This email already exists. Please use a different one.",
     "USR-003": "This phone number is already registered.",
@@ -13,6 +14,43 @@
     "USR-008": "You do not have permission to access this feature.",
     "USR-009": "Authentication error. Please log in again.",
     "USR-010": "Your session has expired. Please log in again to continue.",
+
+    "MOV-001": "Movie not found.",
+    "MOV-002": "Genre not found.",
+    "MOV-003": "You have already reviewed this movie.",
+    "MOV-004": "Invalid file type, only image files are allowed.",
+    "MOV-005": "File size exceeds the allowed limit.",
+    "MOV-006": "Failed to upload file, please try again.",
+
+    "CIN-001": "City not found.",
+    "CIN-002": "Cinema not found.",
+    "CIN-003": "Screening room not found.",
+    "CIN-004": "Seats have already been generated for this room, cannot regenerate.",
+    "CIN-005": "Showtime not found.",
+    "CIN-006": "Showtime overlaps with another showtime in the same room.",
+
+    "BOOK-001": "The showtime has already started, tickets cannot be booked.",
+    "BOOK-002": "The seat does not belong to the room for this showtime.",
+    "BOOK-003": "Seat not found.",
+    "BOOK-004": "The seat has already been booked by someone else.",
+    "BOOK-005": "Booking not found.",
+    "BOOK-006": "You do not have permission to access this booking.",
+    "BOOK-007": "Invalid booking status transition.",
+    "BOOK-008": "You need to provide email and phone number.",
+
+    "LOCK-001": "This seat is currently held by another user.",
+    "LOCK-002": "You do not own the lock for this seat, or the lock has expired.",
+    "LOCK-003": "The hold time for this seat has expired.",
+    "LOCK-004": "Maximum time holding seat reached.",
+
+    "PAY-001": "Payment not found.",
+    "PAY-002": "This booking has already been paid successfully.",
+    "PAY-003": "Cannot create payment for a booking in this status.",
+    "PAY-004": "Invalid callback signature.",
+    "PAY-005": "Callback amount does not match the booking amount.",
+    "PAY-006": "Invalid payment state transition.",
+    "PAY-007": "Booking has expired, payment cannot be processed.",
+
     "DEFAULT": "An unexpected error occurred. Please try again!"
   },
   "nav": {
@@ -94,54 +132,62 @@
     "email_required": "Email is required"
   },
   "seatLock": {
-    "extend_seat_success": "Seat extended successfully",
-    "extend_seat_fail": "Failed to extend seat",
-    "lock_seat_success": "Seat locked successfully",
-    "lock_seat_fail": "Failed to lock seat",
-    "unlock_seat_success": "Seat unlocked successfully",
-    "unlock_seat_fail": "Failed to unlock seat",
+    "extend_seat_success": "Seat hold extended successfully",
+    "extend_seat_fail": "Failed to extend seat hold",
+    "lock_seat_success": "Seat held successfully",
+    "lock_seat_fail": "Failed to hold seat",
+    "unlock_seat_success": "Seat released successfully",
+    "unlock_seat_fail": "Failed to release seat",
     "showtimeId_required": "Showtime ID is required",
-    "seatIds_required": "List of Seat ID are required",
-    "seatTokens_required": "Seat Tokens are required"
+    "seatIds_required": "At least one seat ID is required",
+    "seatTokens_required": "Seat tokens are required"
   },
+
   "screen": {
     "booking": {
       "min": "MINS",
       "showtime_step": "Showtime",
       "seat_step": "Seats",
       "checkout_step": "Checkout",
-      "select_movie_seat": "Select movie and seats to view summary",
+
+      "select_movie_seat": "Select a movie and seats to view the summary",
       "booking_summary": "Booking Summary",
       "selected_seats": "Selected Seats",
       "rowSeat": "Row / Seat",
       "no_seat": "No seats selected yet",
+
       "discount_code": "Discount Code",
       "discount": "Discount",
       "booking_fee": "Booking Fee",
       "free": "Free",
       "total": "Total",
+
       "showtime": {
         "no_showtime_avai": "No Showtimes Available",
         "select_city": "Select City",
         "view_format": "Viewing Format"
       },
+
       "seat": {
-        "infor_warning": "By booking tickets online, you are guaranteed reservation rights for selected spots. Lock duration allows safe transaction clearance. Please wear face masks inside theatres according to local health guidance laws.",
+        "infor_warning": "By booking tickets online, your selected seats will be temporarily held while you complete your booking. Please complete your transaction before the hold expires.",
         "unavai": "Unavailable",
         "tempo_hold": "Temporarily held by another user",
-        "reserved": "Reserved/Maintenance",
+        "reserved": "Reserved / Maintenance",
+
         "seating_legend": "Seating Legend",
         "standard": "Standard",
         "vip": "VIP",
         "vip_lounge": "VIP Lounge",
         "wheel": "Wheelchair",
         "selected_seat": "Selected Seat",
+
         "sold_out": "Sold Out",
-        "reserved_hold": "Reserved Hold",
-        "theorical_create": "Creating theatrical grid...",
+        "reserved_hold": "Reserved / Held",
+
+        "theorical_create": "Creating seating layout...",
         "select_seat": "Select Seats",
-        "click_6_seats": "Click seats in the map below to select them. Maximum 6 seats per booking.",
-        "theater_stage": "Theater Stage / Curved Laser Screen This Way"
+        "click_6_seats": "Select seats from the map below. You can select up to 6 seats per booking.",
+        "theater_stage": "Theater Stage / Curved Screen This Way"
       }
     }
   }

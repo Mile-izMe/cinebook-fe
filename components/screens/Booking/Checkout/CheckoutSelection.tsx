@@ -21,6 +21,7 @@ import { FormProvider, useForm, useWatch } from "react-hook-form";
 import BookingBreadcrumb from "../BookingBreadcrumb";
 import BookingSummary from "../BookingSummary";
 import CheckoutOption from "./CheckoutOption";
+import { useCreatePayment } from "@/features/payment";
 
 interface CheckoutSelectionProps {
   showtimeId: string;
@@ -40,6 +41,7 @@ function CheckoutSelection({ showtimeId }: CheckoutSelectionProps) {
 
   const { data } = useSeatMap(showtimeId);
   const { mutateAsync: createBooking } = useCreateBooking();
+  const { mutateAsync: createPayment } = useCreatePayment();
 
   const isAuthenticated = status === "authenticated";
   const seatMap = data?.data;
@@ -104,9 +106,20 @@ function CheckoutSelection({ showtimeId }: CheckoutSelectionProps) {
 
   const handleCreateBooking = async (data: CreateBookingInput) => {
     try {
-      await createBooking(data);
+      const bookingResult = await createBooking(data);
+      const bookingId = bookingResult.data.bookingId;
+
+      const paymentResult = await createPayment({
+        bookingId,
+        request: {
+          paymentMethod: paymentMethod.toUpperCase(),
+          guestEmail: data.guestEmail,
+          guestPhone: data.guestPhone,
+        },
+      });
+
       clearSeats();
-      router.push(`/bookings/successs`);
+      router.push(paymentResult.data.paymentUrl);
     } catch {}
   };
 
