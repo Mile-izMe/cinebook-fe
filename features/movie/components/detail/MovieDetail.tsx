@@ -35,7 +35,7 @@ export default function MovieDetail({ id }: MovieDetailProps) {
   }
 
   return (
-    <div className="flex-grow bg-brand-black pb-20">
+    <div className="grow bg-brand-black pb-20">
       {/* Hero Backdrop Panel */}
       <div className="relative h-[45vh] sm:h-[60vh] w-full overflow-hidden border-b border-white/5">
         <div className="absolute inset-0">
@@ -44,8 +44,8 @@ export default function MovieDetail({ id }: MovieDetailProps) {
             alt={movie.title}
             className="w-full h-full object-cover opacity-25"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/40 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-r from-brand-black via-brand-black/20 to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-t from-brand-black via-brand-black/40 to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-r from-brand-black via-brand-black/20 to-transparent" />
         </div>
 
         {/* Back Button */}
@@ -80,7 +80,7 @@ export default function MovieDetail({ id }: MovieDetailProps) {
             initial={{ opacity: 0, y: 35 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="w-48 sm:w-64 aspect-[2/3] overflow-hidden rounded-2xl border border-white/5 shadow-2xl shrink-0 self-center md:self-auto bg-brand-dark"
+            className="w-48 sm:w-64 aspect-2/3 overflow-hidden rounded-2xl border border-white/5 shadow-2xl shrink-0 self-center md:self-auto bg-brand-dark"
           >
             <img
               src={movie.posterUrl}

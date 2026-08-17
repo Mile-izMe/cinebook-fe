@@ -10,6 +10,8 @@ interface BookingStore {
   setMaxExpiresAt: (ts: number) => void;
   toggleSeat: (seat: SeatMapSeat) => void;
   clearSeats: () => void;
+
+  clearStore: () => void;
 }
 
 export const useBookingStore = create<BookingStore>()(
@@ -50,6 +52,13 @@ export const useBookingStore = create<BookingStore>()(
         }),
 
       clearSeats: () => set({ selectedSeats: [], seatTokens: {} }),
+
+      clearStore: () =>
+        set({
+          selectedSeats: [],
+          seatTokens: {},
+          maxExpiresAt: null,
+        }),
     }),
     {
       name: "cinebook-session-storage",

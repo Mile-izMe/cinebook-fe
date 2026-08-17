@@ -11,6 +11,7 @@ function MockPayment() {
   const router = useRouter();
 
   const paymentId = searchParams.get("paymentId");
+  const bookingId = searchParams.get("bookingId");
   const amountStr = searchParams.get("amount") || "0";
   const amount = parseInt(amountStr, 10);
 
@@ -30,7 +31,11 @@ function MockPayment() {
   };
 
   const handlePayment = async (isSuccess: boolean) => {
-    if (!paymentId) return;
+    if (!paymentId || !bookingId) {
+      toast.error("Missing transaction information!");
+      return;
+    }
+
     setIsLoading(true);
 
     try {
@@ -45,13 +50,8 @@ function MockPayment() {
         setPaymentStatus(isSuccess ? "SUCCESS" : "FAILED");
 
         setTimeout(() => {
-          if (isSuccess) {
-            toast.success("Chuyển hướng về trang Chi tiết vé (Success)");
-            // router.push(`/booking/success?bookingId=${...}`);
-          } else {
-            toast.error("Chuyển hướng về trang Thanh toán lại (Failed)");
-            // router.push(`/booking/failed?bookingId=${...}`);
-          }
+          toast.info("Routing back to website");
+          router.push(`/bookings/return?bookingId=${bookingId}`);
         }, 2000);
       }, 1500);
     } catch (error) {
@@ -61,7 +61,7 @@ function MockPayment() {
     }
   };
 
-  if (!paymentId) {
+  if (!paymentId || !bookingId) {
     return (
       <div className="p-10 text-center text-red-500 font-bold">
         Error: Payment ID not found in URL

@@ -3,6 +3,7 @@ import { ApiResponse, CursorQueryParams } from "@/types";
 import {
   BookingResponse,
   BookingSummaryResponse,
+  BookingTicketResponse,
   SeatMapResponse,
 } from "../types";
 import { BookingInputForGuest, CreateBookingInput } from "../validations";
@@ -37,4 +38,11 @@ export const bookingApi = {
 
   cancelBookingGuest: (request: BookingInputForGuest): Promise<void> =>
     api.post("/api/bookings/guest/cancel", request),
+
+  // =============== BOOKING STATUS & TICKET =================
+  getBookingStatus: (id: string): Promise<string> =>
+    api.get(`/api/bookings/${id}/status`),
+
+  getBookingTicket: (id: string): Promise<ApiResponse<BookingTicketResponse>> =>
+    api.get(`/api/bookings/${id}/ticket`),
 };

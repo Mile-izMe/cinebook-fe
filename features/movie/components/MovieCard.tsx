@@ -21,7 +21,7 @@ export default function MovieCard({ movie, onClick }: MovieCardProps) {
       whileHover={{ y: -8, transition: { duration: 0.2 } }}
       className="group bg-brand-dark border border-white/5 rounded-2xl overflow-hidden shadow-2xl hover:shadow-brand-red/10 hover:border-white/10 transition-all duration-200"
     >
-      <div className="relative aspect-[2/3] overflow-hidden">
+      <div className="relative aspect-2/3 overflow-hidden">
         {/* Poster */}
         <img
           src={movie.posterUrl}

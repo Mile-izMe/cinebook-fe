@@ -61,6 +61,21 @@ export interface BookingSummaryResponse {
   status: BookingStatus;
 }
 
+export interface BookingTicketResponse {
+  bookingCode: string;
+  movieTitle: string;
+  backdropUrl: string;
+  format: string;
+  duration: number;
+  cinemaName: string;
+  cinemaAddress: string;
+  roomName: string;
+  showtime: string;
+  seats: string[];
+  totalPrice: number;
+  paymentMethod: string;
+}
+
 export type SeatType = "STANDARD" | "VIP" | "COUPLE" | "WHEELCHAIR";
 
 export type SeatStatus = "AVAILABLE" | "RESERVED" | "SOLD";

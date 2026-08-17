@@ -1,7 +1,13 @@
-import MockPayment from "@/components/screens/Payment/MockPayment";
+import { MockPayment } from "@/components";
+import { Metadata } from "next";
 
-function page() {
+export const metadata: Metadata = {
+  title: "Mock Payment | CINEBOOK",
+  description: "Payment Sandbox for Demo.",
+};
+
+function MockPaymentPage() {
   return <MockPayment />;
 }
 
-export default page;
+export default MockPaymentPage;
