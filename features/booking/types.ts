@@ -53,8 +53,11 @@ export interface BookingResponse {
 
 export interface BookingSummaryResponse {
   bookingId: string;
+  bookingCode: string;
   movieName: string;
   posterUrl: string;
+  cinemaName: string;
+  roomName: string;
   seats: string[];
   showtimeStart: string;
   totalPrice: number;
