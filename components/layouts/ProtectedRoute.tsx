@@ -1,12 +1,13 @@
 "use client";
 
-import { useAuthStore } from "@/features/auth";
 import { tokenStorage } from "@/lib";
+import { useAuthStore } from "@/store";
 import { useRouter, usePathname } from "next/navigation";
 import { useEffect } from "react";
 
 export function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { status, setStatus } = useAuthStore();
+  const status = useAuthStore((s) => s.status);
+  const setStatus = useAuthStore((s) => s.setStatus);
   const router = useRouter();
   const pathname = usePathname();
 

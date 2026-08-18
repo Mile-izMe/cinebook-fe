@@ -1,7 +1,8 @@
 "use client";
 
-import { useAuthStore, useGetBookingTicket } from "@/features";
+import { useGetBookingTicket } from "@/features";
 import { formatCurrency, formatIsoToCustom } from "@/lib";
+import { useAuthStore } from "@/store";
 import {
   ArrowRight,
   Calendar,

@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { authApi } from "../api";
-import { useAuthStore } from "../store";
+import { useAuthStore } from "@/store";
 import { LoginInput } from "../validation";
 import { setCookie } from "cookies-next";
 
@@ -12,7 +12,7 @@ export const useLogin = () => {
   const t = useTranslations("auth");
   const router = useRouter();
   const queryClient = useQueryClient();
-  const { setAuth } = useAuthStore();
+  const setAuth = useAuthStore((a) => a.setAuth);
 
   return useMutation({
     mutationFn: (data: LoginInput) => authApi.login(data),

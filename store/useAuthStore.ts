@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { User } from "../types";
+import { User } from "../features/auth/types";
 import { devtools } from "zustand/middleware";
 
 type AuthStatus = "idle" | "loading" | "authenticated" | "unauthenticated";

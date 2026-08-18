@@ -1,10 +1,10 @@
 "use client";
 
-import { useAuthStore } from "@/features/auth";
 import { Loader2 } from "lucide-react";
 import { useReviews } from "../hooks";
 import CreateReviewForm from "./CreateReviewForm";
 import ReviewCard from "./ReviewCard";
+import { useAuthStore } from "@/store";
 
 interface MovieReviewSectionProps {
   movieId: string;
@@ -13,7 +13,7 @@ interface MovieReviewSectionProps {
 export default function MovieReviewSection({
   movieId,
 }: MovieReviewSectionProps) {
-  const { status } = useAuthStore();
+  const status = useAuthStore((s) => s.status);
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useReviews(movieId);
   const reviews = data?.pages.flatMap((page) => page.data) ?? [];

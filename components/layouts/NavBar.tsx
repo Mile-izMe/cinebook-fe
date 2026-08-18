@@ -1,5 +1,6 @@
 "use client";
-import { useAuthStore, useLogout } from "@/features/auth";
+import { useLogout } from "@/features/auth";
+import { useAuthStore } from "@/store";
 import { Film, LogOut, Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useTranslations } from "next-intl";
@@ -10,7 +11,8 @@ import { useState } from "react";
 export default function Navbar() {
   const t = useTranslations("nav");
   const [isOpen, setIsOpen] = useState(false);
-  const { user, status } = useAuthStore();
+  const user = useAuthStore((s) => s.user);
+  const status = useAuthStore((s) => s.status);
   const pathname = usePathname();
   const normalizedPath = pathname.replace(/^\/(en|vi)/, "") || "/";
   const { mutate: logout, isPending } = useLogout();
@@ -113,7 +115,7 @@ export default function Navbar() {
                 <X className="w-6 h-6" />
               ) : (
                 <Menu className="w-6 h-6" />
-              )}  
+              )}
             </button>
           </div>
         </div>
@@ -174,7 +176,7 @@ export default function Navbar() {
                   >
                     <LogOut className="w-4 h-4" />
                     <span>Sign Out</span>
-                  </button> 
+                  </button>
                 </div>
               ) : (
                 <Link

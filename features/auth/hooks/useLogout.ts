@@ -3,12 +3,12 @@ import { ApiErrorResponse } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { authApi } from "../api";
-import { useAuthStore } from "../store";
+import { useAuthStore } from "@/store";
 
 export const useLogout = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
-  const { clearAuth } = useAuthStore();
+  const clearAuth = useAuthStore((a) => a.clearAuth);
 
   return useMutation({
     mutationFn: () => authApi.logout(),

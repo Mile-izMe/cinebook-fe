@@ -1,11 +1,14 @@
-import { useQuery } from "@tanstack/react-query";
-import { authApi } from "../api";
-import { useEffect } from "react";
-import { useAuthStore } from "../store";
 import { tokenStorage } from "@/lib";
+import { useAuthStore } from "@/store";
+import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
+import { authApi } from "../api";
 
 export const useMe = () => {
-  const { setAuth, clearAuth, setLoading } = useAuthStore();
+  const setAuth = useAuthStore((a) => a.setAuth);
+  const clearAuth = useAuthStore((a) => a.clearAuth);
+  const setLoading = useAuthStore((a) => a.setLoading);
+
   const hasToken =
     typeof window !== "undefined" && !!tokenStorage.getAccessToken();
 

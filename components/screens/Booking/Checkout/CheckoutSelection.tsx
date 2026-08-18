@@ -1,7 +1,6 @@
 "use client";
 
 import { useSeatHold } from "@/features";
-import { useAuthStore } from "@/features/auth";
 import {
   bookingSchema,
   CinemaSummary,
@@ -10,7 +9,7 @@ import {
   useSeatMap,
 } from "@/features/booking";
 import { useCreateBooking } from "@/features/booking/hooks/useCreateBooking";
-import { useBookingStore } from "@/store";
+import { useAuthStore, useBookingStore } from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ShieldAlert } from "lucide-react";
 import { useTranslations } from "next-intl";
