@@ -1,11 +1,13 @@
-import React from "react";
+import { ProfileComponent } from "@/components";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Profile | CINEBOOK",
+  description: "Profile user.",
+};
 
 function ProfilePage() {
-  return (
-    <div>
-      <div>This is Profile page</div>
-    </div>
-  );
+  return <ProfileComponent />;
 }
 
 export default ProfilePage;
