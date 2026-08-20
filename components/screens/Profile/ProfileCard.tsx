@@ -1,11 +1,23 @@
+"use client";
+
 import { User } from "@/features";
-import { Image, Loader2, Mail, Phone, Save, UserIcon } from "lucide-react";
+import { Camera, Loader2, Mail, Phone, Save, UserIcon } from "lucide-react";
+import { useEffect, useMemo, useRef } from "react";
+import { useFormContext } from "react-hook-form";
+import { toast } from "sonner";
+
+const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
+const DEFAULT_AVATAR =
+  "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200";
 
 interface ProfileCardProps {
   user: User | null;
   isEditing: boolean;
   setIsEditing: (boolean: boolean) => void;
   isLoading: boolean;
+  avatarFile: File | null;
+  onAvatarChange: (file: File | null) => void;
 }
 
 function ProfileCard({
@@ -13,11 +25,57 @@ function ProfileCard({
   isEditing,
   setIsEditing,
   isLoading,
+  avatarFile,
+  onAvatarChange,
 }: ProfileCardProps) {
-  //   const {
-  //     register,
-  //     formState: { errors },
-  //   } = useFormContext();
+  const {
+    register,
+    reset,
+    formState: { errors },
+  } = useFormContext();
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Preview - fallback to current avatar if not selected
+  const previewUrl = useMemo(() => {
+    if (avatarFile) return URL.createObjectURL(avatarFile);
+    return user?.avatarUrl || DEFAULT_AVATAR;
+  }, [avatarFile, user?.avatarUrl]);
+
+  useEffect(() => {
+    return () => {
+      if (avatarFile) URL.revokeObjectURL(previewUrl);
+    };
+  }, [avatarFile, previewUrl]);
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+
+    if (!file) return;
+
+    if (!ALLOWED_TYPES.includes(file.type)) {
+      toast.error("Only accept JPEG, PNG or WEBP");
+      return;
+    }
+    if (file.size > MAX_FILE_SIZE) {
+      toast.error("Maximum file size is 5MB");
+      return;
+    }
+
+    onAvatarChange(file);
+  };
+
+  const handleCancel = () => {
+    reset({
+      userName: user?.userName || "",
+      email: user?.email || "",
+      phone: user?.phone || "",
+      avatarUrl: user?.avatarUrl || "",
+    });
+    onAvatarChange(null);
+    setIsEditing(false);
+  };
 
   return (
     <div className="lg:col-span-2">
@@ -33,6 +91,40 @@ function ProfileCard({
             </p>
           </div>
 
+          {/* Avatar picker */}
+          <div className="flex items-center gap-4">
+            <div className="relative">
+              <img
+                src={previewUrl}
+                alt="Avatar preview"
+                className="w-20 h-20 rounded-full border-2 border-brand-red object-cover"
+              />
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                className="absolute bottom-0 right-0 bg-brand-red hover:bg-red-700 text-white rounded-full p-1.5 border-2 border-brand-dark transition-colors cursor-pointer"
+                title="Doi anh dai dien"
+              >
+                <Camera className="w-3.5 h-3.5" />
+              </button>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                onChange={handleFileSelect}
+                className="hidden"
+              />
+            </div>
+            <div className="text-[10px] text-zinc-500 uppercase font-black tracking-widest">
+              JPEG, PNG hoac WEBP. Toi da 5MB.
+              {avatarFile && (
+                <p className="text-brand-red mt-1 normal-case font-semibold">
+                  Da chon: {avatarFile.name}
+                </p>
+              )}
+            </div>
+          </div>
+
           {/* Grid Name/Email */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
@@ -43,22 +135,16 @@ function ProfileCard({
                 <UserIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-zinc-700" />
                 <input
                   type="text"
-                  placeholder="John Doe"
-                  //   {...register("name", {
-                  //     required: "Full Name is required",
-                  //     minLength: {
-                  //       value: 2,
-                  //       message: "Name must be at least 2 characters",
-                  //     },
-                  //   })}
+                  placeholder="Your user name"
+                  {...register("userName")}
                   className="w-full bg-black border border-white/5 rounded-xl pl-12 pr-4 py-3 text-xs focus:outline-none focus:ring-1 focus:ring-brand-red focus:border-brand-red text-white placeholder-zinc-700 uppercase font-semibold"
                 />
               </div>
-              {/* {errors.name && (
+              {errors.userName && (
                 <p className="text-brand-red text-[9px] uppercase font-black tracking-widest mt-1">
-                  {errors.name.message}
+                  {errors.userName.message as string}
                 </p>
-              )} */}
+              )}
             </div>
 
             <div className="space-y-2">
@@ -69,22 +155,16 @@ function ProfileCard({
                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-zinc-700" />
                 <input
                   type="email"
-                  placeholder="name@example.com"
-                  //   {...register("email", {
-                  //     required: "Email is required",
-                  //     pattern: {
-                  //       value: /^\S+@\S+$/i,
-                  //       message: "Please enter a valid email address",
-                  //     },
-                  //   })}
+                  placeholder="Your email address"
+                  {...register("email")}
                   className="w-full bg-black border border-white/5 rounded-xl pl-12 pr-4 py-3 text-xs focus:outline-none focus:ring-1 focus:ring-brand-red focus:border-brand-red text-white placeholder-zinc-700 uppercase font-semibold"
                 />
               </div>
-              {/* {errors.email && (
+              {errors.email && (
                 <p className="text-brand-red text-[9px] uppercase font-black tracking-widest mt-1">
-                  {errors.email.message}
+                  {errors.email.message as string}
                 </p>
-              )} */}
+              )}
             </div>
           </div>
 
@@ -98,41 +178,16 @@ function ProfileCard({
                 <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-zinc-700" />
                 <input
                   type="tel"
-                  placeholder="+1 (555) 019-2834"
-                  //   {...register("phone")}
+                  placeholder="Your phone number"
+                  {...register("phone")}
                   className="w-full bg-black border border-white/5 rounded-xl pl-12 pr-4 py-3 text-xs focus:outline-none focus:ring-1 focus:ring-brand-red focus:border-brand-red text-white placeholder-zinc-700 font-mono font-semibold"
                 />
               </div>
-              {/* {errors.phone && (
+              {errors.phone && (
                 <p className="text-brand-red text-[9px] uppercase font-black tracking-widest mt-1">
-                  {errors.phone.message}
+                  {errors.phone.message as string}
                 </p>
-              )} */}
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-[10px] font-black text-zinc-400 uppercase tracking-widest">
-                Avatar Image URL
-              </label>
-              <div className="relative">
-                <Image className="absolute left-4 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-zinc-700" />
-                <input
-                  type="text"
-                  placeholder="https://images.unsplash.com/photo-..."
-                  //   {...register("avatarUrl", {
-                  //     pattern: {
-                  //       value: /^https?:\/\/.+/i,
-                  //       message: "Must be a valid secure image URL",
-                  //     },
-                  //   })}
-                  className="w-full bg-black border border-white/5 rounded-xl pl-12 pr-4 py-3 text-xs focus:outline-none focus:ring-1 focus:ring-brand-red focus:border-brand-red text-white placeholder-zinc-700 font-semibold"
-                />
-              </div>
-              {/* {errors.avatarUrl && (
-                <p className="text-brand-red text-[9px] uppercase font-black tracking-widest mt-1">
-                  {errors.avatarUrl.message}
-                </p>
-              )} */}
+              )}
             </div>
           </div>
 
@@ -140,7 +195,7 @@ function ProfileCard({
           <div className="flex justify-end gap-3 pt-4 border-t border-white/5">
             <button
               type="button"
-              onClick={() => setIsEditing(false)}
+              onClick={handleCancel}
               className="px-5 py-3 text-[10px] font-black uppercase tracking-widest bg-brand-black border border-white/5 hover:bg-zinc-800 text-zinc-400 hover:text-white rounded-xl transition-all cursor-pointer"
             >
               Cancel

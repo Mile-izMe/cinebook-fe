@@ -1,11 +1,20 @@
-import { User } from "@/features";
+import { User, UserStats } from "@/features";
+import { formatCurrency } from "@/lib";
 import { ActivityIcon, Award, Film, Ticket } from "lucide-react";
 
 interface ProfileStaticColumnProps {
   user: User | null;
+  userStats?: UserStats;
+  isEditing: boolean;
+  onEdit: () => void;
 }
 
-function ProfileStaticColumn({ user }: ProfileStaticColumnProps) {
+function ProfileStaticColumn({
+  user,
+  userStats,
+  isEditing,
+  onEdit,
+}: ProfileStaticColumnProps) {
   return (
     <div className="space-y-6">
       {/* Avatar Profile Card */}
@@ -35,11 +44,11 @@ function ProfileStaticColumn({ user }: ProfileStaticColumnProps) {
 
         <div className="pt-2">
           <button
-            // onClick={() => setIsEditing(!isEditing)}
+            type="button"
+            onClick={onEdit}
             className="w-full py-2.5 bg-brand-black border border-white/5 hover:bg-zinc-800 text-zinc-300 hover:text-white rounded-xl text-[10px] font-black transition-colors uppercase tracking-widest cursor-pointer"
           >
-            {/* {isEditing ? "Cancel Edit" : "Edit Profile"} */}
-            Edit Profile
+            {isEditing ? "Cancel Edit" : "Edit Profile"}
           </button>
         </div>
       </div>
@@ -58,7 +67,7 @@ function ProfileStaticColumn({ user }: ProfileStaticColumnProps) {
               Tickets
             </span>
             <p className="text-xl font-black text-white">
-              {/* {totalSeatsBooked} */} 2
+              {userStats?.totalTickets || 0}
             </p>
           </div>
           <div className="bg-black border border-white/5 p-4 rounded-xl space-y-1">
@@ -67,7 +76,7 @@ function ProfileStaticColumn({ user }: ProfileStaticColumnProps) {
               Bookings
             </span>
             <p className="text-xl font-black text-white">
-              {/* {bookings.length} */} 3
+              {userStats?.totalBookings || 0}
             </p>
           </div>
         </div>
@@ -77,7 +86,7 @@ function ProfileStaticColumn({ user }: ProfileStaticColumnProps) {
             Total Investment
           </span>
           <span className="font-mono text-emerald-400 font-black text-xs">
-            {/* ${totalAmountSpent.toFixed(2)} */} 300.000 VNĐ
+            {formatCurrency(userStats?.totalSpent)}
           </span>
         </div>
       </div>

@@ -1,4 +1,5 @@
 "use client";
+
 import { useLogout } from "@/features/auth";
 import { useAuthStore } from "@/store";
 import { Film, LogOut, Menu, X } from "lucide-react";
@@ -17,6 +18,10 @@ export default function Navbar() {
   const normalizedPath = pathname.replace(/^\/(en|vi)/, "") || "/";
   const { mutate: logout, isPending } = useLogout();
   const isAuthenticated = status === "authenticated";
+
+  const avatarSrc =
+    user?.avatarUrl ||
+    "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200";
 
   const navLinks = [
     { name: t("home"), path: "/" },
@@ -75,10 +80,7 @@ export default function Navbar() {
                   className="flex items-center gap-2 hover:opacity-85 transition-opacity"
                 >
                   <img
-                    src={
-                      user?.avatarUrl ||
-                      "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200"
-                    }
+                    src={avatarSrc}
                     alt={user?.userName}
                     className="w-8 h-8 rounded-full border-2 border-brand-red object-cover"
                   />
