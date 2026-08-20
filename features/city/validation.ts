@@ -8,7 +8,11 @@ export const citySchema = (t: MessageGetter) =>
   });
 
 export const createCitySchema = (t: MessageGetter) => citySchema(t);
-export const updateCitySchema = (t: MessageGetter) => citySchema(t);
+
+export const updateCitySchema = (t: MessageGetter) =>
+  citySchema(t).extend({
+    id: z.string(),
+  });
 
 export type CreateCityInput = z.infer<ReturnType<typeof createCitySchema>>;
 export type UpdateCityInput = z.infer<ReturnType<typeof updateCitySchema>>;

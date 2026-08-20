@@ -2,7 +2,7 @@
 
 import { useLogout } from "@/features/auth";
 import { useAuthStore } from "@/store";
-import { Film, LogOut, Menu, X } from "lucide-react";
+import { Film, LayoutDashboard, LogOut, Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
@@ -18,6 +18,7 @@ export default function Navbar() {
   const normalizedPath = pathname.replace(/^\/(en|vi)/, "") || "/";
   const { mutate: logout, isPending } = useLogout();
   const isAuthenticated = status === "authenticated";
+  const isAdmin = user?.roleCode === "ADMIN";
 
   const avatarSrc =
     user?.avatarUrl ||
@@ -88,6 +89,17 @@ export default function Navbar() {
                     {user?.userName}
                   </span>
                 </Link>
+
+                {isAdmin && (
+                  <Link
+                    href="/admin"
+                    className="p-2 text-brand-red bg-brand-red/10 hover:bg-brand-red/20 rounded-lg transition-all border border-brand-red/20"
+                    title="Admin Dashboard"
+                  >
+                    <LayoutDashboard className="w-5 h-5" />
+                  </Link>
+                )}
+
                 <button
                   onClick={() => logout()}
                   disabled={isPending}
@@ -171,6 +183,18 @@ export default function Navbar() {
                       </div>
                     </div>
                   </div>
+
+                  {isAdmin && (
+                    <Link
+                      href="/admin"
+                      onClick={() => setIsOpen(false)}
+                      className="w-full flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-brand-red/10 text-brand-red border border-brand-red/20 hover:bg-brand-red/20 transition-colors"
+                    >
+                      <LayoutDashboard className="w-4 h-4" />
+                      <span>Admin Dashboard</span>
+                    </Link>
+                  )}
+
                   <button
                     onClick={() => logout()}
                     disabled={isPending}
