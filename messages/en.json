@@ -190,5 +190,8 @@
         "theater_stage": "Theater Stage / Curved Screen This Way"
       }
     }
+  },
+  "payment": {
+    "mock_success": "Mock payment success"
   }
 }

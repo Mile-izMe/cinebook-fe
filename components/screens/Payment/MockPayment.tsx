@@ -52,8 +52,8 @@ function MockPayment() {
         setTimeout(() => {
           toast.info("Routing back to website");
           router.push(`/bookings/return?bookingId=${bookingId}`);
-        }, 2000);
-      }, 1500);
+        }, 1500);
+      }, 1000);
     } catch (error) {
       console.error(error);
       alert("Có lỗi xảy ra khi gọi API giả lập!");

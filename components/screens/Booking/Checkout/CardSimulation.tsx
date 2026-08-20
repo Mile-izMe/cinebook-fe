@@ -193,7 +193,7 @@ function CardSimulation({
         <div className="flex gap-3 bg-black p-4 rounded-xl border border-white/5 text-[10px] uppercase font-black tracking-wider text-zinc-400 leading-relaxed">
           <ShieldCheck className="w-5 h-5 text-emerald-500 shrink-0" />
           <p>
-            By clicking &quot;Confirm Booking&quot;, you authorize Starlight
+            By clicking &quot;Confirm Booking&quot;, you authorize Cinebook
             Cinema Group to charge your card{" "}
             <span className="text-white font-bold">
               {finalPrice.toLocaleString("vi-VN")}đ

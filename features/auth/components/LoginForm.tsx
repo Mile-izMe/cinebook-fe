@@ -55,7 +55,7 @@ function LoginForm() {
             className="inline-flex items-center gap-2 text-brand-red font-black text-2xl tracking-widest select-none"
           >
             <Film className="w-8 h-8 fill-brand-red animate-pulse" />
-            <span>STARLIGHT</span>
+            <span>CINEBOOK</span>
           </Link>
           <h2 className="text-xs font-black text-white uppercase tracking-widest">
             Sign In to Your Account

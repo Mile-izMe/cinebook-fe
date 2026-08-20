@@ -181,5 +181,8 @@
         "theater_stage": "Sân khấu rạp / Màn hình cong hướng này"
       }
     }
+  },
+  "payment": {
+    "mock_success": "Giả lập thanh toán thành công"
   }
 }

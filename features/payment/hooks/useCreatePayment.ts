@@ -17,7 +17,7 @@ export const useCreatePayment = () => {
     mutationFn: (payload: CreatePaymentPayload) =>
       paymentApi.createPayment(payload.bookingId, payload.request),
     onSuccess: () => {
-      toast.success(t("create_payment_success"));
+      // toast.success(t("create_payment_success"));
       queryClient.invalidateQueries({ queryKey: ["payments"] });
     },
     onError: () => {
