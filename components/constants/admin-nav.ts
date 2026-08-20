@@ -1,10 +1,11 @@
 import {
-  LayoutDashboard,
-  Film,
-  Tags,
   Building2,
-  MonitorPlay,
   CalendarDays,
+  DoorOpen,
+  Film,
+  LayoutDashboard,
+  LayoutGrid,
+  MapPin,
   Ticket,
   Users,
 } from "lucide-react";
@@ -16,17 +17,20 @@ export const ADMIN_NAV_LINKS = [
   },
   {
     title: "Movie Management",
-    items: [
-      { name: "Movies", href: "/admin/movies", icon: Film },
-      { name: "Genres", href: "/admin/genres", icon: Tags },
-    ],
+    items: [{ name: "Movies", href: "/admin/movies", icon: Film }],
   },
   {
     title: "Cinema Management",
     items: [
-      { name: "Cities", href: "/admin/cities", icon: Building2 },
+      { name: "Cities", href: "/admin/cities", icon: MapPin },
       { name: "Cinemas", href: "/admin/cinemas", icon: Building2 },
-      { name: "Rooms & Seats", href: "/admin/rooms", icon: MonitorPlay },
+      { name: "Rooms", href: "/admin/rooms", icon: DoorOpen },
+    ],
+  },
+  {
+    title: "Workspace & Visuals",
+    items: [
+      { name: "Seat Map Editor", href: "/admin/seat-editor", icon: LayoutGrid },
     ],
   },
   {

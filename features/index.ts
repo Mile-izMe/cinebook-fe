@@ -7,3 +7,4 @@ export * from "./seatLock";
 export * from "./storage";
 export * from "./user";
 export * from "./cinema";
+export * from "./room";
