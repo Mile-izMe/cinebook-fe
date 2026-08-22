@@ -4,16 +4,21 @@ import { toast } from "sonner";
 import { movieApi } from "../api";
 import { UpdateMovieInput } from "../validation";
 
-export const useUpdateMovie = (id: string) => {
+export type UpdateMoviePayload = {
+  id: string;
+} & UpdateMovieInput;
+
+export const useUpdateMovie = () => {
   const t = useTranslations("movie");
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (data: UpdateMovieInput) => movieApi.updateMovie(id, data),
-    onSuccess: () => {
+    mutationFn: ({ id, ...data }: UpdateMoviePayload) =>
+      movieApi.updateMovie(id, data),
+    onSuccess: (_, variables) => {
       toast.success(t("update_movie_success"));
       queryClient.invalidateQueries({ queryKey: ["movie"] });
-      queryClient.invalidateQueries({ queryKey: ["movie", id] });
+      queryClient.invalidateQueries({ queryKey: ["movie", variables.id] });
     },
     onError: () => {
       toast.error(t("update_movie_fail"));
