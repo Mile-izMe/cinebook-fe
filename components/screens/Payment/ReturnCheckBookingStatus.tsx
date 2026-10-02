@@ -46,12 +46,12 @@ function ReturnCheckBookingStatus() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-brand-black text-white px-4 text-center">
         <h2 className="text-xl font-bold text-brand-red mb-2">Lỗi truy cập</h2>
-        <p className="text-gray-400">
+        <p className="text-zinc-400">
           Không tìm thấy mã giao dịch. Vui lòng kiểm tra lại đơn hàng của bạn.
         </p>
         <button
           onClick={() => router.push("/")}
-          className="mt-6 px-6 py-2 bg-white text-black font-bold rounded-lg hover:bg-gray-200 transition-colors"
+          className="mt-6 px-6 py-3 bg-brand-red text-white font-black rounded-xl hover:bg-red-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-brand-black transition-colors"
         >
           Về trang chủ
         </button>
@@ -61,7 +61,7 @@ function ReturnCheckBookingStatus() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-brand-black text-white px-4">
-      <div className="bg-zinc-900/50 p-10 rounded-2xl border border-zinc-800 flex flex-col items-center text-center max-w-sm w-full shadow-2xl backdrop-blur-sm">
+      <div className="bg-brand-dark p-10 rounded-2xl border border-white/5 flex flex-col items-center text-center max-w-sm w-full shadow-2xl backdrop-blur-sm">
         <Loader2 className="h-12 w-12 text-brand-red animate-spin mb-6" />
         <h1 className="text-xl font-black uppercase tracking-widest text-white mb-2">
           Đang xác nhận

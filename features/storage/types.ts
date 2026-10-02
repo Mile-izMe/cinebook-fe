@@ -1,6 +1,6 @@
 export interface PresignUrl {
   uploadUrl: string;
-  formData: Map<string, string>;
+  formData: Record<string, string>;
   objectKey: string;
   expiresInSeconds: number;
 }

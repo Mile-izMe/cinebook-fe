@@ -1,4 +1,5 @@
 "use client";
+import { serverUrl } from "@/lib/server-url";
 import { AuthInitializer } from "@/features/auth";
 import { ApiErrorResponse } from "@/types";
 import {
@@ -14,9 +15,7 @@ import SockJS from "sockjs-client";
 import { toast } from "sonner";
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  const socketUrl = process.env.NEXT_PUBLIC_API_URL
-    ? `${process.env.NEXT_PUBLIC_API_URL}/ws`
-    : "http://localhost:8080/ws";
+  const socketUrl = `${serverUrl}/ws`;
 
   const tError = useTranslations("errors");
   const [queryClient] = useState(
@@ -46,7 +45,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <StompSessionProvider
       url={socketUrl}
       webSocketFactory={() => new SockJS(socketUrl)}
-      debug={(str) => console.log(str)}
+      debug={process.env.NODE_ENV === "development" ? (str) => console.log(str) : undefined}
     >
       <QueryClientProvider client={queryClient}>
         <AuthInitializer />

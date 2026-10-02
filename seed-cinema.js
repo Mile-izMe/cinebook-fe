@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-require-imports
-require("dotenv").config({ path: ".env.local" });
+const { config: seed, list: seedList } = require("./seed-config.cjs");
 
-const CINEBOOK_BASE = "http://localhost:8080/api";
+const CINEBOOK_BASE = seed.apiUrl;
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 const DEVICE_ID = "seed-script";
@@ -174,7 +174,10 @@ async function main() {
   console.log("Logging in as admin...");
   const accessToken = await loginAsAdmin();
 
-  const cities = await fetchCities();
+  const cities = await fetchCities(accessToken);
+  const existing = await seedList("/cinemas", accessToken);
+  const existingNames = new Set(existing.map(cinema => cinema.name));
+  let total = existing.length;
 
   for (const city of cities) {
     const cityKey = getCityKey(city.cityName);
@@ -186,10 +189,12 @@ async function main() {
       continue;
     }
 
-    console.log(`\n🌆 Creating cinemas for city: ${city.name}`);
-    const cinemasToCreate = MOCK_CINEMAS[cityKey];
+    console.log(`\nCreating cinemas for city: ${city.cityName}`);
+    const cinemasToCreate = seed.full ? MOCK_CINEMAS[cityKey] : MOCK_CINEMAS[cityKey].slice(0, 1);
 
     for (const cinemaData of cinemasToCreate) {
+      if (total >= seed.cinemaCount) break;
+      if (existingNames.has(cinemaData.name)) continue;
       const payload = {
         cityId: city.id,
         name: cinemaData.name,
@@ -201,6 +206,8 @@ async function main() {
       console.log(`Creating "${payload.name}"...`);
       const created = await createCinema(payload, accessToken);
       if (created) {
+        total++;
+        existingNames.add(cinemaData.name);
         const newId = created.data?.id || "?";
         console.log(`  ✅ OK -> id = ${newId}`);
       }

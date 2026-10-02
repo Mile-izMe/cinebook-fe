@@ -1,4 +1,6 @@
-const API_URL = "http://localhost:8080/api";
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const { config: seed, pause: seedPause } = require("./seed-config.cjs");
+const API_URL = seed.apiUrl;
 
 const FIRST_NAMES = [
   "Alex",
@@ -49,15 +51,16 @@ function getRandomPhone() {
 }
 
 async function seedUsers() {
-  console.log("🚀 Creating 30 users...");
+  if (!seed.demoPassword) throw new Error("Set SEED_USER_PASSWORD for non-local sample accounts");
+  console.log(`Creating ${seed.userCount} sample users. They require email verification before reviews.`);
 
-  for (let i = 1; i <= 30; i++) {
+  for (let i = 1; i <= seed.userCount; i++) {
     const randomUserName = getRandomName();
     const randomPhone = getRandomPhone();
 
     const userPayload = {
       email: `cinefan${i}@cinebook.com`,
-      password: "Password123!",
+      password: seed.demoPassword,
       userName: randomUserName,
       phone: randomPhone,
     };
@@ -78,9 +81,10 @@ async function seedUsers() {
     } catch (error) {
       console.error(`Error connection when creating user ${i}:`, error.message);
     }
+    await seedPause();
   }
 
   console.log("🎉 Finish process creating Users!");
 }
 
-seedUsers();
+seedUsers().catch(error => { console.error(error.message); process.exitCode = 1; });

@@ -1,3 +1,4 @@
+import { serverUrl } from "./server-url";
 import { ApiErrorResponse } from "@/types";
 import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
 import { v4 as uuidv4 } from "uuid";
@@ -5,7 +6,7 @@ import { tokenStorage } from "./token-storage";
 import { isTokenExpiringSoon } from "./tokenUtil";
 import { refreshAccessToken } from "./refreshToken";
 
-const baseURL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:8080";
+const baseURL = serverUrl;
 
 const getDeviceId = () => {
   if (typeof window === "undefined") return null;

@@ -1,4 +1,6 @@
-const API_URL = "http://localhost:8080/api";
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const { config: seed, list: seedList, pause: seedPause } = require("./seed-config.cjs");
+const API_URL = seed.apiUrl;
 
 const COMMENTS_BY_RATING = {
   5: [
@@ -42,77 +44,44 @@ const COMMENTS_BY_RATING = {
   ],
 };
 async function seedReviews() {
-  console.log("🚀 Seeding Reviews...");
-
-  const userTokens = [];
-  console.log("⏳ Logging in 30 users...");
-  for (let i = 1; i <= 30; i++) {
-    const email = `cinefan${i}@cinebook.com`;
-    const res = await fetch(`${API_URL}/auth/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-Device-ID": `seed-script-device-${i}`,
-      },
-      body: JSON.stringify({ email: email, password: "Password123!" }),
+  if (!seed.demoPassword) throw new Error("Set SEED_USER_PASSWORD for non-local sample accounts");
+  const users = [];
+  for (let i = 1; i <= seed.userCount; i++) {
+    const res = await fetch(API_URL + "/auth/login", {
+      method: "POST", signal: AbortSignal.timeout(30_000),
+      headers: { "Content-Type": "application/json", "X-Device-ID": "seed-review-" + i },
+      body: JSON.stringify({ email: "cinefan" + i + "@cinebook.com", password: seed.demoPassword }),
     });
-
     if (res.ok) {
-      const data = await res.json();
-      userTokens.push({ email, token: data.data.accessToken });
-    }
+      const { data } = await res.json();
+      users.push({ token: data.accessToken, userId: data.userId });
+    } else if (res.status >= 500) throw new Error("Review user login failed: " + res.status);
+    await seedPause();
   }
-  console.log(`✅ Get success ${userTokens.length} token.`);
-
-  // Get list movies
-  console.log("⏳ Get list phim...");
-  const moviesRes = await fetch(`${API_URL}/movies?limit=50`);
-  const moviesData = await moviesRes.json();
-  const movies = moviesData.data;
-  console.log(`✅ Found ${movies.length} movies.`);
-
-  // Create random reviews
-  let successCount = 0;
-  let attempts = 0;
-  const usedCombinations = new Set(); // Prevent 1 user rate 2 times
-
-  while (successCount < 300 && attempts < 2000) {
-    // Random user & random movie
-    const randomUser =
-      userTokens[Math.floor(Math.random() * userTokens.length)];
-    const randomMovie = movies[Math.floor(Math.random() * movies.length)];
-    const comboKey = `${randomUser.email}-${randomMovie.id}`;
-
-    if (usedCombinations.has(comboKey)) continue;
-
-    const rating = Math.floor(Math.random() * 5) + 1;
-    const possibleComments = COMMENTS_BY_RATING[rating];
-    const comment =
-      possibleComments[Math.floor(Math.random() * possibleComments.length)];
-
-    try {
-      const res = await fetch(`${API_URL}/movies/${randomMovie.id}/reviews`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${randomUser.token}`,
-        },
-        body: JSON.stringify({ rating, comment }),
+  if (!users.length) throw new Error("Seed reviews requires verified sample users; no reviews created");
+  const movies = (await seedList("/movies?limit=50")).slice(0, seed.movieCount);
+  if (!movies.length) throw new Error("Seed movies first");
+  let created = 0, skipped = 0, processed = 0;
+  const perMovie = Math.ceil(seed.reviewCount / movies.length);
+  // Round-robin gives every movie ratings, with no random retry loop.
+  for (let round = 0; round < Math.min(perMovie, users.length); round++) {
+    for (let index = 0; index < movies.length && processed < seed.reviewCount; index++) {
+      const movie = movies[index], user = users[(index + round) % users.length];
+      const existing = await seedList("/movies/" + movie.id + "/reviews?limit=50", user.token);
+      processed++;
+      if (existing.some(review => review.userId === user.userId)) { skipped++; continue; }
+      const rating = 3 + ((index + round) % 3);
+      const res = await fetch(API_URL + "/movies/" + movie.id + "/reviews", {
+        method: "POST", signal: AbortSignal.timeout(30_000),
+        headers: { "Content-Type": "application/json", Authorization: "Bearer " + user.token },
+        body: JSON.stringify({ rating, comment: COMMENTS_BY_RATING[rating][0] }),
       });
-
-      if (res.ok) {
-        usedCombinations.add(comboKey);
-        successCount++;
-        console.log(
-          `⭐ Review #${successCount}: ${randomUser.email} rate ${rating} star for movie with ID ${randomMovie.id.substring(0, 8)}...`,
-        );
-      }
-    } catch (error) {
-      console.error("Error when creating review:", error.message);
+      if (res.ok) created++;
+      else if (res.status === 409) skipped++;
+      else throw new Error("Create review failed: " + res.status);
+      await seedPause();
     }
   }
-
-  console.log(`🎉 Finish seeding ${successCount} Reviews!`);
+  console.log("Review seed finished: created=" + created + ", skipped=" + skipped);
 }
-
-seedReviews();
+seedReviews().catch(error => { console.error(error.message); process.exitCode = 1; });

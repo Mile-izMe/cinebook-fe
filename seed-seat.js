@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-require-imports
-require("dotenv").config({ path: ".env.local" });
+const { config: seed, list: seedList } = require("./seed-config.cjs");
 
-const CINEBOOK_BASE = "http://localhost:8080/api";
+const CINEBOOK_BASE = seed.apiUrl;
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 const DEVICE_ID = "seed-script";
@@ -71,7 +71,7 @@ async function main() {
   const accessToken = await loginAsAdmin();
 
   console.log("⏳ Getting list Cinemas...");
-  const cinemas = await fetchCinemas(accessToken);
+  const cinemas = (await fetchCinemas(accessToken)).slice(0, seed.cinemaCount);
   console.log(`📍 Found ${cinemas.length} cinemas.`);
 
   for (const cinema of cinemas) {
@@ -82,7 +82,9 @@ async function main() {
       console.log(`  -> This cinema does not have any rooms. Skipped.\n`);
       continue;
     }
-    for (const room of rooms) {
+    for (const room of rooms.slice(0, seed.roomsPerCinema)) {
+      const existing = await seedList(`/rooms/${room.id}/seats`, accessToken);
+      if (existing.length) { console.log(`Seats already exist for ${room.name}; skipped.`); continue; }
       const capacity = room.capacity || 100;
 
       let columns = 10;

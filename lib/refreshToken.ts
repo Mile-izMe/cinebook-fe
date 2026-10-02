@@ -1,7 +1,8 @@
+import { serverUrl } from "./server-url";
 import axios from "axios";
 import { tokenStorage } from "./token-storage";
 
-const baseURL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:8080";
+const baseURL = serverUrl;
 
 let refreshPromise: Promise<string> | null = null;
 

@@ -1,16 +1,19 @@
 // eslint-disable-next-line @typescript-eslint/no-require-imports
-require("dotenv").config({ path: ".env.local" });
+const { config: seed, list: seedList } = require("./seed-config.cjs");
 
-const CINEBOOK_BASE = "http://localhost:8080/api";
+const CINEBOOK_BASE = seed.apiUrl;
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 const DEVICE_ID = "seed-script";
 
-const MOCK_ROOMS = [
+const MOCK_ROOMS = seed.full ? [
   { name: "Cinema 01", capacity: 120, roomType: "STANDARD" },
   { name: "Cinema 02", capacity: 100, roomType: "STANDARD" },
   { name: "Cinema 03 - IMAX", capacity: 200, roomType: "IMAX" },
   { name: "Cinema 04 - 4DX", capacity: 80, roomType: "FOUR_DX" },
+] : [
+  { name: "Cinema 01", capacity: 60, roomType: "STANDARD" },
+  { name: "Cinema 02 - IMAX", capacity: 60, roomType: "IMAX" },
 ];
 
 async function loginAsAdmin() {
@@ -59,13 +62,18 @@ async function main() {
   const accessToken = await loginAsAdmin();
 
   console.log("⏳ Getting list Cinemas...");
-  const cinemas = await fetchCinemas(accessToken);
+  const cinemas = (await fetchCinemas(accessToken)).slice(0, seed.cinemaCount);
   console.log(`📍 Found ${cinemas.length} cinemas.`);
 
   for (const cinema of cinemas) {
     console.log(`\n🎬 Creating rooms for Cinema: ${cinema.name}`);
 
-    for (const roomData of MOCK_ROOMS) {
+    const existing = await seedList(`/cinemas/${cinema.id}/rooms`, accessToken);
+    const names = new Set(existing.map(room => room.name));
+    let count = existing.length;
+    for (const roomData of MOCK_ROOMS.slice(0, seed.roomsPerCinema)) {
+      if (count >= seed.roomsPerCinema) break;
+      if (names.has(roomData.name)) continue;
       const payload = {
         name: roomData.name,
         capacity: roomData.capacity,
@@ -76,6 +84,8 @@ async function main() {
       const created = await createRoom(cinema.id, payload, accessToken);
 
       if (created) {
+        count++;
+        names.add(roomData.name);
         const newId = created.data?.id || "?";
         console.log(`     ✅ OK -> roomId = ${newId}`);
       }

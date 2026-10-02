@@ -12,7 +12,6 @@
 
 # testing
 /coverage
-seed-movie.js
 
 # next.js
 /.next/
