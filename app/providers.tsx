@@ -45,7 +45,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <StompSessionProvider
       url={socketUrl}
       webSocketFactory={() => new SockJS(socketUrl)}
-      debug={process.env.NODE_ENV === "development" ? (str) => console.log(str) : undefined}
+      debug={(str) => { if (process.env.NODE_ENV === "development") console.log(str); }}
     >
       <QueryClientProvider client={queryClient}>
         <AuthInitializer />
