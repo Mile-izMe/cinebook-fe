@@ -9,7 +9,7 @@ import { toast } from "sonner";
 const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const DEFAULT_AVATAR =
-  "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200";
+  "/avatar-placeholder.svg";
 
 interface ProfileCardProps {
   user: User | null;

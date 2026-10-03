@@ -3,7 +3,6 @@
     "SYS-500": "An unexpected system error occurred. Please try again later.",
     "SYS-400": "Invalid input data. Please check your information.",
     "SYS-409": "A data conflict occurred in the system.",
-
     "USR-001": "User account not found.",
     "USR-002": "This email already exists. Please use a different one.",
     "USR-003": "This phone number is already registered.",
@@ -14,21 +13,18 @@
     "USR-008": "You do not have permission to access this feature.",
     "USR-009": "Authentication error. Please log in again.",
     "USR-010": "Your session has expired. Please log in again to continue.",
-
     "MOV-001": "Movie not found.",
     "MOV-002": "Genre not found.",
     "MOV-003": "You have already reviewed this movie.",
     "MOV-004": "Invalid file type, only image files are allowed.",
     "MOV-005": "File size exceeds the allowed limit.",
     "MOV-006": "Failed to upload file, please try again.",
-
     "CIN-001": "City not found.",
     "CIN-002": "Cinema not found.",
     "CIN-003": "Screening room not found.",
     "CIN-004": "Seats have already been generated for this room, cannot regenerate.",
     "CIN-005": "Showtime not found.",
     "CIN-006": "Showtime overlaps with another showtime in the same room.",
-
     "BOOK-001": "The showtime has already started, tickets cannot be booked.",
     "BOOK-002": "The seat does not belong to the room for this showtime.",
     "BOOK-003": "Seat not found.",
@@ -37,12 +33,10 @@
     "BOOK-006": "You do not have permission to access this booking.",
     "BOOK-007": "Invalid booking status transition.",
     "BOOK-008": "You need to provide email and phone number.",
-
     "LOCK-001": "This seat is currently held by another user.",
     "LOCK-002": "You do not own the lock for this seat, or the lock has expired.",
     "LOCK-003": "The hold time for this seat has expired.",
     "LOCK-004": "Maximum time holding seat reached.",
-
     "PAY-001": "Payment not found.",
     "PAY-002": "This booking has already been paid successfully.",
     "PAY-003": "Cannot create payment for a booking in this status.",
@@ -50,7 +44,6 @@
     "PAY-005": "Callback amount does not match the booking amount.",
     "PAY-006": "Invalid payment state transition.",
     "PAY-007": "Booking has expired, payment cannot be processed.",
-
     "DEFAULT": "An unexpected error occurred. Please try again!"
   },
   "nav": {
@@ -75,17 +68,17 @@
     "now_playing": "Now Playing",
     "no_movies_found_criteria": "No movies found matching your criteria",
     "spotlight": "Spotlight",
-    "imdb": "IMDB",
+    "imdb": "CineBook rating",
     "mins": "MINS",
     "read_details": "Read Details",
     "no_movies_found": "No Movies Found",
     "try_adjusting_criteria": "Try adjusting your criteria or search keyword",
     "back": "Back",
-    "rating": "Rating",
+    "rating": "CineBook rating",
     "director": "Director",
     "starring_cast": "Starring Cast",
     "select_showtime": "Select Showtime",
-    "official_movie_trailer": "Official Movie Trailer",
+    "official_movie_trailer": "Trailer on YouTube",
     "movie_not_found": "Movie Not Found",
     "movie_not_found_description": "The movie you are looking for does not exist or has been removed from our current listing.",
     "return_to_catalog": "Return to Catalog",
@@ -142,48 +135,40 @@
     "seatIds_required": "At least one seat ID is required",
     "seatTokens_required": "Seat tokens are required"
   },
-
   "screen": {
     "booking": {
       "min": "MINS",
       "showtime_step": "Showtime",
       "seat_step": "Seats",
       "checkout_step": "Checkout",
-
       "select_movie_seat": "Select a movie and seats to view the summary",
       "booking_summary": "Booking Summary",
       "selected_seats": "Selected Seats",
       "rowSeat": "Row / Seat",
       "no_seat": "No seats selected yet",
-
       "discount_code": "Discount Code",
       "discount": "Discount",
       "booking_fee": "Booking Fee",
       "free": "Free",
       "total": "Total",
-
       "showtime": {
         "no_showtime_avai": "No Showtimes Available",
         "select_city": "Select City",
         "view_format": "Viewing Format"
       },
-
       "seat": {
         "infor_warning": "By booking tickets online, your selected seats will be temporarily held while you complete your booking. Please complete your transaction before the hold expires.",
         "unavai": "Unavailable",
         "tempo_hold": "Temporarily held by another user",
         "reserved": "Reserved / Maintenance",
-
         "seating_legend": "Seating Legend",
         "standard": "Standard",
         "vip": "VIP",
         "vip_lounge": "VIP Lounge",
         "wheel": "Wheelchair",
         "selected_seat": "Selected Seat",
-
         "sold_out": "Sold Out",
         "reserved_hold": "Reserved / Held",
-
         "theorical_create": "Creating seating layout...",
         "select_seat": "Select Seats",
         "click_6_seats": "Select seats from the map below. You can select up to 6 seats per booking.",
@@ -193,5 +178,44 @@
   },
   "payment": {
     "mock_success": "Mock payment success"
+  },
+  "demo": {
+    "banner": "Educational demo · Simulated bookings and payments. No real tickets or charges.",
+    "learnMore": "About this demo",
+    "title": "About CineBook and credits",
+    "intro": "CineBook is an independent, non-commercial learning and portfolio project for practicing a cinema booking flow.",
+    "scopeTitle": "Demo scope",
+    "scope": "Cinemas, schedules, seat availability, prices, reviews and tickets are demonstration data. Bookings do not grant entry to any real cinema. Payments are simulated and no money is collected. Do not enter real card or banking details.",
+    "affiliationTitle": "Independent project",
+    "affiliation": "CineBook is not an official cinema service and is not affiliated with or endorsed by any cinema operator, film studio or payment provider. Film titles, venue references and format names are used only to illustrate the demo.",
+    "creditsTitle": "Movie data and images",
+    "credits": "Movie metadata, posters and backdrops are sourced through The Movie Database (TMDB). They remain the property of their respective rights holders; CineBook does not claim ownership of them. Links to trailers point to third-party YouTube content.",
+    "ratingTitle": "Ratings and reviews",
+    "rating": "Displayed scores are CineBook review averages on a 10-point scale, including clearly labelled seeded demo reviews. They are not IMDb ratings or independent audience statistics.",
+    "privacyTitle": "Testing and data",
+    "privacy": "Use the provided demo accounts or made-up test details. Account, booking and review data submitted here may be stored to demonstrate app features. Shared demo accounts are accessible to other testers, so do not enter sensitive or personal information.",
+    "sourcesTitle": "Development and third-party software",
+    "sources": "The project uses open-source libraries, including Next.js, React, next-intl and Lucide. Those dependencies retain their own licenses. The default avatar is a generic illustration created for this project.",
+    "tmdbNotice": "This product uses the TMDB API but is not endorsed or certified by TMDB.",
+    "sourceLink": "TMDB attribution requirements",
+    "footer": "CineBook · Non-commercial educational demo",
+    "discover": "Explore the demo",
+    "catalog": "Movie catalog",
+    "bookings": "Demo bookings",
+    "profile": "Test profile",
+    "safety": "Try it safely",
+    "safetyBody": "Use demo details. Tickets and payment amounts are simulated; no real cinema booking or financial transaction takes place.",
+    "paymentTitle": "Demo payment details",
+    "paymentHint": "Use made-up details only. This form does not process real card payments.",
+    "paymentTerms": "This simulates a booking for {amount}. No card is charged and the demo ticket cannot be used at a real cinema.",
+    "loginIntro": "Sign in to try seat holds, demo bookings and reviews.",
+    "registerIntro": "Create a test account to explore the educational demo.",
+    "methodTitle": "Demo payment method",
+    "bankTitle": "Demo bank transfer",
+    "bankHint": "Simulated payment; no bank transfer",
+    "walletTitle": "Demo e-wallet",
+    "walletHint": "Simulation; no wallet provider connected",
+    "cardTitle": "Demo card form",
+    "cardHint": "Use made-up details only; no real card processing"
   }
 }

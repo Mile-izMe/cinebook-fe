@@ -1,5 +1,6 @@
 import { formatCardNumber } from "@/lib";
 import { CreditCard, Landmark, Lock, ShieldCheck } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useFormContext } from "react-hook-form";
 
 interface CardSimulationProps {
@@ -15,6 +16,7 @@ function CardSimulation({
   watchedExpiry,
   finalPrice,
 }: CardSimulationProps) {
+  const demo = useTranslations("demo");
   const {
     register,
     formState: { errors },
@@ -44,7 +46,7 @@ function CardSimulation({
         <div className="flex justify-between items-start">
           <Landmark className="w-8 h-8 opacity-75" />
           <span className="text-[9px] font-black italic tracking-widest uppercase opacity-75">
-            CINEBOOK SECURE
+            CINEBOOK DEMO
           </span>
         </div>
 
@@ -78,17 +80,16 @@ function CardSimulation({
         </div>
       </div>
 
-      {/* Payment Details Input Fields (Bỏ thẻ <form> đi, thay bằng <div>) */}
+      {/* Demo card fields */}
       <div className="bg-black/50 border border-white/5 p-6 sm:p-8 rounded-2xl space-y-6 shadow-inner">
         <div className="flex items-center gap-2 pb-4 border-b border-white/5">
           <Lock className="w-5 h-5 text-brand-red" />
           <div>
             <h3 className="font-black text-white text-xs uppercase tracking-widest">
-              Payment Details
+              {demo("paymentTitle")}
             </h3>
             <p className="text-zinc-500 text-[10px] uppercase font-black tracking-widest mt-1">
-              All card transactions are processed securely using 256-bit
-              encryption.
+              {demo("paymentHint")}
             </p>
           </div>
         </div>
@@ -193,13 +194,7 @@ function CardSimulation({
         <div className="flex gap-3 bg-black p-4 rounded-xl border border-white/5 text-[10px] uppercase font-black tracking-wider text-zinc-400 leading-relaxed">
           <ShieldCheck className="w-5 h-5 text-emerald-500 shrink-0" />
           <p>
-            By clicking &quot;Confirm Booking&quot;, you authorize Cinebook
-            Cinema Group to charge your card{" "}
-            <span className="text-white font-bold">
-              {finalPrice.toLocaleString("vi-VN")}đ
-            </span>{" "}
-            for movie entry credentials. Tickets are strictly non-refundable
-            once locked.
+            {demo("paymentTerms", { amount: `${finalPrice.toLocaleString("vi-VN")} VND` })}
           </p>
         </div>
       </div>

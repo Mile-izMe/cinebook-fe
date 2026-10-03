@@ -22,7 +22,7 @@ export default function Navbar() {
 
   const avatarSrc =
     user?.avatarUrl ||
-    "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200";
+    "/avatar-placeholder.svg";
 
   const navLinks = [
     { name: t("home"), path: "/" },
@@ -169,7 +169,7 @@ export default function Navbar() {
                     <img
                       src={
                         user?.avatarUrl ||
-                        "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200"
+                        "/avatar-placeholder.svg"
                       }
                       alt={user?.userName}
                       className="w-10 h-10 rounded-full border-2 border-brand-red object-cover"

@@ -23,7 +23,7 @@ function ProfileStaticColumn({
           <img
             src={
               user?.avatarUrl ||
-              "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200"
+              "/avatar-placeholder.svg"
             }
             alt={user?.userName}
             className="w-24 h-24 sm:w-28 sm:h-28 rounded-full border-2 border-brand-red mx-auto object-cover"
@@ -57,7 +57,7 @@ function ProfileStaticColumn({
       <div className="bg-brand-dark border border-white/5 rounded-2xl p-6 space-y-4">
         <h4 className="text-[10px] font-black uppercase tracking-widest text-zinc-400 flex items-center gap-1.5 border-b border-white/5 pb-3">
           <ActivityIcon className="w-4 h-4 text-brand-red" />
-          <span>Cinema Loyalty Stats</span>
+          <span>Demo Booking Stats</span>
         </h4>
 
         <div className="grid grid-cols-2 gap-4 text-center">
@@ -83,7 +83,7 @@ function ProfileStaticColumn({
 
         <div className="bg-black border border-white/5 p-4 rounded-xl flex justify-between items-center text-xs">
           <span className="text-zinc-500 font-black uppercase tracking-widest">
-            Total Investment
+            Simulated Total
           </span>
           <span className="font-mono text-emerald-400 font-black text-xs">
             {formatCurrency(userStats?.totalSpent)}

@@ -20,6 +20,7 @@ import { useRegister } from "../hooks";
 import { createRegisterSchema, RegisterInput } from "../validation";
 
 function RegisterForm() {
+  const demo = useTranslations("demo");
   const authForm = useTranslations("auth");
   const authSchema = createRegisterSchema(authForm);
   const { mutate: registerUser } = useRegister();
@@ -43,13 +44,7 @@ function RegisterForm() {
 
   return (
     <div className="flex-grow flex items-center justify-center bg-brand-black px-4 py-20 relative">
-      <div
-        className="absolute inset-0 bg-cover bg-center opacity-[0.02] pointer-events-none"
-        style={{
-          backgroundImage:
-            "url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1200')",
-        }}
-      />
+      <div className="absolute inset-0 bg-gradient-to-br from-brand-red/5 to-transparent pointer-events-none" />
 
       <motion.div
         initial={{ opacity: 0, y: 25 }}
@@ -69,7 +64,7 @@ function RegisterForm() {
             Create an Account
           </h2>
           <p className="text-zinc-500 text-[10px] uppercase font-black tracking-widest">
-            Unlock exclusive features and premium discounts.
+            {demo("registerIntro")}
           </p>
         </div>
 

@@ -3,7 +3,7 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Authentication | CINEBOOK",
-  description: "Đăng nhập để đặt vé xem phim và nhận nhiều ưu đãi hấp dẫn.",
+  description: "Tài khoản thử nghiệm cho dự án học tập CineBook; đặt vé và thanh toán giả lập.",
 };
 
 export default function LoginPage() {
